@@ -147,6 +147,12 @@ JudyHS was invented and implemented by Doug Baskins after retiring from Hewlett-
 
 
 
+=head1 SOURCE AVAILABILITY
+
+This source is in Github: L<git://github.com/jbenjore/judy-hs.git>
+
+
+
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-Judy-HS at rt.cpan.org>, or through
