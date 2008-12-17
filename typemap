@@ -1,0 +1,3 @@
+TYPEMAP
+Word_t	T_U_INT
+Pvoid_t T_PTR

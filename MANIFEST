@@ -1,0 +1,11 @@
+.cvsignore
+Changes
+HS.xs
+lib/Judy/HS.pm
+Makefile.PL
+MANIFEST
+ppport.h
+README
+t/00-load.t
+t/10basic.t
+typemap
