@@ -1,5 +1,11 @@
 Revision history for Judy::HS
 
+0.01 - Wed Dec 17 13:31:03 2008
+	Initial upload.
+	Provided "raw" HS macros, some tests failing
+
+	.
+
 0.01    Date/time
         First version, released on an unsuspecting world.
 
