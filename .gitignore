@@ -1,6 +1,26 @@
+# WTF, why does CPANTS write this file?
+Debian_CPANTS.txt
+
+# Releases
+Judy-HS-*
+
+# Compilation artifacts
+*.bs
+*.c
+*.o
+
+# EU::MM
+blib
+pm_to_blib
+Makefile
+Makefile.old
+
+# Emacs
 .#*
 *#
 *~
+
+# make manifest
 MANIFEST.bak
-Makefile
-Makefile.old
+
+# 
