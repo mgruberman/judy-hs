@@ -1,0 +1,12 @@
+#!perl
+use strict;
+use warnings;
+use Judy::HS 'JHSI';
+
+my $hash = 0;
+while (<>) {
+    use bytes;
+    my $duplicate = 0;
+    JHSI( $duplicate, $hash, $_, length );
+    print if ! $duplicate;
+}
