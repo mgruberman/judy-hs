@@ -1,9 +1,12 @@
 .cvsignore
+.releaserc
 Changes
+eg/juniq
 HS.xs
 lib/Judy/HS.pm
 Makefile.PL
 MANIFEST
+META.yml
 ppport.h
 README
 t/00-load.t
