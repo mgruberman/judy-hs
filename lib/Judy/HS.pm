@@ -6,9 +6,8 @@ use warnings;
 BEGIN {
     our $VERSION = '0.01';
 
-    require DynaLoader;
-    our @ISA = 'DynaLoader';
-    __PACKAGE__->bootstrap;
+    require XSLoader;
+    XSLoader::load(__PACKAGE__,$VERSION);
 }
 
 use Sub::Exporter -setup => {
