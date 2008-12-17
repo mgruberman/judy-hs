@@ -6,12 +6,15 @@
 
 MODULE = Judy::HS PACKAGE = Judy::HS PREFIX = ljhs_
 
+PROTOTYPES: DISABLE
+
 void
 ljhs_JHSI( PValue_arg, PJHSArray_arg, Index, Length )
         Word_t PValue_arg
         Pvoid_t PJHSArray_arg
         char * Index
         Word_t Length
+    PROTOTYPE: $$$$
     CODE:
         /* Map non-lvalue input to lvalues */
         Word_t PValue_val = PValue_arg;
