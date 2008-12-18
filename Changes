@@ -1,5 +1,10 @@
 Revision history for Judy::HS
 
+0.02 - Thu Dec 18 00:05:27 2008
+	Utterly incompatible API change but now useful
+	Passes all tests
+	Moved pod to separate file
+
 0.01 - Wed Dec 17 13:31:03 2008
 	Initial upload.
 	Provided "raw" HS macros, some tests failing
