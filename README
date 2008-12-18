@@ -7,8 +7,9 @@ SYNOPSIS
 
       my $judy = 0;
       while (<>) {
-        JHSI( my( $value ), $judy, $_, length );
-        print if ! $value;
+        my ($ptr,$val) = Get( $judy, $_ );
+        print if ! $ptr;
+        Set( $judy, $_, 1 );
       }
 
 DESCRIPTION
@@ -19,7 +20,7 @@ DESCRIPTION
     length: Length. Rather than using a null terminated string, this
     difference from JudySL(3X) allows strings to contain all bits
     (specifically the null character). This new addition (May 2004) to Judy
-    arrays is a hybird using the best capabilities of hashing and Judy
+    arrays is a hybrid using the best capabilities of hashing and Judy
     methods. JudyHS does not have a poor performance case where knowledge of
     the hash algorithm can be used to degrade the performance.
 
@@ -37,63 +38,52 @@ DESCRIPTION
 
     A JudyHS array is allocated with an undefined or 0 value.
 
-        my $PJHSArray = 0;
+        my $judy = 0;
 
 EXPORT
     All functions are exportable by Sub::Exporter.
 
-RAW FUNCTIONS
-    The following functions follow the C macro API as closely as possible. I
-    don't yet know how to meaningfully have modifiable $PValue pointers.
+DATA TYPES
+    *   $PValue - JudyHS array element. A pointer cast to integer.
 
-    The values below are hopefully mapped to useful Perl analogues. The sole
-    exception is $PValue which is just exposed as a numified pointer. This
-    will hopefully change to be more useful.
+    *   $Rc_int - return flag.
 
-      Word_t  * PValue;                           // JudyHS array element
-      int       Rc_int;                           // return flag
-      Word_t    Rc_word;                          // full word return value
-      Pvoid_t   PJHSArray = (Pvoid_t) NULL;       // initialize JudyHS array
-      uint8_t * Index;                            // array-of-bytes pointer
-      Word_t    Length;                           // number of bytes in Index
+    *   $Rc_word - full word return value
 
-  JHSI( $Value, $PJHSArray, $Index, $Length ) // JudyHSIns()
-    Given a pointer to a JudyHS array ($PJHSArray), insert an $Index string
-    of length: $Length and a $Value into the JudyHS array: $PJHSArray. If
-    the $Index is successfully inserted, the $Value is initialized to 0. If
-    the $Index was already present, the $Value is not modified.
+    *   $Judy - JudyHS array
 
-    TODO: document and figure out how to do something meaningful from Perl.
-    This part is just the C documentation and not meaningful for use in
-    Perl. Return PValue pointing to Value. Your program should use this
-    pointer to read or modify the Value, for example:
+    *   $Index - array-of-bytes pointer
 
-     Value = *PValue;
-     *PValue = 1234;
+BASIC FUNCTIONS
+  $PValue = JHSI( $Judy, $Index, $Value )
+    Given a pointer to a JudyHS array ($Judy), insert an $Index string and a
+    $Value into the JudyHS array: $Judy. Sets the value to $Value.
 
     Note: JHSI() and JHSD can reorganize the JudyHS array. Therefore,
     pointers returned from previous JudyHS calls become invalid and must be
     re-acquired (using JHSG()).
 
-  JHSD($Rc_int, $PJHSArray, $Index, $Length) // JudyHSDel()
-    Given a pointer to a JudyHS array ($PJHSArray), delete the specified
-    $Index along with the $Value from the JudyHS array.
+  $Rc_int = JHSD( $Judy, $Index )
+    Given a pointer to a JudyHS array ($Judy), delete the specified $Index
+    along with the $Value from the JudyHS array.
 
     Return $Rc_int set to 1 if successfully removed from the array. Return
     $Rc_int set to 0 if $Index was not present.
 
-  JHSG($PValue, $PJHSArray, $Index, $Length) // JudyHSGet()
-    Given a pointer to a JudyHS array ($PJHSArray), find $Value associated
-    with $Index.
+  ( $PValue, $Value ) = JHSG( $Judy, $Index )
+    Given a pointer to a JudyHS array ($Judy), find $Value associated with
+    $Index.
 
     Return $PValue pointing to $Index's Value. Return $PValue set to NULL if
     the $Index was not present.
 
-  JHSFA($Rc_word, $PJHSArray) // JudyHSFreeArray()
-    Given a pointer to a JudyHS array ($PJHSArray), free the entire array.
+    Return $Value of dereferencing $PValue if the $Index was present. Return
+    undef in $Value otherwise.
 
-    Return $Rc_word set to the number of bytes freed and $PJHSArray set to
-    NULL.
+  $Rc_word = JHSFA( $Judy )
+    Given a pointer to a JudyHS array ($Judy), free the entire array.
+
+    Return $Rc_word set to the number of bytes freed and $Judy set to NULL.
 
 AUTHOR
     Joshua ben Jore, "<jjore at cpan.org>"
