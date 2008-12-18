@@ -23,4 +23,5 @@ Makefile.old
 # make manifest
 MANIFEST.bak
 
-# 
+# bin/release
+Changes.bak
