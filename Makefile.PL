@@ -6,7 +6,7 @@ WriteMakefile(
     NAME                => 'Judy::HS',
     AUTHOR              => 'Joshua ben Jore <jjore@cpan.org>',
     VERSION_FROM        => 'lib/Judy/HS.pm',
-    ABSTRACT_FROM       => 'lib/Judy/HS.pm',
+    ABSTRACT_FROM       => 'lib/Judy/HS.pod',
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
