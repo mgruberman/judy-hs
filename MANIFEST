@@ -5,6 +5,7 @@ Changes
 eg/juniq
 HS.xs
 lib/Judy/HS.pm
+lib/Judy/HS.pod
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
