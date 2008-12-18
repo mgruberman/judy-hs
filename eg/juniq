@@ -1,11 +1,9 @@
 #!perl
 use strict;
 use warnings;
-use Judy::HS qw( JHSI JHSG );
+use Judy::HS qw( Duplicates );
 
 my $judy = 0;
 while ( <> ) {
-    my ( $ptr, $val ) = JHSG( $judy, $_ );
-    print if ! $ptr;
-    ( undef, $judy ) = JHSI( $judy, $_, 0 );
+    print if ! Duplicates( $judy, $_ );
 }

@@ -11,9 +11,9 @@ Shows an ultra-cheap hash for removing duplicates.
 
   my $judy = 0;
   while (<>) {
-    my ($ptr,$val) = JHSG($judy,$_);
+    my ($ptr,$val) = Get( $judy, $_ );
     print if ! $ptr;
-    (undef,$judy) = JHSI( $judy, $_, 0 );
+    Set( $judy, $_, 1 );
   }
 
 =head1 DESCRIPTION
@@ -84,7 +84,7 @@ $Index - array-of-bytes pointer
 
 =head1 BASIC FUNCTIONS
 
-=head2 ( $PValue, $Judy ) = JHSI( $Judy, $Index, $Value )
+=head2 $PValue = JHSI( $Judy, $Index, $Value )
 
 Given a pointer to a JudyHS array (C<$Judy>), insert an C<$Index>
 string and a C<$Value> into the JudyHS array:
@@ -94,7 +94,7 @@ Note: JHSI() and JHSD can reorganize the JudyHS array. Therefore,
 pointers returned from previous JudyHS calls become invalid and must
 be re-acquired (using JHSG()).
 
-=head2 ( $Rc_int, $Judy ) = JHSD( $Judy, $Index )
+=head2 $Rc_int = JHSD( $Judy, $Index )
 
 Given a pointer to a JudyHS array (C<$Judy>), delete the
 specified C<$Index> along with the C<$Value> from the JudyHS array.
@@ -113,7 +113,7 @@ to NULL if the C<$Index> was not present.
 Return C<$Value> of dereferencing C<$PValue> if the C<$Index> was
 present. Return undef in C<$Value> otherwise.
 
-=head2 ( $Rc_word, $Judy ) = JHSFA( $Judy )
+=head2 $Rc_word = JHSFA( $Judy )
 
 Given a pointer to a JudyHS array (C<$Judy>), free the entire array.
 

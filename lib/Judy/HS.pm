@@ -4,14 +4,14 @@ use strict;
 use warnings;
 
 BEGIN {
-    our $VERSION = '0.02';
+    our $VERSION = '0.03';
 
     require XSLoader;
     XSLoader::load(__PACKAGE__,$VERSION);
 }
 
 use Sub::Exporter -setup => {
-    exports => [qw[ JHSI JHSD JHSG JHSFA ]],
+    exports => [qw[ Duplicates Set Delete Get Free ]],
 };
 
 no warnings;
