@@ -1,12 +1,11 @@
 #!perl
 use strict;
 use warnings;
-use Judy::HS 'JHSI';
+use Judy::HS qw( JHSI JHSG );
 
-my $hash = 0;
-while (<>) {
-    use bytes;
-    my $duplicate = 0;
-    JHSI( $duplicate, $hash, $_, length );
-    print if ! $duplicate;
+my $judy = 0;
+while ( <> ) {
+    my ( $ptr, $val ) = JHSG( $judy, $_ );
+    print if ! $ptr;
+    ( undef, $judy ) = JHSI( $judy, $_, 0 );
 }
