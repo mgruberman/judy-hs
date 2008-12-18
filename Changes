@@ -1,9 +1,14 @@
 Revision history for Judy::HS
 
+0.03 - Thu Dec 19 02:00:00 2008
+        Rewrote API
+
 0.02 - Thu Dec 18 00:05:27 2008
-	Utterly incompatible API change but now useful
-	Passes all tests
-	Moved pod to separate file
+        Rewrote API
+        Moving pod to a separate file, minimally rewriting docs for new API
+        Rendered pod to README
+        Removed boilerplate from Changes
+        Author tests skipped unless AUTHOR_TEST
 
 0.01 - Wed Dec 17 13:31:03 2008
 	Initial upload.
