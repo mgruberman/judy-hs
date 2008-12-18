@@ -9,15 +9,15 @@ MODULE = Judy::HS PACKAGE = Judy::HS PREFIX = ljhs_
 PROTOTYPES: DISABLE
 
 void
-ljhs_JHSI( PJHSArray_arg, Index_sv, Value )
-        Pvoid_t PJHSArray_arg
-        SV      *Index_sv
-        UV      Value
+ljhs_JHSI( PJHSArray_sv, Index_sv, Value )
+        SV *PJHSArray_sv
+        SV *Index_sv
+        UV Value
     INIT:
-        Word_t  *PValue = (Word_t*)0xDEADBEEF;
-        Pvoid_t PJHSArray = PJHSArray_arg;
+        Pvoid_t PJHSArray = (Pvoid_t*)(SvOK( PJHSArray_sv ) ? SvUV( PJHSArray_sv ) : 0);
         STRLEN  Length = 0xDEADBEEF;
         char *Index = sv_2pvbyte(Index_sv,&Length);
+        Word_t  *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         //warn("&PValue=%d",&PValue);
         //warn("JHSIa Judy=%d Index=%s Length=%d",PJHSArray,Index,Length);
@@ -30,11 +30,11 @@ ljhs_JHSI( PJHSArray_arg, Index_sv, Value )
         XPUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PJHSArray))));
 
 void
-ljhs_JHSD( PJHSArray_arg, Index_sv )
-        Pvoid_t PJHSArray_arg
-        SV      *Index_sv
+ljhs_JHSD( PJHSArray_sv, Index_sv )
+        SV *PJHSArray_sv
+        SV *Index_sv
     INIT:
-        Pvoid_t PJHSArray = (Pvoid_t)PJHSArray_arg;
+        Pvoid_t PJHSArray = (Pvoid_t*)(SvOK(PJHSArray_sv) ? SvUV(PJHSArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
         char *Index = sv_2pvbyte(Index_sv,&Length);
         int Rc_int = 0xDEADBEEF;
@@ -48,14 +48,14 @@ ljhs_JHSD( PJHSArray_arg, Index_sv )
         XPUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PJHSArray))));
 
 void
-ljhs_JHSG( PJHSArray_arg, Index_sv )
-        Pvoid_t PJHSArray_arg
+ljhs_JHSG( PJHSArray_sv, Index_sv )
+        SV *PJHSArray_sv
         SV *Index_sv
     INIT:
-        Word_t *PValue = (Word_t*)0xDEADBEEF;
-        Pvoid_t PJHSArray = (Pvoid_t)PJHSArray_arg;
+        Pvoid_t PJHSArray = (Pvoid_t*)(SvOK(PJHSArray_sv) ? SvUV(PJHSArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
         char *Index = sv_2pvbyte(Index_sv,&Length);
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         //warn("&PValue=%d",&PValue);
         //warn("JHSGa Judy=%d",PJHSArray);
@@ -73,11 +73,11 @@ ljhs_JHSG( PJHSArray_arg, Index_sv )
         }
 
 void
-ljhs_JHSFA( PJHSArray_arg )
-        Pvoid_t PJHSArray_arg
+ljhs_JHSFA( PJHSArray_sv )
+        SV *PJHSArray_sv
     INIT:
+        Pvoid_t PJHSArray = (Pvoid_t*)(SvOK(PJHSArray_sv) ? SvUV(PJHSArray_sv) : 0);
         Word_t Rc_word = 0xDEADBEEF;
-        Pvoid_t PJHSArray = (Pvoid_t)PJHSArray_arg;
     PPCODE:
         JHSFA(Rc_word,PJHSArray);
         //warn("JHSFA Rc_word=%d",Rc_word);
