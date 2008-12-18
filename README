@@ -1,52 +1,145 @@
-Judy::HS
+NAME
+    Judy::HS - Library for creating and accessing a dynamic array, using an
+    array-of-bytes of Length as an Index and a word as a Value.
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+SYNOPSIS
+    Shows an ultra-cheap hash for removing duplicates.
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+      my $judy = 0;
+      while (<>) {
+        JHSI( my( $value ), $judy, $_, length );
+        print if ! $value;
+      }
 
+DESCRIPTION
+    Judy::HS is an interface to the JudyHS macros in the Judy array library.
 
-INSTALLATION
+    A JudyHS array is the equivalent of an array of word-sized
+    value/pointers. An Index is a pointer to an array-of-bytes of specified
+    length: Length. Rather than using a null terminated string, this
+    difference from JudySL(3X) allows strings to contain all bits
+    (specifically the null character). This new addition (May 2004) to Judy
+    arrays is a hybird using the best capabilities of hashing and Judy
+    methods. JudyHS does not have a poor performance case where knowledge of
+    the hash algorithm can be used to degrade the performance.
 
-To install this module, run the following commands:
+    Since JudyHS is based on a hash method, Indexes are not stored in any
+    particular order. Therefore the JudyHSFirst(), JudyHSNext(),
+    JudyHSPrev() and JudyHSLast() neighbor search functions are not
+    practical. The Length of each array-of-bytes can be from 0 to the limits
+    of malloc() (about 2GB).
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+    The hallmark of JudyHS is speed with scalability, but memory efficiency
+    is excellent. The speed is very competitive with the best hashing
+    methods. The memory efficiency is similar to a linked list of the same
+    Indexes and Values. JudyHS is designed to scale from 0 to billions of
+    Indexes.
 
-SUPPORT AND DOCUMENTATION
+    A JudyHS array is allocated with an undefined or 0 value.
 
-After installing, you can find documentation for this module with the
-perldoc command.
+        my $PJHSArray = 0;
 
-    perldoc Judy::HS
+EXPORT
+    All functions are exportable by Sub::Exporter.
 
-You can also look for information at:
+RAW FUNCTIONS
+    The following functions follow the C macro API as closely as possible. I
+    don't yet know how to meaningfully have modifiable $PValue pointers.
 
-    RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Judy-HS
+    The values below are hopefully mapped to useful Perl analogues. The sole
+    exception is $PValue which is just exposed as a numified pointer. This
+    will hopefully change to be more useful.
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/Judy-HS
+      Word_t  * PValue;                           // JudyHS array element
+      int       Rc_int;                           // return flag
+      Word_t    Rc_word;                          // full word return value
+      Pvoid_t   PJHSArray = (Pvoid_t) NULL;       // initialize JudyHS array
+      uint8_t * Index;                            // array-of-bytes pointer
+      Word_t    Length;                           // number of bytes in Index
 
-    CPAN Ratings
-        http://cpanratings.perl.org/d/Judy-HS
+  JHSI( $Value, $PJHSArray, $Index, $Length ) // JudyHSIns()
+    Given a pointer to a JudyHS array ($PJHSArray), insert an $Index string
+    of length: $Length and a $Value into the JudyHS array: $PJHSArray. If
+    the $Index is successfully inserted, the $Value is initialized to 0. If
+    the $Index was already present, the $Value is not modified.
 
-    Search CPAN
-        http://search.cpan.org/dist/Judy-HS/
+    TODO: document and figure out how to do something meaningful from Perl.
+    This part is just the C documentation and not meaningful for use in
+    Perl. Return PValue pointing to Value. Your program should use this
+    pointer to read or modify the Value, for example:
 
+     Value = *PValue;
+     *PValue = 1234;
 
-COPYRIGHT AND LICENCE
+    Note: JHSI() and JHSD can reorganize the JudyHS array. Therefore,
+    pointers returned from previous JudyHS calls become invalid and must be
+    re-acquired (using JHSG()).
 
-Copyright (C) 2008 Joshua ben Jore
+  JHSD($Rc_int, $PJHSArray, $Index, $Length) // JudyHSDel()
+    Given a pointer to a JudyHS array ($PJHSArray), delete the specified
+    $Index along with the $Value from the JudyHS array.
 
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+    Return $Rc_int set to 1 if successfully removed from the array. Return
+    $Rc_int set to 0 if $Index was not present.
+
+  JHSG($PValue, $PJHSArray, $Index, $Length) // JudyHSGet()
+    Given a pointer to a JudyHS array ($PJHSArray), find $Value associated
+    with $Index.
+
+    Return $PValue pointing to $Index's Value. Return $PValue set to NULL if
+    the $Index was not present.
+
+  JHSFA($Rc_word, $PJHSArray) // JudyHSFreeArray()
+    Given a pointer to a JudyHS array ($PJHSArray), free the entire array.
+
+    Return $Rc_word set to the number of bytes freed and $PJHSArray set to
+    NULL.
+
+AUTHOR
+    Joshua ben Jore, "<jjore at cpan.org>"
+
+    JudyHS was invented and implemented by Doug Baskins after retiring from
+    Hewlett-Packard.
+
+SOURCE AVAILABILITY
+    This source is in Github: <git://github.com/jbenjore/judy-hs.git>
+
+BUGS
+    Please report any bugs or feature requests to "bug-Judy-HS at
+    rt.cpan.org", or through the web interface at
+    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Judy-HS>. I will be
+    notified, and then you'll automatically be notified of progress on your
+    bug as I make changes.
+
+SUPPORT
+    You can find documentation for this module with the perldoc command.
+
+      perldoc Judy::HS
+
+    You can also look for information at:
+
+    *   RT: CPAN's request tracker
+
+        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Judy::HS>
+
+    *   AnnoCPAN: Annotated CPAN documentation
+
+        <http://annocpan.org/dist/Judy::HS>
+
+    *   CPAN Ratings
+
+        <http://cpanratings.perl.org/d/Judy::HS>
+
+    *   Search CPAN
+
+        <http://search.cpan.org/dist/Judy::HS/>
+
+ACKNOWLEDGEMENTS
+    Doug Baskins, totally.
+
+COPYRIGHT & LICENSE
+    Copyright 2008 Joshua ben Jore, all rights reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
 
