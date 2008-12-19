@@ -3,7 +3,7 @@
 \.bs$
 \.c$
 \.o$
-^Judy-HS-[\d.-]+\.tar\.gz$
+^Judy-HS-[\d.-]
 ^\.git/
 ~$
 ^blib

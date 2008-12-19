@@ -6,14 +6,19 @@ eg/juniq
 HS.xs
 lib/Judy/HS.pm
 lib/Judy/HS.pod
+lib/Judy/SL.pm
+lib/Judy/SL.pod
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 ppport.h
 README
+SL.xs
 t/00-load.t
 t/10basic.t
+t/10sl.t
+t/11sugar.t
 typemap
 xt/99_critic.t
 xt/99_pod.t

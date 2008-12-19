@@ -10,10 +10,10 @@ WriteMakefile(
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
-    PL_FILES            => {},
     PREREQ_PM => {
         'Test::More' => 0,
 	'Sub::Exporter' => 0,
+        'PeekPoke' => 0,
     },
     LIBS => ['-lJudy'],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },

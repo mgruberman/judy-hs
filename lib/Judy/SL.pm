@@ -6,12 +6,15 @@ use warnings;
 BEGIN {
     our $VERSION = '0.01';
 
-    require XSLoader;
-    XSLoader::load(__PACKAGE__,$VERSION);
+    require Judy::HS;
 }
 
 use Sub::Exporter -setup => {
-    exports => [qw[ Set Delete Get Free SearchForward SearchForwardExclusive SearchBackwards SearchBackwardsExclusive ]],
+    exports => [qw[
+        Set Delete Get Free
+        SearchForward  ContinueForward
+        SearchBackward ContinueBackward
+    ]],
 };
 
 no warnings;
