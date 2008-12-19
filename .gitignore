@@ -20,8 +20,10 @@ Makefile.old
 *#
 *~
 
-# make manifest
+# Distribution artifacts
 MANIFEST.bak
+META.yml
+
 
 # bin/release
 Changes.bak
