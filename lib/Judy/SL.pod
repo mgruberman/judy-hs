@@ -1,0 +1,125 @@
+=head1 NAME
+
+Judy::SL - Library for creating and accessing a dynamic array (hash), using a null-terminated string as a key
+
+
+
+=head1 SYNOPSIS
+
+Shows a string sort routine
+
+  my $judy = 0;
+  while (<>) {
+      Insert($judy,$_,0);
+  }
+
+  my(undef,undef,$key) = SearchForward($judy,'');
+  if ( defined $key ) {
+      print $key;
+      print $key while (undef,undef,$key) = SearchForwardExclusive($judy,$key);
+  }
+
+=head1 DESCRIPTION
+
+A JudySL array is the equivalent of a sorted set of strings, each
+associated with a Value (word). A Value is addressed by a Key, which
+is a null-terminated character string of any length. Memory to support
+the array is allocated as key/value pairs are inserted, and released
+as key/value pairs are deleted. This is a form of "hash", where array
+elements are also sorted lexicographically (case-sensitive) by
+keys. This could be thought of as
+
+    @JudySLArray = ("Toto, I don't think we're in Kansas any more");
+
+A Judy::SL array is allocated with a NULL pointer
+
+    my $judy = 0;
+
+There are no duplicate keys in a Judy::SL array.
+
+The default error handling sends a message to the standard error and
+terminates the program with exit(1).
+
+
+
+=head1 EXPORT
+
+All functions are exportable by L<Sub::Exporter>.
+
+
+
+=head1 DATA TYPES
+
+=over
+
+=item *
+
+$Judy - Judy::SL array
+
+=item *
+
+$Key - bytes
+
+=item *
+
+$Value - Stored integer
+
+=item *
+
+$PValue - JudySL array element. A pointer cast to integer.
+
+=item *
+
+$Rc - Return flag
+
+=back
+
+
+
+=head1 BASIC FUNCTIONS
+
+=head2 $PValue = Set( $Judy, $Key, $Value )
+
+Insert a $Key string and $Value in the JudySL array. The stored $Value
+is updated to the passed-in $Value.
+
+Return $PValue pointing to the stored $Value. Your program can use
+this pointer to modify the stored $Value, for example:
+
+    use PeekPoke 'poke';
+    my $Judy = 0;
+    my $PValue = Set( $Judy, 'Aloha', 0 );
+
+    poke( $PValue, 1234 );
+
+Note: Set() and Delete() reorganize the JudySL array. Therefore,
+pointers returned from previous JudySL calls become invalid and must
+be reacquired.
+
+=head2 BOOL = Delete( $Judy, $Key )
+
+Delete the specified $Key/$Value pair (array element) from the JudySL
+array.
+
+Returns true if the element was removed, false otherwise.
+
+=head2 ( $PValue, $Value ) = Get( $Judy, $Key )
+
+Get $Key's $Value. If $Key exists in $Judy, return $PValue pointing to
+$Key's $Value and $Value in a list. Return an empty list if $Key is
+not present.
+
+JSLFA(Rc_word, PJSLArray) // JudySLFreeArray()
+    Given a pointer to a JudySL array (PJSLArray), free the entire array (much faster than using a JSLN(), JSLD() loop.)
+
+    Return Rc_word set to the number of bytes freed and PJSLArray set to NULL.
+
+JudySL Search Functions
+    The JudySL search functions allow you to search for indexes in the array. You may search inclusively or exclusively, in either forward or reverse directions.
+
+    If successful, Index is returned set to the found index, and PValue is returned set to a pointer to Index's Value. If unsuccessful, PValue is returned set to NULL, and Index contains no useful information. PValue must be tested for non-NULL prior to using Index, since a search failure is possible.
+
+    Note: To accomodate all possible returns, the Index buffer must be at least as large as the largest string stored in the array.
+
+JSLF(PValue, PJSLArray, Index) // JudySLFirst()
+    Search (inclusive) for the first index present that is equal to or greater than the passed Index string. (Start with a null string to find the first index in the array.) JSLF() is typically u
