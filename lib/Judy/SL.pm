@@ -3,11 +3,7 @@ package Judy::SL;
 use strict;
 use warnings;
 
-BEGIN {
-    our $VERSION = '0.01';
-
-    require Judy::HS;
-}
+use Judy::HS ();
 
 use Sub::Exporter -setup => {
     exports => [qw[
