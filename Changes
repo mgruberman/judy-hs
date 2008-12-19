@@ -1,5 +1,9 @@
 Revision history for Judy::HS
 
+0.04 - Fri Dec 20 12:02:00 2008
+        Added Judy::SL
+        Fixed documentation in Judy::HS
+
 0.03 - Thu Dec 19 02:00:00 2008
         Rewrote API
 
