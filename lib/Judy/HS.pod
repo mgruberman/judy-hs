@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-Judy::HS - Library for creating and accessing a dynamic array, using an array-of-bytes of Length as an Index and a word as a Value. 
+Judy::HS - Library for creating and accessing a dynamic array, using an array-of-bytes as an Key and a word as a Value. 
 
 
 
@@ -21,26 +21,24 @@ Shows an ultra-cheap hash for removing duplicates.
 Judy::HS is an interface to the JudyHS macros in the Judy array library.
 
 A JudyHS array is the equivalent of an array of word-sized
-value/pointers. An Index is a pointer to an array-of-bytes of
-specified length: Length. Rather than using a null terminated string,
-this difference from JudySL(3X) allows strings to contain all bits
-(specifically the null character). This new addition (May 2004) to
-Judy arrays is a hybrid using the best capabilities of hashing and
-Judy methods. JudyHS does not have a poor performance case where
-knowledge of the hash algorithm can be used to degrade the
-performance.
+value/pointers. An Key is a pointer to an array-of-bytes. Rather than
+using a null terminated string, this difference from JudySL(3X) allows
+strings to contain all bits (specifically the null character). This
+new addition (May 2004) to Judy arrays is a hybrid using the best
+capabilities of hashing and Judy methods. JudyHS does not have a poor
+performance case where knowledge of the hash algorithm can be used to
+degrade the performance.
 
-Since JudyHS is based on a hash method, Indexes are not stored in any
+Since JudyHS is based on a hash method, Keys are not stored in any
 particular order. Therefore the JudyHSFirst(), JudyHSNext(),
 JudyHSPrev() and JudyHSLast() neighbor search functions are not
-practical. The Length of each array-of-bytes can be from 0 to the
-limits of malloc() (about 2GB).
+practical.
 
 The hallmark of JudyHS is speed with scalability, but memory
 efficiency is excellent. The speed is very competitive with the best
 hashing methods. The memory efficiency is similar to a linked list of
-the same Indexes and Values. JudyHS is designed to scale from 0 to
-billions of Indexes.
+the same Keys and Values. JudyHS is designed to scale from 0 to
+billions of Keys.
 
 A JudyHS array is allocated with an undefined or 0 value.
 
@@ -76,7 +74,7 @@ $Judy - JudyHS array
 
 =item *
 
-$Index - array-of-bytes pointer
+$Key - array-of-bytes pointer
 
 =back
 
@@ -84,9 +82,9 @@ $Index - array-of-bytes pointer
 
 =head1 BASIC FUNCTIONS
 
-=head2 $PValue = Set( $Judy, $Index, $Value )
+=head2 $PValue = Set( $Judy, $Key, $Value )
 
-Given a pointer to a JudyHS array (C<$Judy>), insert an C<$Index>
+Given a pointer to a JudyHS array (C<$Judy>), insert an C<$Key>
 string and a C<$Value> into the JudyHS array:
 C<$Judy>. Sets the value to $Value.
 
@@ -94,24 +92,21 @@ Note: Set() and Delete can reorganize the JudyHS array. Therefore,
 pointers returned from previous JudyHS calls become invalid and must
 be re-acquired (using Get()).
 
-=head2 $Rc_int = Delete( $Judy, $Index )
+=head2 $Rc_int = Delete( $Judy, $Key )
 
 Given a pointer to a JudyHS array (C<$Judy>), delete the
-specified C<$Index> along with the C<$Value> from the JudyHS array.
+specified C<$Key> along with the C<$Value> from the JudyHS array.
 
 Return C<$Rc_int> set to 1 if successfully removed from the
-array. Return C<$Rc_int> set to 0 if C<$Index> was not present.
+array. Return C<$Rc_int> set to 0 if C<$Key> was not present.
 
-=head2 ( $PValue, $Value ) = Get( $Judy, $Index )
+=head2 ( $PValue, $Value ) = Get( $Judy, $Key )
 
 Given a pointer to a JudyHS array (C<$Judy>), find C<$Value>
-associated with C<$Index>.
+associated with C<$Key>.
 
-Return C<$PValue> pointing to C<$Index>'s Value. Return C<$PValue> set
-to NULL if the C<$Index> was not present.
-
-Return C<$Value> of dereferencing C<$PValue> if the C<$Index> was
-present. Return undef in C<$Value> otherwise.
+If C<$Key> is in the hash, return C<$PValue> a pointer to C<$Value>
+and C<$Value>. Return nothing if C<$Key> is not in the hash.
 
 =head2 $Rc_word = Free( $Judy )
 

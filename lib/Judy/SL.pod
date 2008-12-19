@@ -54,19 +54,19 @@ All functions are exportable by L<Sub::Exporter>.
 
 =item *
 
-$Judy - Judy::SL array
+C<$Judy> - Judy::SL array
 
 =item *
 
-$Key - bytes
+C<$Key> - bytes
 
 =item *
 
-$Value - Stored integer
+C<$Value> - Stored integer
 
 =item *
 
-$PValue - JudySL array element. A pointer cast to integer.
+C<$PValue> - JudySL array element. A pointer cast to integer.
 
 =item *
 
@@ -80,11 +80,11 @@ $Rc - Return flag
 
 =head2 $PValue = Set( $Judy, $Key, $Value )
 
-Insert a $Key string and $Value in the JudySL array. The stored $Value
-is updated to the passed-in $Value.
+Insert a C<$Key> string and C<$Value> in the JudySL array. The stored C<$Value>
+is updated to the passed-in C<$Value>.
 
-Return $PValue pointing to the stored $Value. Your program can use
-this pointer to modify the stored $Value, for example:
+Return C<$PValue> pointing to the stored C<$Value>. Your program can use
+this pointer to modify the stored C<$Value>, for example:
 
     use PeekPoke 'poke';
     my $Judy = 0;
@@ -96,30 +96,81 @@ Note: Set() and Delete() reorganize the JudySL array. Therefore,
 pointers returned from previous JudySL calls become invalid and must
 be reacquired.
 
-=head2 BOOL = Delete( $Judy, $Key )
+=head2 $Rc = Delete( $Judy, $Key )
 
-Delete the specified $Key/$Value pair (array element) from the JudySL
+Delete the specified C<$Key>/C<$Value> pair (array element) from the JudySL
 array.
 
 Returns true if the element was removed, false otherwise.
 
 =head2 ( $PValue, $Value ) = Get( $Judy, $Key )
 
-Get $Key's $Value. If $Key exists in $Judy, return $PValue pointing to
-$Key's $Value and $Value in a list. Return an empty list if $Key is
+Get C<$Key>'s C<$Value>. If C<$Key> exists in C<$Judy>, return C<$PValue> pointing to
+C<$Key>'s C<$Value> and C<$Value> in a list. Return an empty list if C<$Key> is
 not present.
 
-JSLFA(Rc_word, PJSLArray) // JudySLFreeArray()
-    Given a pointer to a JudySL array (PJSLArray), free the entire array (much faster than using a JSLN(), JSLD() loop.)
+=head2 $Rc = Free( $Judy )
 
-    Return Rc_word set to the number of bytes freed and PJSLArray set to NULL.
+Given a pointer to a JudySL array (C<$Judy>), free the entire array
+(much faster than using a C<SearchForward()>, C<Delete()> loop.)
 
-JudySL Search Functions
-    The JudySL search functions allow you to search for indexes in the array. You may search inclusively or exclusively, in either forward or reverse directions.
+Return $Rc set to the number of bytes freed and C<$Judy> set to 0.
 
-    If successful, Index is returned set to the found index, and PValue is returned set to a pointer to Index's Value. If unsuccessful, PValue is returned set to NULL, and Index contains no useful information. PValue must be tested for non-NULL prior to using Index, since a search failure is possible.
+=head1 BASIC SEARCH FUNCTIONS
 
-    Note: To accomodate all possible returns, the Index buffer must be at least as large as the largest string stored in the array.
+The JudySL search functions allow you to search for keyss in the
+array. You may search inclusively or exclusively, in either forward or
+reverse directions.
 
-JSLF(PValue, PJSLArray, Index) // JudySLFirst()
-    Search (inclusive) for the first index present that is equal to or greater than the passed Index string. (Start with a null string to find the first index in the array.) JSLF() is typically u
+If successful, C<$PValue> is returned set to a pointer to C<$Value>, C<$Value>
+is returned, and C<$Key> is returned set to the found index. If
+unsuccessful, nothing is returned.
+
+=over
+
+=item ( $PValue, $Value, $FoundKey ) = SearchForward( $Judy, $Key )
+
+Search (inclusive) for the first C<$Key> present that is equal to or
+greater than the passed C<$Key> string. (Start with an empty string to
+find the first key in the array.) SearchForward() is typically used to
+I<begin> a sorted-order scan of the valid C<$Key>s in a JudySL array.
+
+    my ( undef, $Value, $Key ) = SearchForward( $Judy, '' );
+    while ( $Key ) {
+        print "$Key=$Value\n";
+        ( undef, $Value, $Key ) = ContinueForward( $Judy, $Key );
+    }
+
+    Search (exclusive) for the previous index present that is less than the passed Index string. JSLP() is typically used to continue a reverse-sorted-order scan of the valid indexes in a JudySL array, or to locate a "neighbor" of a given index. 
+
+
+JSLF() is typically u
+
+=item ( $PValue, $Value, $FoundKey ) = ContinueForward( $Judy, $Key )
+
+Search (inclusive) for the first C<$Key> present that is greater than the
+passed C<$Key> string. (Start with an empty string to find the first key
+in the array.) C<ContinueForward()> is typically used to I<continue> a
+sorted-order scan of the valid C<$Key>s in a JudySL array.
+
+=item ( $PValue, $Value, $FoundKey ) = SearchBackward( $Judy, $Key )
+
+Search (inclusive) for the first C<$Key> present that is less than or
+equal to the passed C<$Key> string. (Start with a maximum-valued string
+to look up the last C<$Key> in the array, such as a max-length string of
+C<0xff> bytes.)  C<SearchBackward()> is typically used to C<begin> a
+reverse-sorted-order scan of the valid keys in a JudySL array.
+
+    my ( undef, $Value, $Key ) = SearchBackward( $Judy, '' );
+    while ( $Key ) {
+        print "$Key=$Value\n";
+        ( undef, $Value, $Key ) = ContinueBackward( $Judy, $Key );
+    }
+
+=item ( $PValue, $Value, $FoundKey ) = ContinueBackward( $Judy, $Key )
+
+Search (inclusive) for the first C<$Key> present that is less than the
+passed C<$Key> string. C<ContinueBackward()> is typically used to C<continue> a
+reverse-sorted-order scan of the valid keys in a JudySL array.
+
+=back
