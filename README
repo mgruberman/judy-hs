@@ -1,135 +1,71 @@
-NAME
-    Judy::HS - Library for creating and accessing a dynamic array, using an
-    array-of-bytes of Length as an Index and a word as a Value.
+INTRODUCTION
+    What is Judy?
 
-SYNOPSIS
-    Shows an ultra-cheap hash for removing duplicates.
+    Judy is a C library that provides a state-of-the-art core technology
+    that implements a sparse dynamic array. Judy arrays are declared simply
+    with a null pointer. A Judy array consumes memory only when it is
+    populated, yet can grow to take advantage of all available memory if
+    desired.
 
-      my $judy = 0;
-      while (<>) {
-        my ($ptr,$val) = Get( $judy, $_ );
-        print if ! $ptr;
-        Set( $judy, $_, 1 );
-      }
+    Judy's key benefits are scalability, high performance, and memory
+    efficiency. A Judy array is extensible and can scale up to a very large
+    number of elements, bounded only by machine memory. Since Judy is
+    designed as an unbounded array, the size of a Judy array is not
+    pre-allocated but grows and shrinks dynamically with the array
+    population.
 
-DESCRIPTION
-    Judy::HS is an interface to the JudyHS macros in the Judy array library.
+    Judy combines scalability with ease of use. The Judy API is accessed
+    with simple insert, retrieve, and delete calls that do not require
+    extensive programming. Tuning and configuring are not required (in fact
+    not even possible). In addition, sort, search, count, and sequential
+    access capabilities are built into Judy's design.
 
-    A JudyHS array is the equivalent of an array of word-sized
-    value/pointers. An Index is a pointer to an array-of-bytes of specified
-    length: Length. Rather than using a null terminated string, this
-    difference from JudySL(3X) allows strings to contain all bits
-    (specifically the null character). This new addition (May 2004) to Judy
-    arrays is a hybrid using the best capabilities of hashing and Judy
-    methods. JudyHS does not have a poor performance case where knowledge of
-    the hash algorithm can be used to degrade the performance.
+    Judy can be used whenever a developer needs dynamically sized arrays,
+    associative arrays or a simple-to-use interface that requires no rework
+    for expansion or contraction.
 
-    Since JudyHS is based on a hash method, Indexes are not stored in any
-    particular order. Therefore the JudyHSFirst(), JudyHSNext(),
-    JudyHSPrev() and JudyHSLast() neighbor search functions are not
-    practical. The Length of each array-of-bytes can be from 0 to the limits
-    of malloc() (about 2GB).
+    Judy can replace many common data structures, such as arrays, sparse
+    arrays, hash tables, B-trees, binary trees, linear lists, skiplists,
+    other sort and search algorithms, and counting functions.
 
-    The hallmark of JudyHS is speed with scalability, but memory efficiency
-    is excellent. The speed is very competitive with the best hashing
-    methods. The memory efficiency is similar to a linked list of the same
-    Indexes and Values. JudyHS is designed to scale from 0 to billions of
-    Indexes.
+DETAILED DESCRIPTION
+    <http://judy.sourceforge.net/doc/10minutes.htm>
+        A 10 minute technical description
 
-    A JudyHS array is allocated with an undefined or 0 value.
+    <http://judy.sourceforge.net/doc/shop_interm.pdf>
+        A 3 hour technical description, slightly out of date, and very
+        corny>
 
-        my $judy = 0;
+INSTALLATION
+  libJudy C LIBRARY
+    The Perl CPAN module wraps the C library available at
+    <http://judy.sourceforge.net/>. Download and install this prior to
+    attempting to install Judy::HS. At the time of this writing, Judy-1.0.4
+    happens to be the latest but I don't have any particular reason to
+    prefer one version over another. If you have a newer version, give it a
+    try.
 
-EXPORT
-    All functions are exportable by Sub::Exporter.
+    Fetch Judy from <http://judy.sourceforge.net>
 
-DATA TYPES
-    *   $PValue - JudyHS array element. A pointer cast to integer.
+      $ tar xzf Judy-1.0.4.tar.gz
+      $ cd Judy-1.0.4
+      $ ./configure
+      $ make
+      $ make check
+      $ sudo make install
 
-    *   $Rc_int - return flag.
+  Judy::* PERL LIBRARY
+    Fetch Judy::HS from CPAN, <http://search.cpan.org>.
 
-    *   $Rc_word - full word return value
-
-    *   $Judy - JudyHS array
-
-    *   $Index - array-of-bytes pointer
-
-BASIC FUNCTIONS
-  $PValue = JHSI( $Judy, $Index, $Value )
-    Given a pointer to a JudyHS array ($Judy), insert an $Index string and a
-    $Value into the JudyHS array: $Judy. Sets the value to $Value.
-
-    Note: JHSI() and JHSD can reorganize the JudyHS array. Therefore,
-    pointers returned from previous JudyHS calls become invalid and must be
-    re-acquired (using JHSG()).
-
-  $Rc_int = JHSD( $Judy, $Index )
-    Given a pointer to a JudyHS array ($Judy), delete the specified $Index
-    along with the $Value from the JudyHS array.
-
-    Return $Rc_int set to 1 if successfully removed from the array. Return
-    $Rc_int set to 0 if $Index was not present.
-
-  ( $PValue, $Value ) = JHSG( $Judy, $Index )
-    Given a pointer to a JudyHS array ($Judy), find $Value associated with
-    $Index.
-
-    Return $PValue pointing to $Index's Value. Return $PValue set to NULL if
-    the $Index was not present.
-
-    Return $Value of dereferencing $PValue if the $Index was present. Return
-    undef in $Value otherwise.
-
-  $Rc_word = JHSFA( $Judy )
-    Given a pointer to a JudyHS array ($Judy), free the entire array.
-
-    Return $Rc_word set to the number of bytes freed and $Judy set to NULL.
+      $ tar xzf Judy-HS-...tar.gz
+      $ perl Makefile.PL
+      $ make test
+      $ sudo make install
 
 AUTHOR
-    Joshua ben Jore, "<jjore at cpan.org>"
+    Judy was invented by Doug Baskins (dougbaskins .AT, yahoo.com) and
+    implemented by Hewlett-Packard. (Note: Judy is named for the inventor's
+    sister, after discarding many proposed names.)
 
-    JudyHS was invented and implemented by Doug Baskins after retiring from
-    Hewlett-Packard.
-
-SOURCE AVAILABILITY
-    This source is in Github: <git://github.com/jbenjore/judy-hs.git>
-
-BUGS
-    Please report any bugs or feature requests to "bug-Judy-HS at
-    rt.cpan.org", or through the web interface at
-    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Judy-HS>. I will be
-    notified, and then you'll automatically be notified of progress on your
-    bug as I make changes.
-
-SUPPORT
-    You can find documentation for this module with the perldoc command.
-
-      perldoc Judy::HS
-
-    You can also look for information at:
-
-    *   RT: CPAN's request tracker
-
-        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Judy::HS>
-
-    *   AnnoCPAN: Annotated CPAN documentation
-
-        <http://annocpan.org/dist/Judy::HS>
-
-    *   CPAN Ratings
-
-        <http://cpanratings.perl.org/d/Judy::HS>
-
-    *   Search CPAN
-
-        <http://search.cpan.org/dist/Judy::HS/>
-
-ACKNOWLEDGEMENTS
-    Doug Baskins, totally.
-
-COPYRIGHT & LICENSE
-    Copyright 2008 Joshua ben Jore, all rights reserved.
-
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+    Judy::HS, the perl wrapper was written by Joshua ben Jore
 

@@ -1,0 +1,81 @@
+=head1 INTRODUCTION
+
+What is Judy?
+
+Judy is a C library that provides a state-of-the-art core technology
+that implements a sparse dynamic array. Judy arrays are declared
+simply with a null pointer. A Judy array consumes memory only when it
+is populated, yet can grow to take advantage of all available memory
+if desired.
+
+Judy's key benefits are scalability, high performance, and memory
+efficiency. A Judy array is extensible and can scale up to a very
+large number of elements, bounded only by machine memory. Since Judy
+is designed as an unbounded array, the size of a Judy array is not
+pre-allocated but grows and shrinks dynamically with the array
+population.
+
+Judy combines scalability with ease of use. The Judy API is accessed
+with simple insert, retrieve, and delete calls that do not require
+extensive programming. Tuning and configuring are not required (in
+fact not even possible). In addition, sort, search, count, and
+sequential access capabilities are built into Judy's design.
+
+Judy can be used whenever a developer needs dynamically sized arrays,
+associative arrays or a simple-to-use interface that requires no
+rework for expansion or contraction.
+
+Judy can replace many common data structures, such as arrays, sparse
+arrays, hash tables, B-trees, binary trees, linear lists, skiplists,
+other sort and search algorithms, and counting functions.
+
+=head1 DETAILED DESCRIPTION
+
+=over
+
+=item L<http://judy.sourceforge.net/doc/10minutes.htm>
+
+A 10 minute technical description
+
+=item L<http://judy.sourceforge.net/doc/shop_interm.pdf>
+
+A 3 hour technical description, slightly out of date, and very corny>
+
+=back
+
+=head1 INSTALLATION
+
+=head2 libJudy C LIBRARY
+
+The Perl CPAN module wraps the C library available at
+L<http://judy.sourceforge.net/>. Download and install this prior to
+attempting to install Judy::HS. At the time of this writing,
+Judy-1.0.4 happens to be the latest but I don't have any particular
+reason to prefer one version over another. If you have a newer
+version, give it a try.
+
+Fetch Judy from L<http://judy.sourceforge.net>
+
+  $ tar xzf Judy-1.0.4.tar.gz
+  $ cd Judy-1.0.4
+  $ ./configure
+  $ make
+  $ make check
+  $ sudo make install
+
+=head2 Judy::* PERL LIBRARY
+
+Fetch Judy::HS from CPAN, L<http://search.cpan.org>.
+
+  $ tar xzf Judy-HS-...tar.gz
+  $ perl Makefile.PL
+  $ make test
+  $ sudo make install
+
+=head1 AUTHOR
+
+Judy was invented by Doug Baskins (dougbaskins .AT, yahoo.com) and
+implemented by Hewlett-Packard. (Note: Judy is named for the
+inventor's sister, after discarding many proposed names.)
+
+Judy::HS, the perl wrapper was written by Joshua ben Jore

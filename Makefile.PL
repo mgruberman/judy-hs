@@ -2,6 +2,12 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+# Render README.pod to README for consumption by the world. README.pod
+# is only present in the version available from git.
+if ( -e 'README.pod' ) {
+    system 'perldoc -t README.pod > README';
+}
+
 WriteMakefile(
     NAME                => 'Judy::HS',
     AUTHOR              => 'Joshua ben Jore <jjore@cpan.org>',

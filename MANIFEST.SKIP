@@ -12,4 +12,5 @@
 ^Makefile$
 ^Makefile.old$
 ^MANIFEST\.bak$
+^README\.pod$
 ^pm_to_blib$
