@@ -7,8 +7,10 @@ use Judy::HS ();
 
 use Sub::Exporter -setup => {
     exports => [qw[
-        Peek Poke
-        Copy Free
+        PeekU PokeU
+        PeekI PokeI
+        String2Ptr Free
+        Ptr2String Ptr2String2
     ]],
 };
 

@@ -55,7 +55,7 @@ ljme_Free(PStr)
         Safefree(SvUV(PStr));
 
 UV
-PeekUV(ptr)
+PeekU(ptr)
         UV ptr
     CODE:
         RETVAL = *((UV*)ptr);
@@ -63,14 +63,14 @@ PeekUV(ptr)
         RETVAL
 
 void
-PokeUV(ptr,v)
+PokeU(ptr,v)
         UV ptr
         UV v
     CODE:
         *((UV*)ptr) = v;
 
 IV
-PeekIV(ptr)
+PeekI(ptr)
         IV ptr
     CODE:
         RETVAL = *((IV*)ptr);
@@ -78,7 +78,7 @@ PeekIV(ptr)
         RETVAL
 
 void
-PokeIV(ptr,v)
+PokeI(ptr,v)
         IV ptr
         IV v
     CODE:
