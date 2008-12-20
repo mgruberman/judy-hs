@@ -1,5 +1,8 @@
 Revision history for Judy::HS
 
+0.06 - Sat Dec 20 01:20:00 2008
+        Depends on Alien::Judy to auto-install Judy
+
 0.05 - Fri Dec 19 00:35:34 2008
 	Added Judy::Mem
         Added t/20sl.t

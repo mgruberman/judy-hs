@@ -19,6 +19,7 @@ WriteMakefile(
     PREREQ_PM => {
         'Test::More' => 0,
 	'Sub::Exporter' => 0,
+        'Alien::Judy' => 0,
     },
     LIBS => ['-lJudy'],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
