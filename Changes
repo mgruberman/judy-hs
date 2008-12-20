@@ -1,7 +1,18 @@
 Revision history for Judy::HS
 
-0.04 - Fri Dec 19 00:35:34 2008
-	...
+0.05 - Fri Dec 19 00:35:34 2008
+	Added Judy::Mem
+        Added t/20sl.t
+        Renamed t/10basic.t to t/10hs.t
+
+        Removed PeekPoke dependency. Re-implemented in Judy::Mem.
+        Stop using sv_2pvbyte, use SvPVbyte instead.
+        Using ppport.h at its own recommendation. Possibly incompatible with 5.6.1. See comment in HS.xs
+
+        Changed C comment syntax from // to /**/
+        Fixed README, now it autogenerates from README.pod
+        Git ignores Judy-*
+        Cleaned MANIFEST
 
 0.04 - Fri Dec 20 12:02:00 2008
         Added Judy::SL
@@ -20,5 +31,83 @@ Revision history for Judy::HS
 0.01 - Wed Dec 17 13:31:03 2008
 	Initial upload.
 	Provided "raw" HS macros, some tests failing
+commit 8a0ca3f2d75b8f9140c989304524f96c6d9b40ce
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 22:12:29 2008 -0800
 
-	.
+    0.05
+
+:100644 100644 39aa83a... 46a9aff... M	lib/Judy/HS.pm
+
+commit ce79125dc582296b3c77f45252a5cfcb23da49d1
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 22:12:12 2008 -0800
+
+    Thinko, use SvPVbyte correctly.
+
+:100644 100644 f1c37e1... e3f0915... M	HS.xs
+
+commit 6c27dfe970687d8d774ff15923713ed6ec2611df
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 20:49:40 2008 -0800
+
+    Adding Judy-* to .gitignore
+
+:100644 100644 07068df... 18ecc39... M	.gitignore
+
+commit e655d0289ef2743df082a38eb2e35e49583b13b2
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 20:49:12 2008 -0800
+
+    Ignoring Judy-* in git. That's probably just an unpacked C lib or perl dist.
+    Adding Judy::Mem to the MANIFEST.
+    Removed SL.xs
+    Added t/20sl.t
+    Renamed t/10basic.t to t/20sl.t
+    Added README.po
+    Automatically render README from README.pod
+
+:100644 100644 4ab6f24... 6869a8e... M	MANIFEST
+:100644 100644 bfe1b1b... 47f2c84... M	MANIFEST.SKIP
+:100644 100644 50afa4c... d160602... M	Makefile.PL
+:100644 100644 ccab0c2... 6268430... M	README
+:000000 100644 0000000... d25fe61... A	README.pod
+
+commit 61d8fc328bfb3d55dc90da71f1cf8f19a84a0d6a
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 17:22:09 2008 -0800
+
+    Removed PeekPoke dependency
+
+:100644 100644 1d1b2f6... ead9796... M	lib/Judy/SL.pod
+:100644 100644 cf78042... b0335b5... M	t/10hs.t
+:100644 100644 4df55a8... 536753a... M	t/10sl.t
+
+commit a1d890410c9724c43ac24b0e0fdacbc1f264fe13
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 17:21:37 2008 -0800
+
+    Removed PeekPoke dependency
+
+:100644 100644 dcd6b32... 50afa4c... M	Makefile.PL
+
+commit 3a7ddec369508daffcc33e2d0c51f822bce0b690
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 17:21:04 2008 -0800
+
+    Switching from sv_2pvbyte to SvPVbyte at the recommendation of perlapi
+    Including ppport.h at its own recommendation
+    Potentially incompatible on perl 5.6.1, per ppport.h
+    Adding implementation for Judy::Mem
+    Swapped // comments for /**/ style at the behest of ppport.h
+
+:100644 100644 f8b1786... f1c37e1... M	HS.xs
+
+commit e20b25bd275f818bffb987e62b3613fd1a4fab55
+Author: Joshua ben Jore <jjore@cpan.org>
+Date:   Fri Dec 19 17:10:45 2008 -0800
+
+    Adding Judy::Mem
+
+:000000 100644 0000000... b06dcec... A	lib/Judy/Mem.pm
+:000000 100644 0000000... 79750e6... A	lib/Judy/Mem.pod
