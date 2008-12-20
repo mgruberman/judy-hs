@@ -1,0 +1,51 @@
+=head1 NAME
+
+Judy::Mem - Useful functions for interacting with memory
+
+=head1 SYNOPSIS
+
+  
+
+=head1 DESCRIPTION
+
+=head1 EXPORT
+
+=head1 DATA TYPES
+
+=over
+
+=item * 
+
+C<$Ptr> - (void*) cast to unsigned integer
+
+=item *
+
+C<$String> - A perl string
+
+=item *
+
+C<$Int> - Signed integer
+
+=item *
+
+C<$UInt> - Unsigned integer
+
+=back
+
+=head1 FUNCTIONS
+
+=head2 $Ptr = String2Ptr( $String )
+
+=head2 $String = Ptr2String( $Ptr )
+
+=head2 $String = Ptr2String2( $Ptr, $Length )
+
+=head2 Free( $Ptr )
+
+=head2 $Int = PeekI( $Ptr )
+
+=head2 PokeI( $Ptr, $Int )
+
+=head2 $UInt = PeekU( $Ptr )
+
+=head2 PokeU( $Ptr, $UInt )
