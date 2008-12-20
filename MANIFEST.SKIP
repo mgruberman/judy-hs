@@ -3,7 +3,7 @@
 \.bs$
 \.c$
 \.o$
-^Judy-HS-[\d.-]
+^Judy-
 ^\.git/
 ~$
 ^blib
