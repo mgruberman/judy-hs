@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Test::More tests => 24;
 use Judy::SL qw( Set Delete Get Free );
-use Judy::Mem qw( Peek );
+use Judy::Mem qw( PeekU );
 
 {
     my $judy = 0;
@@ -19,21 +19,21 @@ use Judy::Mem qw( Peek );
     {
 	my $ptr = Set( $judy, 'a', 23 );
 	isnt( $judy, 0, 'Judy is true' );
-	is( Peek( $ptr ), 23, 'Setting a=23' );
+	is( PeekU( $ptr ), 23, 'Setting a=23' );
     }
 
     {
 	my $ptr0 = Set( $judy, 'a', 42 );
-	is( Peek( $ptr0 ), 42, 'Setting a=42' );
+	is( PeekU( $ptr0 ), 42, 'Setting a=42' );
 	my($ptr1,$val) = Get( $judy, 'a' );
 	is( $ptr1, $ptr0, 'Pointers returned by Set and Get are the same' );
 	is( $val, 42, 'Fetched a=42' );
-	is( Peek( $ptr1 ), 42, 'Fetched and Peekerenced a=42' );
+	is( PeekU( $ptr1 ), 42, 'Fetched and PeekUerenced a=42' );
 	
 	(my($ptr2),$val) = Get( $judy, 'a' );
 	is($ptr2,$ptr1, 'Pointers returned by subsequent Get calls are identical' );
 	is( $val, 42, 'Fetched a=42' );
-	is( Peek( $ptr2 ), 42, 'Fetched and Peekerenced a=42' );
+	is( PeekU( $ptr2 ), 42, 'Fetched and PeekUerenced a=42' );
     }
 
     {
