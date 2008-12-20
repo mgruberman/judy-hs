@@ -86,11 +86,11 @@ is updated to the passed-in C<$Value>.
 Return C<$PValue> pointing to the stored C<$Value>. Your program can use
 this pointer to modify the stored C<$Value>, for example:
 
-    use PeekPoke 'poke';
+    use Judy::Mem 'Poke';
     my $Judy = 0;
     my $PValue = Set( $Judy, 'Aloha', 0 );
 
-    poke( $PValue, 1234 );
+    Poke( $PValue, 1234 );
 
 Note: Set() and Delete() reorganize the JudySL array. Therefore,
 pointers returned from previous JudySL calls become invalid and must
