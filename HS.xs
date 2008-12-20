@@ -100,7 +100,7 @@ ljhs_Duplicates( PJHSArray_sv, Key_sv )
     INIT:
         Pvoid_t PJHSArray = (Pvoid_t)(SvOK( PJHSArray_sv ) ? SvUV( PJHSArray_sv ) : 0);
         STRLEN  Length = 0xDEADBEEF;
-        char *Key = SvPVbyte(Key_sv,&Length);
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
         Word_t PrevValue = 0xDEADBEEF;
     PPCODE:
@@ -130,7 +130,7 @@ ljhs_Set( PJHSArray_sv, Key_sv, Value )
     INIT:
         Pvoid_t PJHSArray = (Pvoid_t)(SvOK( PJHSArray_sv ) ? SvUV( PJHSArray_sv ) : 0);
         STRLEN  Length = 0xDEADBEEF;
-        char *Key = SvPVbyte(Key_sv,&Length);
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t  *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         /* warn("&PValue=%d",&PValue); */
@@ -155,7 +155,7 @@ ljhs_Delete( PJHSArray_sv, Key_sv )
     INIT:
         Pvoid_t PJHSArray = (Pvoid_t)(SvOK(PJHSArray_sv) ? SvUV(PJHSArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte(Key_sv,&Length);
+        char *Key = SvPVbyte(Key_sv,Length);
         int Rc_int = 0xDEADBEEF;
     PPCODE:
         /* warn("JHSDa Judy=%d Rc_int=%d",PJHSArray,Rc_int); */
@@ -178,7 +178,7 @@ ljhs_Get( PJHSArray_sv, Key_sv )
     INIT:
         Pvoid_t PJHSArray = (Pvoid_t)(SvOK(PJHSArray_sv) ? SvUV(PJHSArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte(Key_sv,&Length);
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         /* warn("&PValue=%d",&PValue); */
@@ -224,7 +224,7 @@ ljsl_Set( PJSLArray_sv, Key_sv, Value )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK( PJSLArray_sv ) ? SvUV( PJSLArray_sv ) : 0 );
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         JSLI(PValue,PJSLArray,Key);
@@ -247,7 +247,7 @@ ljsl_Delete( PJSLArray_sv, Key_sv )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK(PJSLArray_sv) ? SvUV(PJSLArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte(Key_sv,Length);
         int Rc_int = 0xDEADBEEF;
     PPCODE:
         JSLD(Rc_int,PJSLArray,Key);
@@ -268,7 +268,7 @@ ljsl_Get( PJSLArray_sv, Key_sv )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK(PJSLArray_sv) ? SvUV(PJSLArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         JSLG(PValue,PJSLArray,Key);
@@ -305,7 +305,7 @@ ljsl_SearchForward( PJSLArray_sv, Key_sv )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK(PJSLArray_sv) ? SvUV(PJSLArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         JSLF(PValue,PJSLArray,Key);
@@ -325,7 +325,7 @@ ljsl_ContinueForward( PJSLArray_sv, Key_sv )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK(PJSLArray_sv) ? SvUV(PJSLArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         JSLN(PValue,PJSLArray,Key);
@@ -346,7 +346,7 @@ ljsl_SearchBackward( PJSLArray_sv, Key_sv )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK(PJSLArray_sv) ? SvUV(PJSLArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte( Key_sv, Length );
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         JSLL(PValue,PJSLArray,Key);
@@ -366,7 +366,7 @@ ljsl_ContinueBackward( PJSLArray_sv, Key_sv )
     INIT:
         Pvoid_t PJSLArray = (Pvoid_t)(SvOK(PJSLArray_sv) ? SvUV(PJSLArray_sv) : 0);
         STRLEN Length = 0xDEADBEEF;
-        char *Key = SvPVbyte( Key_sv, &Length );
+        char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
         JSLP(PValue,PJSLArray,Key);
