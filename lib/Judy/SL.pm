@@ -8,8 +8,7 @@ use Judy::HS ();
 use Sub::Exporter -setup => {
     exports => [qw[
         Set Delete Get Free
-        SearchForward  ContinueForward
-        SearchBackward ContinueBackward
+        First Next Last Prev
     ]],
 };
 

@@ -13,10 +13,10 @@ Shows a string sort routine
       Insert($judy,$_,0);
   }
 
-  my(undef,undef,$key) = SearchForward($judy,'');
+  my(undef,undef,$key) = First($judy,'');
   if ( defined $key ) {
       print $key;
-      print $key while (undef,undef,$key) = SearchForwardExclusive($judy,$key);
+      print $key while (undef,undef,$key) = Next($judy,$key);
   }
 
 =head1 DESCRIPTION
@@ -112,7 +112,7 @@ not present.
 =head2 $Rc = Free( $Judy )
 
 Given a pointer to a JudySL array (C<$Judy>), free the entire array
-(much faster than using a C<SearchForward()>, C<Delete()> loop.)
+(much faster than using a C<First()>, C<Delete()> loop.)
 
 Return $Rc set to the number of bytes freed and C<$Judy> set to 0.
 
@@ -128,17 +128,17 @@ unsuccessful, nothing is returned.
 
 =over
 
-=item ( $PValue, $Value, $FoundKey ) = SearchForward( $Judy, $Key )
+=item ( $PValue, $Value, $FoundKey ) = First( $Judy, $Key )
 
 Search (inclusive) for the first C<$Key> present that is equal to or
 greater than the passed C<$Key> string. (Start with an empty string to
-find the first key in the array.) SearchForward() is typically used to
+find the first key in the array.) First() is typically used to
 I<begin> a sorted-order scan of the valid C<$Key>s in a JudySL array.
 
-    my ( undef, $Value, $Key ) = SearchForward( $Judy, '' );
+    my ( undef, $Value, $Key ) = First( $Judy, '' );
     while ( $Key ) {
         print "$Key=$Value\n";
-        ( undef, $Value, $Key ) = ContinueForward( $Judy, $Key );
+        ( undef, $Value, $Key ) = Next( $Judy, $Key );
     }
 
     Search (exclusive) for the previous index present that is less than the passed Index string. JSLP() is typically used to continue a reverse-sorted-order scan of the valid indexes in a JudySL array, or to locate a "neighbor" of a given index. 
@@ -146,31 +146,31 @@ I<begin> a sorted-order scan of the valid C<$Key>s in a JudySL array.
 
 JSLF() is typically u
 
-=item ( $PValue, $Value, $FoundKey ) = ContinueForward( $Judy, $Key )
+=item ( $PValue, $Value, $FoundKey ) = Next( $Judy, $Key )
 
 Search (inclusive) for the first C<$Key> present that is greater than the
 passed C<$Key> string. (Start with an empty string to find the first key
-in the array.) C<ContinueForward()> is typically used to I<continue> a
+in the array.) C<Next()> is typically used to I<continue> a
 sorted-order scan of the valid C<$Key>s in a JudySL array.
 
-=item ( $PValue, $Value, $FoundKey ) = SearchBackward( $Judy, $Key )
+=item ( $PValue, $Value, $FoundKey ) = Last( $Judy, $Key )
 
 Search (inclusive) for the first C<$Key> present that is less than or
 equal to the passed C<$Key> string. (Start with a maximum-valued string
 to look up the last C<$Key> in the array, such as a max-length string of
-C<0xff> bytes.)  C<SearchBackward()> is typically used to C<begin> a
+C<0xff> bytes.)  C<Last()> is typically used to C<begin> a
 reverse-sorted-order scan of the valid keys in a JudySL array.
 
-    my ( undef, $Value, $Key ) = SearchBackward( $Judy, '' );
+    my ( undef, $Value, $Key ) = Last( $Judy, '' );
     while ( $Key ) {
         print "$Key=$Value\n";
-        ( undef, $Value, $Key ) = ContinueBackward( $Judy, $Key );
+        ( undef, $Value, $Key ) = Prev( $Judy, $Key );
     }
 
-=item ( $PValue, $Value, $FoundKey ) = ContinueBackward( $Judy, $Key )
+=item ( $PValue, $Value, $FoundKey ) = Prev( $Judy, $Key )
 
 Search (inclusive) for the first C<$Key> present that is less than the
-passed C<$Key> string. C<ContinueBackward()> is typically used to C<continue> a
+passed C<$Key> string. C<Prev()> is typically used to C<continue> a
 reverse-sorted-order scan of the valid keys in a JudySL array.
 
 =back

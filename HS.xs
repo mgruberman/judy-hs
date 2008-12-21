@@ -10,6 +10,8 @@
 #include "ppport.h"
 #include "Judy.h"
 
+#include "const-c.inc"
+
 MODULE = Judy::Mem PACKAGE = Judy::Mem PREFIX = ljme_
 
 =pod
@@ -104,12 +106,9 @@ ljhs_Duplicates( PJHSArray_sv, Key_sv )
         Word_t *PValue = (Word_t*)0xDEADBEEF;
         Word_t PrevValue = 0xDEADBEEF;
     PPCODE:
-        /* warn("&PValue=%d",&PValue); */
-        /* warn("JHSIa Judy=%d Key=%s Length=%d",PJHSArray,Key,Length); */
         JHSI(PValue,PJHSArray,Key,(Word_t)Length);
         PrevValue = *PValue;
         ++*PValue;
-        /* warn("JHSIb Judy=%d PValue=%d *PValue=%d Value=%d Key=%s Length=%d",PJHSArray,PValue,(PValue?(*PValue):-1),Value,Key,Length); */
 
         /* OUTPUT */
         if ( SvOK(PJHSArray_sv) ) {
@@ -133,11 +132,8 @@ ljhs_Set( PJHSArray_sv, Key_sv, Value )
         char *Key = SvPVbyte(Key_sv,Length);
         Word_t  *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
-        /* warn("&PValue=%d",&PValue); */
-        /* warn("JHSIa Judy=%d Key=%s Length=%d",PJHSArray,Key,Length); */
         JHSI(PValue,PJHSArray,Key,(Word_t)Length);
         *PValue = Value;
-        /* warn("JHSIb Judy=%d PValue=%d *PValue=%d Value=%d Key=%s Length=%d",PJHSArray,PValue,(PValue?(*PValue):-1),Value,Key,Length); */
 
         /* OUTPUT */
         if ( SvOK(PJHSArray_sv) ) {
@@ -158,9 +154,7 @@ ljhs_Delete( PJHSArray_sv, Key_sv )
         char *Key = SvPVbyte(Key_sv,Length);
         int Rc_int = 0xDEADBEEF;
     PPCODE:
-        /* warn("JHSDa Judy=%d Rc_int=%d",PJHSArray,Rc_int); */
         JHSD(Rc_int,PJHSArray,Key,(Word_t)Length);
-        /* warn("JHSDb Judy=%d Rc_int=%d",PJHSArray,Rc_int); */
 
         /* OUTPUT */
         if ( SvOK(PJHSArray_sv) ) {
@@ -181,10 +175,7 @@ ljhs_Get( PJHSArray_sv, Key_sv )
         char *Key = SvPVbyte(Key_sv,Length);
         Word_t *PValue = (Word_t*)0xDEADBEEF;
     PPCODE:
-        /* warn("&PValue=%d",&PValue); */
-        /* warn("JHSGa Judy=%d",PJHSArray); */
         JHSG(PValue,PJHSArray,Key,(Word_t)Length);
-        /* warn("JHSGb Judy=%d PValue=%d *PValue=%d",PJHSArray,PValue,(PValue?(*PValue):-1)); */
 
         /* OUTPUT */
         if ( PValue ) {
@@ -201,7 +192,6 @@ ljhs_Free( PJHSArray_sv )
         Word_t Rc_word = 0xDEADBEEF;
     PPCODE:
         JHSFA(Rc_word,PJHSArray);
-        /* warn("JHSFA Rc_word=%d",Rc_word); */
 
         /* OUTPUT */
         if ( SvOK(PJHSArray_sv) ) {
