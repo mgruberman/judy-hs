@@ -289,7 +289,7 @@ ljsl_Free( PJSLArray_sv )
 
 
 void
-ljsl_SearchForward( PJSLArray_sv, Key_sv )
+ljsl_First( PJSLArray_sv, Key_sv )
         SV *PJSLArray_sv
         SV *Key_sv
     INIT:
@@ -309,7 +309,7 @@ ljsl_SearchForward( PJSLArray_sv, Key_sv )
 
 
 void
-ljsl_ContinueForward( PJSLArray_sv, Key_sv )
+ljsl_Next( PJSLArray_sv, Key_sv )
         SV *PJSLArray_sv
         SV *Key_sv
     INIT:
@@ -330,7 +330,7 @@ ljsl_ContinueForward( PJSLArray_sv, Key_sv )
 
 
 void
-ljsl_SearchBackward( PJSLArray_sv, Key_sv )
+ljsl_Last( PJSLArray_sv, Key_sv )
         SV *PJSLArray_sv
         SV *Key_sv
     INIT:
@@ -350,7 +350,7 @@ ljsl_SearchBackward( PJSLArray_sv, Key_sv )
 
 
 void
-ljsl_ContinueBackward( PJSLArray_sv, Key_sv )
+ljsl_Prev( PJSLArray_sv, Key_sv )
         SV *PJSLArray_sv
         SV *Key_sv
     INIT:
