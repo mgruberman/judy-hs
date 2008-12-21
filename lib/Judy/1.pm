@@ -7,10 +7,11 @@ use Judy::HS ();
 
 use Sub::Exporter -setup => {
     exports => [qw[
-        Set Unset Test
+        Set Get Delete Unset Test
         Count Nth
         Free MemUsed
         First Next Last Prev
+        FirstEmpty NextEmpty LastEmpty PrevEmpty
     ]],
 };
 
