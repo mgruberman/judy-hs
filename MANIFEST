@@ -29,8 +29,10 @@ t/10o.t
 t/10sl.t
 t/11sugar.t
 t/20l.t
+t/20o.t
 t/20sl.t
 t/30l.t
+t/30o.t
 typemap
 xt/99_critic.t
 xt/99_pod.t
