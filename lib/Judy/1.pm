@@ -15,6 +15,7 @@ use Sub::Exporter -setup => {
 };
 
 BEGIN {
+    *Delete = \&Unset;
     *Get = \&Test;
 }
 

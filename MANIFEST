@@ -6,6 +6,8 @@ const-c.inc
 const-xs.inc
 eg/juniq
 HS.xs
+lib/Judy/1.pm
+lib/Judy/1.pod
 lib/Judy/HS.pm
 lib/Judy/HS.pod
 lib/Judy/L.pm
@@ -22,9 +24,13 @@ ppport.h
 README
 t/00-load.t
 t/10hs.t
+t/10l.t
+t/10o.t
 t/10sl.t
 t/11sugar.t
+t/20l.t
 t/20sl.t
+t/30l.t
 typemap
 xt/99_critic.t
 xt/99_pod.t
