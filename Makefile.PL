@@ -1,12 +1,19 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use ExtUtils::Constant 'WriteConstants';
 
 # Render README.pod to README for consumption by the world. README.pod
 # is only present in the version available from git.
 if ( -e 'README.pod' ) {
     system 'perldoc -t README.pod > README';
 }
+
+WriteConstants(
+    NAME => 'Judy',
+    DEFAULT_TYPE => 'UV',
+    NAMES => [qw[JLAP_INVALID PJERR]]
+    );
 
 WriteMakefile(
     NAME                => 'Judy::HS',
