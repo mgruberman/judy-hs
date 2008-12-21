@@ -2,10 +2,14 @@
 .gitignore
 .releaserc
 Changes
+const-c.inc
+const-xs.inc
 eg/juniq
 HS.xs
 lib/Judy/HS.pm
 lib/Judy/HS.pod
+lib/Judy/L.pm
+lib/Judy/L.pod
 lib/Judy/Mem.pm
 lib/Judy/Mem.pod
 lib/Judy/SL.pm
