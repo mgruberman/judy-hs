@@ -622,5 +622,257 @@ ljl_PrevEmpty( PJLArray_sv, Key )
             XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
+MODULE = Judy::1 PACKAGE = Judy::1 PREFIX = lj1_
+
+PROTOTYPES: DISABLE
+
+void
+lj1_Set( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK( PJ1Array_sv ) ? SvUV( PJ1Array_sv ) : 0 );
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1S(Rc_int,PJ1Array,Key);
+
+        /* OUTPUT */
+        if ( SvOK(PJ1Array_sv) ) {
+            SvUV_set(PJ1Array_sv, INT2PTR(UV,PJ1Array));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJ1Array)));
+        }
+        XPUSHs(Rc_int ? &PL_sv_yes : &PL_sv_no);
+
+void
+lj1_Unset( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK( PJ1Array_sv ) ? SvUV( PJ1Array_sv ) : 0 );
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1U(Rc_int,PJ1Array,Key);
+
+        /* OUTPUT */
+        if ( SvOK(PJ1Array_sv) ) {
+            SvUV_set(PJ1Array_sv, INT2PTR(UV,PJ1Array));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJ1Array)));
+        }
+        XPUSHs(Rc_int ? &PL_sv_yes : &PL_sv_no);
+
+void
+lj1_Test( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK( PJ1Array_sv ) ? SvUV( PJ1Array_sv ) : 0 );
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1T(Rc_int,PJ1Array,Key);
+
+        /* OUTPUT */
+        if ( SvOK(PJ1Array_sv) ) {
+            SvUV_set(PJ1Array_sv, INT2PTR(UV,PJ1Array));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJ1Array)));
+        }
+        XPUSHs(Rc_int ? &PL_sv_yes : &PL_sv_no);
+
+void
+lj1_Count( PJ1Array_sv, Key1, Key2 )
+        SV *PJ1Array_sv
+        UV Key1
+        UV Key2
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+        JError_t JError;
+    PPCODE:
+        Rc_word = Judy1Count(PJ1Array,Key1,Key2,&JError);
+        if ( Rc_word ) {
+            XPUSHs(sv_2mortal(newSVuv(Rc_word)));
+        }
+        else {
+            if (JU_ERRNO(&JError) == JU_ERRNO_NONE) {
+                XPUSHs(sv_2mortal(newSViv(0)));
+            }
+            else if ( JU_ERRNO(&JError) == JU_ERRNO_FULL) {
+                XPUSHs(sv_2mortal(newSVuv(0xFFFFFFFF)));
+            }
+            else if (JU_ERRNO(&JError) == JU_ERRNO_NULLPPARRAY) {
+                croak("NullArray");
+            }
+            else if (JU_ERRNO(&JError) >  JU_ERRNO_NFMAX) {
+                croak("Null_or_CorruptArray");
+            }
+        }
+
+void
+lj1_Nth( PJ1Array_sv, Nth )
+        SV *PJ1Array_sv
+        UV Nth
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        UV Index = 0xDEADBEEF;
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1BC(Rc_int,PJ1Array,Nth,Index);
+
+        if ( Rc_int ) {
+            PUSHs(sv_2mortal(newSVuv(Index)));
+        }
+
+void
+lj1_Free( PJ1Array_sv )
+        SV *PJ1Array_sv
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+    PPCODE:
+        JLFA(Rc_word,PJ1Array);
+
+        /* OUTPUT */
+        if ( SvOK(PJ1Array_sv) ) {
+            SvUV_set(PJ1Array_sv, INT2PTR(UV,PJ1Array));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJ1Array)));
+        }
+        XPUSHs(sv_2mortal(newSVuv(Rc_word)));
+
+void
+lj1_MemUsed( PJ1Array_sv )
+        SV *PJ1Array_sv
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+    PPCODE:
+        J1MU(Rc_word,PJ1Array);
+
+        /* OUTPUT */
+        XPUSHs(sv_2mortal(newSVuv(Rc_word)));
+
+void
+lj1_First( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1F(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+void
+lj1_Next( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1N(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+
+void
+lj1_Last( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1L(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+void
+lj1_Prev( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1P(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+void
+lj1_FirstEmpty( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        J1FE(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+void
+lj1_NextEmpty( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLNE(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+void
+lj1_LastEmpty( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLLE(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+void
+lj1_PrevEmpty( PJ1Array_sv, Key )
+        SV *PJ1Array_sv
+        UV Key
+    INIT:
+        Pvoid_t PJ1Array = (Pvoid_t)(SvOK(PJ1Array_sv) ? SvUV(PJ1Array_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLPE(Rc_int,PJ1Array,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
 MODULE = Judy::HS PACKAGE = Judy::HS PREFIX = ljhs_
 
