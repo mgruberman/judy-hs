@@ -369,5 +369,159 @@ ljsl_Prev( PJSLArray_sv, Key_sv )
         }
 
 
+
+MODULE = Judy::L PACKAGE = Judy::L PREFIX = ljl_
+
+PROTOTYPES: DISABLE
+
+void
+ljl_Set( PJLArray_sv, Key, Value )
+        SV *PJLArray_sv
+        UV Key
+        UV Value
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK( PJLArray_sv ) ? SvUV( PJLArray_sv ) : 0 );
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    PPCODE:
+        JLI(PValue,PJLArray,Key);
+        *PValue = Value;
+
+        /* OUTPUT */
+        if ( SvOK(PJLArray_sv) ) {
+            SvUV_set(PJLArray_sv, INT2PTR(UV,PJLArray));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJLArray)));
+        }
+        XPUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+
+
+void
+ljl_Delete( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLD(Rc_int,PJLArray,Key);
+
+        /* OUTPUT */
+        if ( SvOK(PJLArray_sv) ) {
+            SvUV_set(PJLArray_sv, INT2PTR(UV,PJLArray));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJLArray)));
+        }
+        XPUSHs(sv_2mortal(newSViv(Rc_int)));
+
+void
+ljl_Get( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    PPCODE:
+        JLG(PValue,PJLArray,Key);
+
+        if ( PValue ) {
+            EXTEND(SP,2);
+            PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+            PUSHs(sv_2mortal(newSVuv(*PValue)));
+        }
+
+void
+ljl_Free( PJLArray_sv )
+        SV *PJLArray_sv
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+    PPCODE:
+        JLFA(Rc_word,PJLArray);
+
+        /* OUTPUT */
+        if ( SvOK(PJLArray_sv) ) {
+            SvUV_set(PJLArray_sv, INT2PTR(UV,PJLArray));
+        }
+        else {
+            sv_setsv(ST(0),newSVuv(INT2PTR(UV,PJLArray)));
+        }
+        XPUSHs(sv_2mortal(newSVuv(Rc_word)));
+
+
+void
+ljl_First( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    PPCODE:
+        JLF(PValue,PJLArray,Key);
+
+        if ( PValue ) {
+            EXTEND(SP,3);
+            PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+            PUSHs(sv_2mortal(newSVuv(*PValue)));
+	    PUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+void
+ljl_Next( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    PPCODE:
+        JLN(PValue,PJLArray,Key);
+
+        if ( PValue ) {
+            EXTEND(SP,3);
+            PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+            PUSHs(sv_2mortal(newSVuv(*PValue)));
+	    PUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+
+void
+ljl_Last( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    PPCODE:
+        JLL(PValue,PJLArray,Key);
+
+        if ( PValue ) {
+            EXTEND(SP,3);
+            PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+            PUSHs(sv_2mortal(newSVuv(*PValue)));
+	    PUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+void
+ljl_Prev( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    PPCODE:
+        JLP(PValue,PJLArray,Key);
+
+        if ( PValue ) {
+            EXTEND(SP,3);
+            PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+            PUSHs(sv_2mortal(newSVuv(*PValue)));
+	    PUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
 MODULE = Judy::HS PACKAGE = Judy::HS PREFIX = ljhs_
 
