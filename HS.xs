@@ -432,6 +432,38 @@ ljl_Get( PJLArray_sv, Key )
         }
 
 void
+ljl_Count( PJLArray_sv, Key1, Key2 )
+        SV *PJLArray_sv
+        UV Key1
+        UV Key2
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+    PPCODE:
+        JLC(Rc_word,PJLArray,Key1,Key2);
+
+        XPUSHs(sv_2mortal(newSVuv(Rc_word)));
+
+void
+ljl_Nth( PJLArray_sv, Nth )
+        SV *PJLArray_sv
+        UV Nth
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+        UV Index = 0xDEADBEEF;
+        Word_t *PValue = (Word_t*)0xDEADBEEF;
+    CODE:
+        JLBC(PValue,PJLArray,Nth,Index);
+
+        if ( PValue ) {
+            EXTEND(SP,3);
+            PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
+            PUSHs(sv_2mortal(newSVuv(*PValue)));
+            PUSHs(sv_2mortal(newSVuv(Index)));
+        }
+
+void
 ljl_Free( PJLArray_sv )
         SV *PJLArray_sv
     INIT:
@@ -522,6 +554,62 @@ ljl_Prev( PJLArray_sv, Key )
 	    PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
+void
+ljl_FirstEmpty( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLFE(Rc_int,PJLArray,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+
+void
+ljl_NextEmpty( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLNE(Rc_int,PJLArray,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+void
+ljl_LastEmpty( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLLE(Rc_int,PJLArray,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
+
+void
+ljl_PrevEmpty( PJLArray_sv, Key )
+        SV *PJLArray_sv
+        UV Key
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        int Rc_int = 0xDEADBEEF;
+    PPCODE:
+        JLPE(Rc_int,PJLArray,Key);
+
+        if ( Rc_int ) {
+            XPUSHs(sv_2mortal(newSVuv(Key)));
+        }
 
 MODULE = Judy::HS PACKAGE = Judy::HS PREFIX = ljhs_
 
