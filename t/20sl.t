@@ -2,8 +2,8 @@
 use strict;
 use warnings;
 use Test::More tests => 12;
+use Judy::Mem qw( PeekU );
 use Judy::SL qw( Set Get Free First Next Last Prev );
-use PeekPoke qw( peek );
 
 my $judy;
 
@@ -39,28 +39,28 @@ Set($judy,'l',12);
     my ( $ptr, $val, $key ) = First($judy,'x');
     is( $val, 24, 'Fetched right value for x');
     is( $key, 'x', 'Fetched key x' );
-    is( peek($ptr), 24, 'Fetched right pointer for x');
+    is( PeekU($ptr), 24, 'Fetched right pointer for x');
 }
 
 {
     my ( $ptr, $val, $key ) = Next($judy,'x');
     is( $val, 25, 'Fetched right value for x');
     is( $key, 'y', 'Fetched key x' );
-    is( peek($ptr), 25, 'Fetched right pointer for y');
+    is( PeekU($ptr), 25, 'Fetched right pointer for y');
 }
 
 {
     my ( $ptr, $val, $key ) = Last($judy,'x');
     is( $val, 24, 'Fetched right value for x');
     is( $key, 'x', 'Fetched key x' );
-    is( peek($ptr), 24, 'Fetched right pointer for x');
+    is( PeekU($ptr), 24, 'Fetched right pointer for x');
 }
 
 {
     my ( $ptr, $val, $key ) = Prev($judy,'x');
     is( $val, 23, 'Fetched right value for w');
     is( $key, 'w', 'Fetched key w' );
-    is( peek($ptr), 23, 'Fetched right pointer for w');
+    is( PeekU($ptr), 23, 'Fetched right pointer for w');
 }
 
 Free( $judy );
