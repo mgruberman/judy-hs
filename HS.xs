@@ -453,7 +453,7 @@ ljl_Nth( PJLArray_sv, Nth )
         Word_t Rc_word = 0xDEADBEEF;
         UV Index = 0xDEADBEEF;
         Word_t *PValue = (Word_t*)0xDEADBEEF;
-    CODE:
+    PPCODE:
         JLBC(PValue,PJLArray,Nth,Index);
 
         if ( PValue ) {
@@ -481,6 +481,17 @@ ljl_Free( PJLArray_sv )
         }
         XPUSHs(sv_2mortal(newSVuv(Rc_word)));
 
+void
+ljl_MemUsed( PJLArray_sv )
+        SV *PJLArray_sv
+    INIT:
+        Pvoid_t PJLArray = (Pvoid_t)(SvOK(PJLArray_sv) ? SvUV(PJLArray_sv) : 0);
+        Word_t Rc_word = 0xDEADBEEF;
+    PPCODE:
+        JLMU(Rc_word,PJLArray);
+
+        /* OUTPUT */
+        XPUSHs(sv_2mortal(newSVuv(Rc_word)));
 
 void
 ljl_First( PJLArray_sv, Key )
