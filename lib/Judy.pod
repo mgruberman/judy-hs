@@ -1,0 +1,126 @@
+=head1 NAME
+
+Judy arrays - Library for creating and accessing dynamic arrays 
+
+
+
+=head1 SEE ALSO
+
+=over
+
+=item L<http://judy.sourceforge.net> - the C library home page
+
+=item L<Judy::1>  - maps an Index (word) to a bit
+
+=item L<Judy::L>  - maps an Index (word) to a Value (word/pointer)
+
+=item L<Judy::SL> - maps an Index (null terminated string) to a Value
+
+=item L<Judy::HS> - maps an Index (array-of-bytes) of Length to a Value
+
+=back
+
+
+
+
+=head1 DESCRIPTION
+
+The Judy family of functions supports fully dynamic arrays. These
+arrays may be indexed by a 32- or 64-bit word (depending on processor
+word size), a null terminated string or an array-of-bytes plus
+length. A dynamic array (sparsely populated) can also be thought of as
+a mapping function or associative memory.
+
+A Word_t is a typedef unsigned long int in Judy.h and must be the same
+size as sizeof(void *) I.E. a pointer. This is implemented as the perl
+type UV.
+
+=over
+
+=item L<Judy::1> functions:
+
+Index is an integer and Value is just a bit or simply a flag that Index
+is present or missing from the array. This can be thought of as a huge
+bitmap.
+
+=item L<Judy::L> functions:
+
+Index is a Word_t and Value is a Word_t. This makes JudyL a pure
+word-to-word/pointer mapper. JudySL and JudyHL are based on this
+property of JudyL.
+
+=item L<Judy::SL> functions:
+
+Index is a null-terminated string and Value is a Word_t.
+
+=item L<Judy::HS> functions:
+
+Index is a string. Value is an unsigned integer. This new addition
+(May 2004) to Judy is a hybird using the best features of hashing and
+Judy methods. The C library author believes JudyHS is a good
+replacement for a hashing method when resizing the hash table is done
+during population growth. A correctly tuned hash method with a static
+hash table size and population is unbeatable for speed. However,
+L<Judy::HS> will perform better than a hashing method with smaller and
+larger populations than the optimum hash table size. JudyHS does not
+have a degenerate performance case where knowledge of the hash
+algorithm can be exploited. (I.E. JudyHS does not use a linked list to
+handle hash collisions, it uses a tree of JudyL arrays and a virtual
+hash table size of 4 billion).
+
+=back
+
+Judy arrays are both speed- and memory-efficient, with no tuning or
+configuration required, across a wide range of index set types
+(sequential, periodic, clustered, random). Judy's speed and memory
+usage are typically better than other data storage models such as
+skiplists, linked lists, binary, ternary, b-trees, or even hashing,
+and improves with very large data sets.
+
+A Judy array is created merely by defining a null pointer and then
+storing (inserting) the first element into the array under that
+pointer. The memory used by a Judy array is nearly proportional to the
+population (number of elements).
+
+Since an initial (empty) Judy array is represented by a null pointer,
+it is possible to construct an array of Judy arrays. In other words, a
+Judy array's Values (except L<Judy::1>) can be pointers to other Judy
+arrays. This makes it very simple to construct an array with an
+arbitrary number of dimensions or Index sizes. (L<Judy::SL> and
+L<Judy::HS> are implemented using JudyL this way).
+
+=over
+
+=item A 10 MINUTE TECHNICAL DESCRIPTION
+
+may be found at L<http://judy.sourceforge.net/downloads/10minutes.htm>
+
+=item A 3 HOUR TECHNICAL DESCRIPTION (out of date and a bit corny)
+
+may be found at L<http://judy.sourceforge.net/application/shop_interm.pdf>
+
+=back
+
+
+
+=head1 AUTHOR
+
+Judy was invented by Doug Baskins (dougbaskins .AT, yahoo.com) and
+implemented by Hewlett-Packard. (Note: Judy is named for the
+inventor's sister, after discarding many proposed names.)
+
+The perl wrapper was written by Joshua ben Jore
+
+
+
+=head1 FILES
+
+Locations of interest include:
+http://sourceforge.net/projects/judy -- project downloads
+file:/usr/share/doc/Judy/ -- for HTML version of man pages.
+/usr/share/doc/Judy/demo/ -- demonstration program source files.
+
+The author attempted to write interesting application notes using
+advanced features of Judy. They may be found at
+"http://judy.sourceforge.net/application/ (Some may be out of date).
+
