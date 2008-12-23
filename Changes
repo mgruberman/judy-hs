@@ -1,5 +1,9 @@
 Revision history for Judy::HS
 
+0.08 - Tue Dec 22 00:07:00 2008
+        Add -L and -I build parameters to find Alien::Judy
+        Adding docs
+
 0.07 - Sun Dec 21 09:46:00 2008
         Added Judy::1 and Judy::L
         Changed API. Renamed search functions to be in line with the C library
