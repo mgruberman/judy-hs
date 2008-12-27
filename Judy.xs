@@ -21,12 +21,16 @@
 
 #include "const-c.inc"
 
-#if ULONG_MAX == 4294967295UL
-#define PDEADBEEF (void*)0xDEADBEEF
-#define DEADBEEF 0xDEADBEEF
+#if PTRSIZE == 4
+#	define PDEADBEEF (void*)0xDEADBEEF
 #else
-#define PDEADBEEF (void*)0xDEADBEEFDEADBEEF
-#define DEADBEEF 0xDEADBEEFDEADBEEF
+#	define PDEADBEEF (void*)0xDEADBEEFDEADBEEF
+#endif
+
+#if LONGSIZE == 4
+#	define DEADBEEF 0xDEADBEEF
+#else
+#	define DEADBEEF 0xDEADBEEFDEADBEEF
 #endif
 
 MODULE = Judy PACKAGE = Judy
