@@ -33,6 +33,7 @@ t/20o.t
 t/20sl.t
 t/30l.t
 t/30o.t
+t/40l.t
 typemap
 xt/99_critic.t
 xt/99_pod.t
