@@ -1,7 +1,7 @@
 use strict;
 use warnings;
-use ExtUtils::Constant 'WriteConstants';
 use ExtUtils::MakeMaker;
+use ExtUtils::Constant 'WriteConstants';
 use File::Spec ();
 use Config '%Config';
 
@@ -13,7 +13,7 @@ if ( -e 'README.pod' ) {
 
 WriteConstants(
     NAME => 'Judy',
-    NAMES => [qw[ PJERR JLAP_INVALID ]],
+    NAMES => [qw[JLAP_INVALID PJERR]]
     );
 
 sub unique { my %seen; grep { ! $seen{$_}++ } @_ }
