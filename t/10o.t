@@ -5,7 +5,7 @@ use Test::More tests => 15;
 use Judy::1 qw( Set Unset Test Free );
 
 {
-    my $judy = 0;
+    my $judy;
    
     {
 	my $val = Test( $judy, 42 );

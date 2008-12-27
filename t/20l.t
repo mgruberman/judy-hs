@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Test::More tests => 20;
-use Judy::Mem qw( PeekU );
+use Judy::Mem qw( Peek );
 use Judy::L qw( Set Get Free First Next Last Prev Delete FirstEmpty NextEmpty LastEmpty PrevEmpty );
 
 my $judy;
@@ -39,28 +39,28 @@ Set($judy,ord 'l',12);
     my ( $ptr, $val, $key ) = First($judy,ord 'x');
     is( $val, 24, 'Fetched right value for ord(x)');
     is( $key, ord 'x', 'Fetched key ord(x)' );
-    is( PeekU($ptr), 24, 'Fetched right pointer for ord(x)');
+    is( Peek($ptr), 24, 'Fetched right pointer for ord(x)');
 }
 
 {
     my ( $ptr, $val, $key ) = Next($judy,ord 'x');
     is( $val, 25, 'Fetched right value for ord(Prev(x))');
     is( $key, ord 'y', 'Fetched key ord(y)' );
-    is( PeekU($ptr), 25, 'Fetched right pointer for ord(y)');
+    is( Peek($ptr), 25, 'Fetched right pointer for ord(y)');
 }
 
 {
     my ( $ptr, $val, $key ) = Last($judy,ord('x'));
     is( $val, 24, 'Fetched right value for ord(x)');
     is( $key, ord 'x', 'Fetched key ord(x)' );
-    is( PeekU($ptr), 24, 'Fetched right pointer for ord(x)');
+    is( Peek($ptr), 24, 'Fetched right pointer for ord(x)');
 }
 
 {
     my ( $ptr, $val, $key ) = Prev($judy,ord 'x');
     is( $val, 23, 'Fetched right value for ord(w)');
     is( $key, ord 'w', 'Fetched key ord(w)' );
-    is( PeekU($ptr), 23, 'Fetched right pointer for w');
+    is( Peek($ptr), 23, 'Fetched right pointer for w');
 }
 
 

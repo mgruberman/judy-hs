@@ -1,2 +1,2 @@
 cpan_user JJORE
-perls /opt/perl-5.10.0/bin/perl:/opt/perl-5.10.0-thr/bin/perl
+perls /opt/perl-5.10.0/bin/perl:/opt/perl-5.10.0-thr/bin/perl:/opt-perl-5.10.0-64

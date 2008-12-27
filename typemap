@@ -1,3 +1,49 @@
 TYPEMAP
-Word_t	T_U_INT
-Pvoid_t T_PTR
+Pvoid_t T_PVOID
+Word_t* T_WORD_PTR
+Word_t T_WORD
+
+INPUT
+T_PVOID
+	/* It should never, ever happen that I get pointers that could
+	 suffer truncation because Judy always allocates everything
+	 and that's at the native size instead of perl's long long. */
+	$var = (Pvoid_t)(SvOK($arg) ? (Word_t)SvUV($arg) : 0);
+
+T_WORD_PTR
+	/* It should never, ever happen that I get pointers that could
+	 suffer truncation because Judy always allocates everything
+	 and that's at the native size instead of perl's long long. */
+	$var = INT2PTR($type,SvUV($arg));
+
+T_WORD
+	#if (LONGSIZE != IVSIZE) || (LONGSIZE != UVSIZE)
+
+		/* Perl compiled with -Duse64bitints on a 32-bit
+		machine has IV and UV defined as long long except this
+		doesn't fit within a word. This potentially makes it
+		easy to try to store values in Judy that can't be
+		represented without upgrading the CPU. */
+
+		if ( ULONG_MAX < SvUV($arg) && SvUV($arg) != (Word_t)SvUV($arg) ) {
+			warn(\"(UV)%lld truncated to (Word_t)%ld\", SvUV($arg), (Word_t)SvUV($arg));
+		}
+		$var = (Word_t)SvUV($arg);
+	#else
+		$var = (Word_t)SvUV($arg);
+	#endif
+	/* */
+
+OUTPUT
+T_PVOID
+	if ( SvOK($arg) ) {
+		SvUV_set($arg,INT2PTR(UV,$var));
+	}
+	else {
+		sv_setsv($arg,newSViv(INT2PTR(UV,$var)));
+	}
+T_WORD
+	sv_setuv($arg, (UV)$var);
+
+T_WORD_PTR
+	sv_setuv($arg, PTR2UV($var));

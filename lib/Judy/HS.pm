@@ -3,16 +3,13 @@ package Judy::HS;
 use strict;
 use warnings;
 
-BEGIN {
-    our $VERSION = '0.08';
-
-    require XSLoader;
-    XSLoader::load(__PACKAGE__,$VERSION);
-}
+our $VERSION = '0.09';
 
 use Sub::Exporter -setup => {
     exports => [qw[ Duplicates Set Delete Get Free ]],
 };
+
+require Judy; # Beware, Judy.pm also loads Judy::HS.
 
 no warnings;
 'Warning! The consumption of alcohol may cause you to think you have mystical kung-fu powers.'

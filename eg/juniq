@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Judy::HS qw( Duplicates );
 
-my $judy = 0;
+my $judy;
 while ( <> ) {
     print if ! Duplicates( $judy, $_ );
 }

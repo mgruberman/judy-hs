@@ -1,7 +1,7 @@
 use strict;
 use warnings;
-use ExtUtils::MakeMaker;
 use ExtUtils::Constant 'WriteConstants';
+use ExtUtils::MakeMaker;
 use File::Spec ();
 use Config '%Config';
 
@@ -13,8 +13,7 @@ if ( -e 'README.pod' ) {
 
 WriteConstants(
     NAME => 'Judy',
-    DEFAULT_TYPE => 'UV',
-    NAMES => [qw[JLAP_INVALID PJERR]]
+    NAMES => [qw[ PJERR JLAP_INVALID ]],
     );
 
 sub unique { my %seen; grep { ! $seen{$_}++ } @_ }
@@ -30,10 +29,10 @@ my @lib = unique(
     );
 
 WriteMakefile(
-    NAME                => 'Judy::HS',
+    NAME                => 'Judy',
     AUTHOR              => 'Joshua ben Jore <jjore@cpan.org>',
-    VERSION_FROM        => 'lib/Judy/HS.pm',
-    ABSTRACT_FROM       => 'lib/Judy/HS.pod',
+    VERSION_FROM        => 'lib/Judy.pm',
+    ABSTRACT_FROM       => 'lib/Judy.pod',
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
@@ -42,9 +41,9 @@ WriteMakefile(
         'Test::More' => 0,
 	'Sub::Exporter' => 0,
 	'ExtUtils::CBuilder' => 0,
-        'Alien::Judy' => 0,
+        'Alien::Judy' => '0.05',
     },
     LIBS => ["@lib -lJudy"],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Judy-HS-*' },
+    clean               => { FILES => 'Judy-*' },
 );

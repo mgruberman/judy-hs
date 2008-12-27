@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use Test::More tests => 5;
 use Judy::1 qw( Set Count Nth MemUsed Unset );
-use Judy::Mem qw( PeekU );
 
 my $judy;
 

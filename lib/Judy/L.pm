@@ -3,8 +3,6 @@ package Judy::L;
 use strict;
 use warnings;
 
-use Judy::HS ();
-
 use Sub::Exporter -setup => {
     exports => [qw[
         Set Delete Get Free
@@ -13,6 +11,8 @@ use Sub::Exporter -setup => {
         MemUsed Count Nth
     ]],
 };
+
+require Judy; # Beware, Judy.pm also loads Judy::L.
 
 no warnings;
 'Warning! The consumption of alcohol may cause you to think you have mystical kung-fu powers.'

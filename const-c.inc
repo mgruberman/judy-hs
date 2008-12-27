@@ -33,14 +33,14 @@ constant (pTHX_ const char *name, STRLEN len, IV *iv_return) {
      Regenerate these constant functions by feeding this entire source file to
      perl -x
 
-#!/opt/perl-5.10.0/bin/perl -w
+#!/opt/perl-5.10.0-64/bin/perl -w
 use ExtUtils::Constant qw (constant_types C_constant XS_constant);
 
-my $types = {map {($_, 1)} qw(UV)};
+my $types = {map {($_, 1)} qw(IV)};
 my @names = (qw(JLAP_INVALID PJERR));
 
 print constant_types(), "\n"; # macro defs
-foreach (C_constant ("Judy", 'constant', 'UV', $types, undef, 3, @names) ) {
+foreach (C_constant ("Judy", 'constant', 'IV', $types, undef, 3, @names) ) {
     print $_, "\n"; # C constant subs
 }
 print "\n#### XS Section:\n";
@@ -52,8 +52,8 @@ __END__
   case 5:
     if (memEQ(name, "PJERR", 5)) {
 #ifdef PJERR
-      *iv_return = (IV)PJERR;
-      return PERL_constant_ISUV;
+      *iv_return = PJERR;
+      return PERL_constant_ISIV;
 #else
       return PERL_constant_NOTDEF;
 #endif
@@ -62,8 +62,8 @@ __END__
   case 12:
     if (memEQ(name, "JLAP_INVALID", 12)) {
 #ifdef JLAP_INVALID
-      *iv_return = (IV)JLAP_INVALID;
-      return PERL_constant_ISUV;
+      *iv_return = JLAP_INVALID;
+      return PERL_constant_ISIV;
 #else
       return PERL_constant_NOTDEF;
 #endif

@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Test::More tests => 7;
 use Judy::L qw( Set Count Nth MemUsed Delete );
-use Judy::Mem qw( PeekU );
+use Judy::Mem qw( Peek );
 
 my $judy;
 
@@ -18,7 +18,7 @@ my ( $ptr, $val, $index ) = Nth( $judy, 5 );
 is( $val, 12, '5th' );
 is( $index, 11, '5th' );
 if ( $ptr ) {
-    is( PeekU( $ptr ), 12, '5th' );
+    is( Peek( $ptr ), 12, '5th' );
 }
 else {
     fail( 'Nth pointer is ok' );

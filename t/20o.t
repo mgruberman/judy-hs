@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Test::More tests => 12;
-use Judy::Mem qw( PeekU );
+use Judy::Mem qw( Peek );
 use Judy::1 qw( Set Get Free First Next Last Prev Delete FirstEmpty NextEmpty LastEmpty PrevEmpty );
 
 my $judy;
