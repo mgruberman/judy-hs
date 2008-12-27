@@ -1,4 +1,4 @@
-Revision history for Judy::HS
+Revision history for Judy
 
 0.09 - Sat Dec 26 12:59:00 2008
         API changes:
@@ -23,7 +23,6 @@ Revision history for Judy::HS
         Judy loads all of Judy::1, Judy::L, Judy::S, Judy::HS
         Added test t/40l.t which checks for data loss on machines with
             -Duse64bitint that don't have 64-bit words.
-
 
 0.08 - Tue Dec 22 00:07:00 2008
         Add -L and -I build parameters to find Alien::Judy
