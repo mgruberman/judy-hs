@@ -1,5 +1,8 @@
 Revision history for Judy
 
+0.10 - Sat Dec 26 15:06:00 2008
+        Require Alien::Judy 0.06+
+
 0.09 - Sat Dec 26 12:59:00 2008
         API changes:
             Moved PJERR and JLAP_INVALID from Judy::Mem to Judy
