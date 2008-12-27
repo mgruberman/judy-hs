@@ -1,6 +1,7 @@
+
 =head1 NAME
 
-Judy arrays - Library for creating and accessing dynamic arrays 
+Judy - Library for creating and accessing dynamic arrays 
 
 
 
