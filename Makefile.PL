@@ -41,7 +41,7 @@ WriteMakefile(
         'Test::More' => 0,
 	'Sub::Exporter' => 0,
 	'ExtUtils::CBuilder' => 0,
-        'Alien::Judy' => '0.05',
+        'Alien::Judy' => '0.06',
     },
     LIBS => ["@lib -lJudy"],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
