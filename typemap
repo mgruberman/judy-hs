@@ -2,8 +2,14 @@ TYPEMAP
 Pvoid_t T_PVOID
 Word_t* T_WORD_PTR
 Word_t T_WORD
+Str T_STR
+
+# SvUV handles GET magic and converts strings, etc to numbers if necessary.
 
 INPUT
+T_STR
+	($var.ptr) = SvPV($arg,($var.length))
+
 T_PVOID
 	/* It should never, ever happen that I get pointers that could
 	 suffer truncation because Judy always allocates everything
@@ -35,15 +41,20 @@ T_WORD
 	/* */
 
 OUTPUT
+T_STR
+	sv_setpvn_mg($arg, ($val.ptr), ($val.length));
+
 T_PVOID
 	if ( SvOK($arg) ) {
-		SvUV_set($arg,INT2PTR(UV,$var));
+		sv_setiv_mg($arg,PTR2IV($var));
 	}
 	else {
-		sv_setsv($arg,newSViv(INT2PTR(UV,$var)));
+		/* Handles the case when we're passed an undef */
+		sv_setsv_mg($arg,newSViv(PTR2IV($var)));
 	}
+
 T_WORD
-	sv_setuv($arg, (UV)$var);
+	sv_setiv_mg($arg, $var);
 
 T_WORD_PTR
-	sv_setuv($arg, PTR2UV($var));
+	sv_setiv_mg($arg, PTR2IV($var));

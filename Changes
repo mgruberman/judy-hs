@@ -1,5 +1,10 @@
 Revision history for Judy
 
+0.11 - Sat Dec 26 23:30:00 2008
+        Allow utf8 perl strings
+        Refactored a smidge of XS so string handling is now strictly in the typemap
+        Typemap handles SET magic for Word_t, Word_t*, Pvoid_t types
+
 0.10 - Sat Dec 26 15:06:00 2008
         Require Alien::Judy 0.06+
 
