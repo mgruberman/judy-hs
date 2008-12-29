@@ -70,7 +70,12 @@ ljme_Ptr2String(in)
     OUTPUT:
         RETVAL
 
-FIXME: SV* SET
+=pod
+
+FIXME SV* SMG
+
+=cut
+
 
 SV*
 ljme_Ptr2String2(in,length)
