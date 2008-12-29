@@ -46,15 +46,15 @@ T_STR
 
 T_PVOID
 	if ( SvOK($arg) ) {
-		sv_setiv_mg($arg,PTR2IV($var));
+		sv_setiv($arg,PTR2IV($var));
 	}
 	else {
 		/* Handles the case when we're passed an undef */
-		sv_setsv_mg($arg,newSViv(PTR2IV($var)));
+		sv_setsv($arg,newSViv(PTR2IV($var)));
 	}
 
 T_WORD
-	sv_setiv_mg($arg, $var);
+	sv_setiv($arg, $var);
 
 T_WORD_PTR
-	sv_setiv_mg($arg, PTR2IV($var));
+	sv_setiv($arg, PTR2IV($var));
