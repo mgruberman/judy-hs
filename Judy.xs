@@ -564,7 +564,8 @@ ljsl_Set( PJSLArray, Key, Value )
     INIT:
         Word_t *PValue = PDEADBEEF;
     CODE:
-        JSLI(PValue,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (const uint8_t*) to silence a warning. */
+        JSLI(PValue,PJSLArray,(const uint8_t*)Key.ptr);
         *PValue = Value;
         RETVAL = PValue;
     OUTPUT:
@@ -578,7 +579,8 @@ ljsl_Delete( PJSLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
-        JSLD(Rc_int,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (const uint8_t*) to silence a warning. */
+        JSLD(Rc_int,PJSLArray,(const uint8_t*)Key.ptr);
         RETVAL = Rc_int;
     OUTPUT:
         PJSLArray
@@ -591,7 +593,8 @@ ljsl_Get( PJSLArray, Key )
     INIT:
         Word_t *PValue = PDEADBEEF;
     PPCODE:
-        JSLG(PValue,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (const uint8_t*) to silence a warning. */
+        JSLG(PValue,PJSLArray,(const uint8_t*)Key.ptr);
 
         if ( PValue ) {
             EXTEND(SP,2);
@@ -618,7 +621,8 @@ ljsl_First( PJSLArray, Key )
     INIT:
         Word_t *PValue = PDEADBEEF;
     PPCODE:
-        JSLF(PValue,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (uint8_t*) to silence a warning. */
+        JSLF(PValue,PJSLArray,(uint8_t*)Key.ptr);
 
         if ( PValue ) {
             EXTEND(SP,3);
@@ -634,7 +638,8 @@ ljsl_Next( PJSLArray, Key )
     INIT:
         Word_t *PValue = PDEADBEEF;
     PPCODE:
-        JSLN(PValue,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (uint8_t*) to silence a warning. */
+        JSLN(PValue,PJSLArray,(uint8_t*)Key.ptr);
 
         if ( PValue ) {
             EXTEND(SP,3);
@@ -650,7 +655,8 @@ ljsl_Last( PJSLArray, Key )
     INIT:
         Word_t *PValue = PDEADBEEF;
     PPCODE:
-        JSLL(PValue,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (uint8_t*) to silence a warning. */
+        JSLL(PValue,PJSLArray,(uint8_t*)Key.ptr);
 
         if ( PValue ) {
             EXTEND(SP,3);
@@ -666,7 +672,8 @@ ljsl_Prev( PJSLArray, Key )
     INIT:
         Word_t *PValue = PDEADBEEF;
     PPCODE:
-        JSLP(PValue,PJSLArray,Key.ptr);
+        /* Cast from (char*) to (uint8_t*) to silence a warning. */
+        JSLP(PValue,PJSLArray,(uint8_t*)Key.ptr);
 
         if ( PValue ) {
             EXTEND(SP,3);
