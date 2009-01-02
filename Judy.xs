@@ -76,15 +76,15 @@ FIXME SV* SMG
 
 =cut
 
-
 SV*
 ljme_Ptr2String2(in,length)
         void *in
         STRLEN length
-    CODE:
-        RETVAL = newSVpv((char*)in,length);
-    OUTPUT:
-        RETVAL
+    PREINIT:
+        dXSTARG;
+    PPCODE:
+        EXTEND(SP,1);
+        PUSHp(in,length);
 
 void
 ljme_Free(ptr)
