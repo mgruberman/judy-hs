@@ -3,8 +3,6 @@ package Judy::HS;
 use strict;
 use warnings;
 
-our $VERSION = '0.10';
-
 use Sub::Exporter -setup => {
     exports => [qw[ Duplicates Set Delete Get Free ]],
 };
