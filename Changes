@@ -1,6 +1,11 @@
 Revision history for Judy
 
-0.11 - Sat Jan  3 19:22:00 209
+0.12 - Sun Jan  4 02:06:00 2009
+        croak() instead of exit(1) on error
+        Complete documentation overhaul
+        More careful integer truncation detection
+
+0.11 - Sat Jan  3 19:22:00 2009
         Allow utf8 perl strings
         Typemap handles SET magic for Word_t, Word_t*, Pvoid_t types
         Introduce typedef Str for uniform SV*->((char*),STRLEN) capture
