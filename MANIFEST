@@ -4,6 +4,7 @@
 Changes
 eg/juniq
 Judy.xs
+inc/My/Paths.pm
 lib/Judy.pm
 lib/Judy.pod
 lib/Judy/1.pm
@@ -20,6 +21,7 @@ Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
+pjudy.h
 ppport.h
 README
 t/00-load.t
@@ -33,7 +35,9 @@ t/20o.t
 t/20sl.t
 t/30l.t
 t/30o.t
-t/40l.t
+t/40trunc.t
+t/41typemap.t
+t/README
 typemap
 xt/99_critic.t
 xt/99_pod.t
