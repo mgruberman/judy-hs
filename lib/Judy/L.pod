@@ -1,10 +1,39 @@
 =head1 NAME
 
-Judy::L - library for creating and accessing a dynamic array of words, using a word as an index.
-
-
+Judy::L - Efficient integer to integer map
 
 =head1 SYNOPSIS
+
+Read a series of key/value pairs from the standard input, store in a
+JudyL array, and then print out in sorted order.
+
+  use Judy::L qw( Set First Next Last Prev Delete Free );
+
+  # Load judy.
+  my $judy;
+  Set( $judy, 123, 345 );
+  Set( $judy, 324, 456 );
+  Set( $judy, 234, 567 );
+
+  # Print in ascending order.
+  print "ascending\n";
+  my ( undef, $value , $key ) = First( $judy, 0 );
+  while ( defined $key ) {
+      print "$key=$value\n";
+      ( undef, $value, $key ) = Next( $judy, $key );
+  }
+
+  # Now in descending order, deleting on the way.
+  print "descending\n";
+  ( undef, $value, $key ) = Last( $judy, -1 );
+  while ( defined $key ) {
+      print "$key=$value\n";
+      Delete( $judy, $key );
+      ( undef, $value, $key ) = Prev( $judy, $key );
+  }
+
+  # Ought to be a no-op since Judy is already empty.
+  Free( $judy );
 
 
 
@@ -16,282 +45,220 @@ All functions are exportable by L<Sub::Exporter>.
 
 =head1 DESCRIPTION
 
-A Judy::L array is the equivalent of an array of word-sized values. A
-Value is addressed by an Index (key). The array may be sparse, and the
-Index may be any word-sized number. Memory to support the array is
-allocated as index/value pairs are inserted, and released as
-index/value pairs are deleted. A Judy::L array can also be thought of
-as a mapper, that is "map" a word to another word/pointer.
-
-As with an ordinary array, there are no duplicate indexes in a Judy::L
-array.
+Judy::L is the equivalent of a sparse array of integers. Memory to
+support the array is allocated as key/value pairs are inserted, and
+released as key/value pairs are deleted.
 
 The value may be used as a scalar, or a pointer to a structure or
-block of data (or even another Judy array).
+block of data (or even another Judy array). JudySL and JudyHS are
+implemented on top of JudyL where the values are pointers. See
+L<http://perlmonks.org/?node_id=733140> for an example.
 
-A JudyL array is allocated with a 0 or undef value.
+Nothing special is required to allocate a Judy::L array. Just start using it.
 
-    my $Judy = 0;
+    my $judy;
+    if ( Get( $judy, 10 ) ) {
+        ....
+    }
 
-The default error handling sends a message to the standard error and
-terminates the program with exit(1).
+As with an ordinary array, there are no duplicate keys in a Judy::L
+array.
 
 
 
 
 =head1 DATA TYPES
 
-=over
+=head2 $Judy - Judy::L array
 
-=item *
+=head2 $Key - integer
 
-$Rc - return code
+=head2 $Value - integer
 
-=item *
+=head2 $PValue - pointer to integer
 
-(Word_t)$Index, $Nth - index into array
-
-=item *
-
-(Word_t*)$PValue - pointer to $Value
-
-=item *
-
-(Word_t)$Value - stored value
-
-=item *
-
-(Pvoid_t)$Judy - Judy::L array
-
-=back
-
+=head2 $Nth - integer
 
 
 
 =head1 BASIC FUNCTIONS
 
-=head2 $PValue = Set( $Judy, $Index, $Value )
+=head2 $PValue = Set( $Judy, $Key, $Value )
 
-Insert an C<$Index> and C<$Value> into the Judy::L array C<$Judy>. Sets the value to C<$Value>.
+Insert/set an C<$Key> and C<$Value> into the Judy::L array C<$Judy>.
 
 Return C<$PValue> pointing to C<$Value>. Your program can use this
 pointer to read or modify C<$Value> until the next C<Set()>,
-C<Delete()>, C<Free()> is executed on C<$Judy>y. Examples:
+C<Delete()>, C<Free()> is executed on C<$Judy>. Examples:
 
     use Judy::L   qw( Set         );
-    use Judy::Mem qw( PokeI PeekI );
+    use Judy::Mem qw( Poke Peek );
 
     $pvalue = Set( $judy, 2, 43 );
-    PokeI( $pvalue, 44 );
-    44 == PeekI( $pvalue );
 
-Croak if a malloc() fail occured. Note: C<Set()> and
-C<Delete()> reorganize the Judy::L array. Therefore, C<$PValue>
-returned from previous Judy::L calls become invalid and must be
-re-acquired.
+    Poke( $pvalue, 44 );
+    44 == Peek( $pvalue );
 
-Modifies C<$Judy> to point to allocated JudyL object.
+Note: C<Set()> and C<Delete()> reorganize the Judy::L
+array. Therefore, C<$PValue> returned from previous Judy::L calls
+become invalid and must be re-acquired.
 
-=head2 $Rc = Delete( $Judy, $Index )
+Modifies C<$Judy> to point to allocated Judy::L object.
 
-Delete the C<$Index>/C<$Value> pair from the Judy::L array.
+=head2 bool = Delete( $Judy, $Key )
 
-Return C<$Rc> set to 1 if successful. Return $C<$Rc> set to 0 if Index
-was not present. Croaks if a malloc() fail occurred.
+Delete the C<$Key>/C<$Value> pair from the Judy::L array. Return true
+if the key was removed.
 
-=head2 ($PValue,$Value) = JLG($PValue, $PJLArray, $Index)
+=head2 ($PValue, $Value) = Get( $Judy, $Key )
 
-Get the pointer C<$PValue> and value C<$Value> associated with
-C<$Index> in the C<$Judy> Judy array.
+Get the pointer C<$PValue> and value C<$Value> associated with C<$Key>
+in the C<$Judy> Judy array.
 
 Return C<$PValue> pointing to C<$Value> and C<$Value>. Return nothing
-if the C<$Index> was not present. Croak if a malloc() fail occured.
+if the C<$Key> was not present.
 
-=head2 $Rc = Count( $Judy, $Index1, $Index2 )
 
-Count the number of indexes present in the Judy::L array C<$Judy>
-between C<$Index1> and C<$Index2> (inclusive).
-
-Return the count. A return value of 0 can be valid as a count.
-
-To count all indexes present in a Judy::L array, use:
-
-    Count( $judy, 0, -1 );
-
-=head2 ( $PValue, $Value, $Index ) = Nth( $Judy, $Nth )
-
-Locate the C<$Nth> index that is present in the Judy::L array C<$Judy>
-(C<$Nth> = 1 returns the first index present).
-
-Return pointer to value, value, and index. Return nothing if there
-isn't an C<$Nth> element.
-
-=head2 $Bytes = Free( $Judy )
-
-Given a pointer to a Judy::L array, free the entire array (much faster
-than using a C<Next()>, C<Delete()> loop).
-
-Return number of bytes freed and C<$Judy> set to 0.
-
-=head2 $Bytes = MemUsed( $Judy )
-
-Return Rc_word set to the number of bytes of memory malloc()'ed by PJLArray. This is a very fast routine, and may be used before and after a JLI() or JLD() call with little performance impact.
 
 =head1 Search Functions
 
-First(), Next(), Last(), Prev() allow you to search for indexes in the
-array. You may search inclusively or exclusively, in either forward or
-reverse directions. If successful, C<$Index> is returned set to the
-found index, C<$PValue> is returned set to a pointer to C<$Index>'s
-C<$Value> and C<$Value is returned. If unsuccessful, nothing is
-returned
+C<First()>, C<Next()>, C<Last()>, C<Prev()> allow you to search for
+keys in the array. You may search inclusively or exclusively, in
+either forward or reverse directions. If successful, C<$Key> is
+returned set to the found key, C<$PValue> is returned set to a pointer
+to C<$Key>'s C<$Value> and C<$Value> is returned. If unsuccessful,
+nothing is returned.
 
 FirstEmpty(), NextEmpty(), LastEmpty(), PrevEmpty() allow you to
-search for indexes that are not present ("empty") in the array. You
-may search inclusively or exclusively, in either forward or reverse
-directions. If successful, an C<$Index> is returned set to a not present
-("empty") index. If unsuccessful, nothing is returned.
+search for keys that are not present ("empty") in the array. You may
+search inclusively or exclusively, in either forward or reverse
+directions. If successful, an C<$Key> is returned set to a not present
+("empty") key. If unsuccessful, nothing is returned.
 
-=head2 $Index = First( $Judy, $Index )
+=head2 ( $PValue, $Value, $Key ) = First( $Judy, $Key )
 
-Search (inclusive) for the first index present that is equal to or
-greater than the passed Index. (Start with Index = 0 to find the first
-index in the array.) First() is typically used to begin a sorted-order
-scan of the indexes present in a JudyL array.
+Search (inclusive) for the first key present that is equal to or
+greater than the passed C<$Key>. (Start with C<$Key = 0> to find the
+first key in the array.) C<First()> is typically used to begin a
+sorted-order scan of the keys present in a JudyL array.
 
-=head2 $Index = Next( $Judy, $Index )
+Returns nothing if the search finds nothing.
 
-Search (exclusive) for the next index present that is greater than the
-passed Index. Next() is typically used to continue a sorted-order scan
-of the indexes present in a JudyL array, or to locate a "neighbor" of
-a given index.
+=head2 ( $PValue, $Value, $Key ) = Next( $Judy, $Key )
 
-=head2 $Index = Last( $Judy, C<$Index>)
+Search (exclusive) for the next key present that is greater than the
+passed Key. Next() is typically used to continue a sorted-order scan
+of the keys present in a JudyL array, or to locate a "neighbor" of
+a given key.
 
-Search (inclusive) for the last index present that is equal to or less
-than the passed C<$Index>. (Start with C<$Index = -1>, that is, all
-ones, to find the last index in the array.) Last() is typically used
-to begin a reverse-sorted-order scan of the indexes present in a JudyL
+  # Prints the contents of $judy
+  my ( undef, $value, $key ) = First( $judy, 0 );
+  while ( defined $key ) {
+      print "$key=$value\n";
+
+      ( undef, $value, $key ) = Next( $judy, $key );
+  }
+
+Returns nothing if the search finds nothing.
+
+=head2 ( $PValue, $Value, $Key ) = Last( $Judy, C<$Key>)
+
+Search (inclusive) for the last key present that is equal to or less
+than the passed C<$Key>. (Start with C<$Key = -1>, that is, all
+ones, to find the last key in the array.) Last() is typically used
+to begin a reverse-sorted-order scan of the keys present in a JudyL
 array.
 
-=head2 $Index = Prev( $Judy, $Index )
+Returns nothing if the search finds nothing.
 
-Search (exclusive) for the previous index present that is less than
-the passed C<$Index>. Prev() is typically used to continue a
-reverse-sorted-order scan of the indexes present in a JudyL array, or
-to locate a "neighbor" of a given index.
+=head2 ( $PValue, $Value, $Key ) = Prev( $Judy, $Key )
 
-=head2 $Index = FirstEmpty( $Judy, $Index )
+Search (exclusive) for the previous key present that is less than the
+passed C<$Key>. Prev() is typically used to continue a
+reverse-sorted-order scan of the keys present in a JudyL array, or to
+locate a "neighbor" of a given key.
 
-Search (inclusive) for the first index absent that is equal to or
-greater than the passed C<$Index>. (Start with C<$Index> = 0 to find
-the first index absent in the array.)
+Returns nothing if the search finds nothing.
 
-=head2 $Index = NextEmpty( $Judy, $Index )
+=head2 $Key = FirstEmpty( $Judy, $Key )
 
-Search (exclusive) for the next index absent that is greater than the
-passed C<$Index>.
+Search (inclusive) for the first key absent that is equal to or
+greater than the passed C<$Key>. (Start with C<$Key> = 0 to find
+the first key absent in the array.)
 
-=head2 $Index = LastEmpty( $Judy, $Index )
+Returns nothing if the search finds nothing.
 
-Search (inclusive) for the last index absent that is equal to or less
-than the passed C<$Index>. (Start with C<$Index> = -1, that is, all
-ones, to find the last index absent in the array.)
+=head2 $Key = NextEmpty( $Judy, $Key )
 
-=head2 $Indx = PrevEmpty( $Judy, $Index )
+Search (exclusive) for the next key absent that is greater than the
+passed C<$Key>.
 
-Search (exclusive) for the previous index absent that is less than the
-passed C<$Index>.
+Returns nothing if the search finds nothing.
 
-=head1 Multi-dimensional JudyL Arrays
+=head2 $Key = LastEmpty( $Judy, $Key )
 
-Storing a pointer to another JudyL array in a JudyL array's Value is a
-simple way to support dynamic multi-dimensional JudyL arrays. These
-arrays (or trees) built using JudyL arrays are very fast and memory
-efficient. (In fact, that is how JudySL and JudyHS are
-implemented). An arbitrary number of dimensions can be realized this
-way. To terminate the number of dimensions (or tree), the Value
-pointer is marked to NOT point to another Judy array. A Judy::JLAP_INVALID
-flag is used in the least significant bit(s) of the pointer. After the
-flag Judy::JLAP_INVALID is removed, it is used as a pointer to the users
-data. 
+Search (inclusive) for the last key absent that is equal to or less
+than the passed C<$Key>. (Start with C<$Key> = -1, that is, all
+ones, to find the last key absent in the array.)
 
-Note: The current version of Judy.h changed this flag from 0x4 to 0x1
-to allow for a malloc() that does not deliver memory on an 8 byte
-aligned boundry (such as old v algrind).
+Returns nothing if the search finds nothing.
 
-The following example code segment can be used to determine whether or
-not a pointer points to another JudyL:
+=head2 $Indx = PrevEmpty( $Judy, $Key )
 
-    use Judy 'JLAP_INVALID';
-    sub Dive {
-        my ( $judy, @walk ) = @_;
+Search (exclusive) for the previous key absent that is less than the
+passed C<$Key>.
 
-        my ( $pvalue, $value );
-        for my $index ( @walk ) {
-            return if ! $judy;
+Returns nothing if the search finds nothing.
 
-            # Advance to next dimension.
-            ( $pvalue, $value ) = Get( $judy, $index );
+=head2 $Rc = Count( $Judy, $Key1, $Key2 )
 
-            # Check if pointer to user buffer
-            if ( $value & JLAP_INVALID ) {
-                last;
-            }
-            else {
-                $judy = $value;
-            }
-        }
+Count the number of keys present in C<$Judy> between C<$Key1> and
+C<$Key2> (inclusive).
 
-        # Remove our flag.
-        $value &= ~ JLAP_INVALID;
+Return the count. A return value of 0 can be valid as a count.
 
-        # Return the value.
-        printf "User object pointer is 0x%x\n", $value;
-        return $value;
-    }
+To count all keys present in a Judy::L array, use:
 
-Note: This works because malloc() guarantees to return a pointer with
-the least bit(s) == 0x0. You must remove JLAP_INVALID before using the
-pointer.
+  my $count = Count( $judy, 0, -1 );
+
+=head2 ( $PValue, $Value, $Key ) = Nth( $Judy, $Nth )
+
+Locate the C<$Nth> key that is present in C<$Judy> (C<$Nth> = 1
+returns the first key present).
+
+Return pointer to value, value, and key. Return nothing if there
+isn't an C<$Nth> element.
 
 
 
-=head1 ERRORS
+=head1 UTILITY FUNCTIONS
 
-See L<Judy>
+=head2 bytes = Free( $Judy )
+
+Frees an entire Judy::L array. This is much faster than a
+C<Next>/C<Delete> loop. Return number of bytes freed. C<$Judy> is set
+to 0.
+
+=head2 bytes = MemUsed( $Judy )
+
+Return the number of bytes of memory malloc()'ed by C<$Judy>. This is
+a very fast routine, and may be used before and after a C<Set()> or
+C<Delete()> call with little performance impact.
 
 
 
-=head1 EXAMPLE
+=head1 MULTIDIMENSIONAL Judy::L
 
-Read a series of index/value pairs from the standard input, store in a
-JudyL array, and then print out in sorted order.
+See L<Judy>.
 
-    use Judy::Mem qw( PeekI );
-    use Judy::L qw( Get Set First Next Last Prev Delete );
 
-    # Load judy.
-    my $judy;
-    while (<>) {
-        my ( $index, $value ) = split ' ';
-        Set( $judy, $index, $value );
-    }
 
-    # Print in ascending order.
-    my ( $index ) = First( $judy, 0 );
-    while ( defined $index ) {
-        print("%d %d\n", $index, PeekI( $index ) );
-        ( $index ) = Next( $judy, $index );
-    }
+=head1 ERRORS & WARNINGS
 
-    # Now in descending order, deleting on the way.
-    ( $index ) = Last( $judy, 0 );
-    while ( defined $index ) {
-        print("%d %d\n", $index, PeekI( $index ) );
-        Delete( $judy, $index );
-        ( $index ) = Prev( $judy, $index );
-    }
+See L<Judy>.
 
-    # Ought to be a no-op since Judy is already empty.
-    Free( $judy );
+
+
+=head1 AUTHOR
+
+See L<Judy>.

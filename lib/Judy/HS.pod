@@ -1,82 +1,77 @@
-
 =head1 NAME
 
-Judy::HS - Library for creating and accessing a dynamic array, using an array-of-bytes as an Key and a word as a Value. 
-
-
+Judy::HS - Efficiet string to integer map
 
 =head1 SYNOPSIS
 
-Shows an ultra-cheap hash for removing duplicates.
+Removing duplicates from a list using sugar
 
-  my $judy = 0;
-  while (<>) {
-    my ($ptr,$val) = Get( $judy, $_ );
-    print if ! $ptr;
-    Set( $judy, $_, 1 );
+  use Judy::HS qw( Duplicates Free );
+
+  my $judy;
+  for (qw( d d c a d b c b a b a c )) {
+    print "$_\n" if ! Duplicates( $judy, $_ );
   }
+  printf "Freed %d bytes\n", Free( $judy );
+
+Remove duplicates with less sugar
+
+  use Judy::HS qw( Set Get Free );
+
+  my $judy;
+  for (qw( d d c a d b c b a b a c )) {
+      my ( undef, $value ) = Get( $judy, $_ );
+      if ( ! $value ) {
+          Set( $judy, $_, 1 );
+          print "$_\n";
+      }
+  }
+  printf "Freed %d bytes\n", Free( $judy );
+
+
 
 =head1 DESCRIPTION
 
-Judy::HS is an interface to the JudyHS macros in the Judy array library.
-
-A JudyHS array is the equivalent of an array of word-sized
-value/pointers. An Key is a pointer to an array-of-bytes. Rather than
-using a null terminated string, this difference from JudySL(3X) allows
-strings to contain all bits (specifically the null character). This
-new addition (May 2004) to Judy arrays is a hybrid using the best
+Judy::HS is an equivalent to a hash of integers. The keys are all
+strings, the values are integers. JudyHS is a hybrid using the best
 capabilities of hashing and Judy methods. JudyHS does not have a poor
 performance case where knowledge of the hash algorithm can be used to
 degrade the performance.
 
 Since JudyHS is based on a hash method, Keys are not stored in any
-particular order. Therefore the JudyHSFirst(), JudyHSNext(),
-JudyHSPrev() and JudyHSLast() neighbor search functions are not
-practical.
+particular order. Therefore the C<First()>, C<Next()>, C<Prev()> and
+C<Last()> neighbor search functions are not practical.  To enumerate a
+Judy::HS object, see L<http://perlmonks.org/?node_id=733140>. This is
+not supported but it works.
 
 The hallmark of JudyHS is speed with scalability, but memory
-efficiency is excellent. The speed is very competitive with the best
+efficiency is excelleny. The speed is very competitive with the best
 hashing methods. The memory efficiency is similar to a linked list of
 the same Keys and Values. JudyHS is designed to scale from 0 to
 billions of Keys.
 
-A JudyHS array is allocated with an undefined or 0 value.
+Nothing special is required to allocate a Judy::HS array. Just start using it.
 
-    my $judy = 0;
+    my $judy;
+    if ( Get( $judy, 'omg' ) ) {
+        Set( $judy, 'zomg', 42 );
+        ...
+    }
 
-
-
-=head1 EXPORT
-
-All functions are exportable by L<Sub::Exporter>.
+As with an ordinary array, there are no duplicate keys in a Judy::SL
+array.
 
 
 
 =head1 DATA TYPES
 
-=over
+=head2 $Judy - Judy::SL array
 
-=item *
+=head2 $Key - a string with no null characters
 
-$PValue - JudyHS array element. A pointer cast to integer.
+=head2 $Value - integer
 
-=item *
-
-$Rc_int - return flag.
-
-=item *
-
-$Rc_word - full word return value
-
-=item *
-
-$Judy - JudyHS array
-
-=item *
-
-$Key - array-of-bytes pointer
-
-=back
+=head2 $PValue - pointer to integer
 
 
 
@@ -84,102 +79,64 @@ $Key - array-of-bytes pointer
 
 =head2 $PValue = Set( $Judy, $Key, $Value )
 
-Given a pointer to a JudyHS array (C<$Judy>), insert an C<$Key>
-string and a C<$Value> into the JudyHS array:
-C<$Judy>. Sets the value to $Value.
+Insert/set a C<$Key> and C<$Value> into C<$Judy>.
 
-Note: Set() and Delete can reorganize the JudyHS array. Therefore,
+Returns C<$PValue> pointing to the stored C<$Value>. Your program can
+use this pointer to modify the stored C<$Value> until the next
+C<Set()>, C<Delete()>, C<Free()>. Example:
+
+  use Judy::Mem qw( Peek );
+  use Judy::HS qw( Set );
+
+  $pvalue = Set( $judy, "al\0ha", 42 );
+  printf "al\\0ha=%d\n", Peek( $pvalue );
+
+Note: C<Set()> and Delete can reorganize the JudyHS array. Therefore,
 pointers returned from previous JudyHS calls become invalid and must
 be re-acquired (using Get()).
 
-=head2 $Rc_int = Delete( $Judy, $Key )
+=head2 bool = Delete( $Judy, $Key )
 
-Given a pointer to a JudyHS array (C<$Judy>), delete the
-specified C<$Key> along with the C<$Value> from the JudyHS array.
-
-Return C<$Rc_int> set to 1 if successfully removed from the
-array. Return C<$Rc_int> set to 0 if C<$Key> was not present.
+Delete the specified C<$Key>/C<$Value> pair from Judy::SL. Returns
+true if the element was removed, false otherwise.
 
 =head2 ( $PValue, $Value ) = Get( $Judy, $Key )
 
-Given a pointer to a JudyHS array (C<$Judy>), find C<$Value>
-associated with C<$Key>.
+Get C<$Key>'s C<$Value>. If C<$Key> exists in C<$Judy>, return
+C<$PValue> pointing to C<$Key>'s C<$Value> and C<$Value> in a
+list. Return nothing if C<$Key> isn't present.
 
-If C<$Key> is in the hash, return C<$PValue> a pointer to C<$Value>
-and C<$Value>. Return nothing if C<$Key> is not in the hash.
 
-=head2 $Rc_word = Free( $Judy )
 
-Given a pointer to a JudyHS array (C<$Judy>), free the entire array.
+=head1 SEARCH FUNCTIONS
 
-Return C<$Rc_word> set to the number of bytes freed and C<$Judy>
-set to NULL.
+There are no search functions and no endorsed methods for enumerating
+the contents of Judy::HS. It's possible though. See
+L<http://perlmonks.org/?node_id=733140>.
+
+
+
+=head1 UTILITY FUNCTIONS
+
+=head2 bytes = Free( $Judy )
+
+Frees an entire Judy::HS array. C<$Judy> is set to 0.
+
+
+
+
+=head1 MULTIDIMENSIONAL Judy::HS
+
+See L<Judy>.
+
+
+
+=head1 ERRORS & WARNINGS
+
+See L<Judy>.
 
 
 
 =head1 AUTHOR
 
-Joshua ben Jore, C<< <jjore at cpan.org> >>
-
-JudyHS was invented and implemented by Doug Baskins after retiring from Hewlett-Packard.
-
-
-
-=head1 SOURCE AVAILABILITY
-
-This source is in Github: L<git://github.com/jbenjore/judy-hs.git>
-
-
-
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-Judy-HS at
-rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Judy-HS>.  I will be
-notified, and then you'll automatically be notified of progress on
-your bug as I make changes.
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-  perldoc Judy::HS
-
-You can also look for information at:
-
-=over
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Judy::HS>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Judy::HS>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Judy::HS>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Judy::HS/>
-
-=back
-
-
-
-=head1 ACKNOWLEDGEMENTS
-
-Doug Baskins, totally.
-
-
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2008 Joshua ben Jore, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+See L<Judy>.
