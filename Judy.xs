@@ -2,26 +2,31 @@
 #include "perl.h"
 #include "XSUB.h"
 
-/*
- *  --- hint for SvPVbyte ---
- *  Does not work in perl-5.6.1, ppport.h implements a version
- *  borrowed from perl-5.7.3.
- */
+/* --- hint for SvPVbyte ---
+   Does not work in perl-5.6.1, ppport.h implements a version
+   borrowed from perl-5.7.3. */
 #define NEED_sv_2pvbyte
 #include "ppport.h"
 
+/* Redefine Judy's error handling. Judy's default is to write this
+   message to stderr and exit(1). That's unfriendly to a perl
+   programmer. This does roughly the same thing but since it is perl's
+   own croak(), the warning can be caught.
 
-/*
- * Judy.h comes from Judy at http://judy.sourceforge.net and is
- * automatically installed for you by Alien::Judy. If you're
- * having problems, please file a bug or better, fix it
- * and post the patch.
- */
+   This redefinition must occur prior to including Judy.h */
+#define JUDYERROR(CallerFile,CallerLine,JudyFunc,JudyErrno,JudyErrID) \
+    croak("File '%s', line %d: %s(), JU_ERRNO_* == %d, ID == %d\n",   \
+          CallerFile, CallerLine,                                     \
+          JudyFunc, JudyErrno, JudyErrID);
+
+/* Judy.h comes from Judy at http://judy.sourceforge.net and is
+   automatically installed for you by Alien::Judy. If you're
+   having problems, please file a bug or better, fix it
+   and post the patch. */
 #include "Judy.h"
 
-/*
- * pjudy.h includes whatever I need to share between Judy.xs and the test suite.
- */
+/* pjudy.h includes whatever I need to share between Judy.xs and the
+   test suite. */
 #include "pjudy.h"
 
 #if PTRSIZE == 4
@@ -39,6 +44,11 @@
 MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
 PROTOTYPES: ENABLE
+
+=for FIXME Constants aren't used as constants. The functions are
+getting called anyway.
+
+=cut
 
 Pvoid_t
 lj_PJERR()
@@ -173,21 +183,19 @@ lj1_Count( PJ1Array, Key1, Key2 )
             RETVAL = Rc_word;
         }
         else {
-            if (JU_ERRNO(&JError) == JU_ERRNO_NONE) {
-                RETVAL = 0;
+            if ( JU_ERRNO(&JError) == JU_ERRNO_NONE ) {
+	    	RETVAL = 0;
             }
-            else if ( JU_ERRNO(&JError) == JU_ERRNO_FULL) {
-                /*
-                 * On a 32-bit machine, this value is indistinguishable from the count of
-                 * 2^32. On a 64-bit machine, this value cannot be triggered.
-                 */
+            else if ( JU_ERRNO(&JError) == JU_ERRNO_FULL ) {
+	        /* On a 32-bit machine, this value is
+                   indistinguishable from the count of 2^32. On a
+                   64-bit machine, this value cannot be triggered. */
                 RETVAL = ULONG_MAX;
             }
-            else if (JU_ERRNO(&JError) == JU_ERRNO_NULLPPARRAY) {
-                croak("NullArray");
-            }
-            else if (JU_ERRNO(&JError) >  JU_ERRNO_NFMAX) {
-                croak("Null_or_CorruptArray");
+            else if ( JU_ERRNO(&JError) > JU_ERRNO_NFMAX ) {
+                /* Defer to back to the default implementation for
+                   error handling in the J1C macro. */
+                J_E("Judy1Count",&JError);
             }
         }
     OUTPUT:
