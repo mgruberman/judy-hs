@@ -2,8 +2,8 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 use ExtUtils::Constant 'WriteConstants';
-use File::Spec ();
-use Config '%Config';
+use lib 'inc';
+use My::Paths;
 
 # Render README.pod to README for consumption by the world. README.pod
 # is only present in the version available from git.
@@ -16,17 +16,6 @@ WriteConstants(
     NAMES => [qw[JLAP_INVALID PJERR]]
     );
 
-sub unique { my %seen; grep { ! $seen{$_}++ } @_ }
-
-my @inc = unique(
-    map { join '', '-I', File::Spec->catdir( $_, 'include' ) }
-    @Config{qw( siteprefixexp prefixexp )}
-    );
-
-my @lib = unique(
-    map { join '', '-L', File::Spec->catdir( $_, 'Alien', 'Judy' ) }
-    @Config{qw(sitearchexp sitearch)}
-    );
 
 WriteMakefile(
     NAME                => 'Judy',
@@ -36,14 +25,14 @@ WriteMakefile(
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
-    INC => "@inc",
+    INC => join( ' ', @{ My::Paths::CCINC() } ),
     PREREQ_PM => {
         'Test::More' => 0,
 	'Sub::Exporter' => 0,
 	'ExtUtils::CBuilder' => 0,
         'Alien::Judy' => '0.06',
     },
-    LIBS => ["@lib -lJudy"],
+    LIBS => [join ' ', @{ My::Paths::CCLIB() }, '-lJudy'],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Judy-*' },
 );

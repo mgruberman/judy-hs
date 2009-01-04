@@ -19,7 +19,10 @@
  */
 #include "Judy.h"
 
-#include "const-c.inc"
+/*
+ * pjudy.h includes whatever I need to share between Judy.xs and the test suite.
+ */
+#include "pjudy.h"
 
 #if PTRSIZE == 4
 #	define PDEADBEEF (void*)0xDEADBEEF
@@ -33,16 +36,25 @@
 #	define DEADBEEF 0xDEADBEEFDEADBEEF
 #endif
 
-typedef struct {
-	char *ptr;
-	STRLEN length;
-} Str;
-
-MODULE = Judy PACKAGE = Judy
+MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
 PROTOTYPES: ENABLE
 
-INCLUDE: const-xs.inc
+Pvoid_t
+lj_PJERR()
+    PROTOTYPE:
+    CODE:
+        RETVAL = PJERR;
+    OUTPUT:
+        RETVAL
+
+Word_t
+lj_JLAP_INVALID()
+    PROTOTYPE:
+    CODE:
+        RETVAL = JLAP_INVALID;
+    OUTPUT:
+        RETVAL
 
 MODULE = Judy PACKAGE = Judy::Mem PREFIX = ljme_
 
@@ -61,30 +73,25 @@ ljme_String2Ptr(in)
     OUTPUT:
         RETVAL
 
-char*
+Str
 ljme_Ptr2String(in)
         void *in
     CODE:
         /* Guess about the length of the string. Use Ptr2String2 if there are nulls. */
-        RETVAL = in;
+        RETVAL.ptr = in;
+        RETVAL.length = 0;
     OUTPUT:
         RETVAL
 
-=pod
-
-FIXME SV* SMG
-
-=cut
-
-SV*
+Str
 ljme_Ptr2String2(in,length)
         void *in
         STRLEN length
-    PREINIT:
-        dXSTARG;
-    PPCODE:
-        EXTEND(SP,1);
-        PUSHp(in,length);
+    CODE:
+        RETVAL.ptr = in;
+        RETVAL.length = length;
+    OUTPUT:
+        RETVAL
 
 void
 ljme_Free(ptr)

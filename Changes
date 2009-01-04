@@ -1,5 +1,14 @@
 Revision history for Judy
 
+0.12 - ...
+        Introduce typedef Str for uniform SV*->((char*),STRLEN) capture
+        Silence warning, casting from (char*) to (uint8_t*) and (const uint8_t*)'
+        Ptr2String2 now triggers set magic
+        Now ignoring _Inline
+        Dropping const-{c,xs}.inc - it was throwing annoying warnings
+        Adding inc/My/Paths.pm to put -I, -l, -L cc handling in a single place
+        Currently using Inline::C for some magic tests. Plan is to remove Inline.
+
 0.11 - Sat Dec 26 23:30:00 2008
         Allow utf8 perl strings
         Refactored a smidge of XS so string handling is now strictly in the typemap
