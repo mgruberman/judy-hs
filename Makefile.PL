@@ -1,7 +1,6 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
-use ExtUtils::Constant 'WriteConstants';
 use lib 'inc';
 use My::Paths;
 
@@ -10,12 +9,6 @@ use My::Paths;
 if ( -e 'README.pod' ) {
     system 'perldoc -t README.pod > README';
 }
-
-WriteConstants(
-    NAME => 'Judy',
-    NAMES => [qw[JLAP_INVALID PJERR]]
-    );
-
 
 WriteMakefile(
     NAME                => 'Judy',
