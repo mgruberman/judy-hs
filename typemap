@@ -32,7 +32,7 @@ T_WORD
            store values in Judy that can't be represented without
            upgrading the CPU. */
 
-        if ( ULONG_MAX < SvUV($arg) && SvUV($arg) != (Word_t)SvUV($arg) ) {
+        if ( SvUV($arg) != (UV)(Word_t)SvUV($arg) ) {
             warn(\"(UV)%lld truncated to (Word_t)%ld\", SvUV($arg), (Word_t)SvUV($arg));
         }
         $var = (Word_t)SvUV($arg);
