@@ -1,23 +1,41 @@
 Revision history for Judy
 
+0.13 - Sun Apr  5 14:28:00 2009
+
+897dc7a7b3f7b0c83bc8d56461e8ced83b0f0b13 Removed (char*) typecast from Index - wasn't needed
+96e01701727ffcc93525525e5f8146a66992ae68 Removed accidental Safefree from Judy::SL::Last
+bfd975011f2b2b444369edb3783deff75a516ec3 Judy::SL::Next copies Index like I thought I committed previously
+39494e19dcb530d09400773e09f37642d414bfd9 added blank space between packages in XS to make it easier to scan
+163a8281f4f580d6b20b249bcddce85c51a221b1 add PWord_t type for more conciseness
+1cabdcb08efb4f4e7b50635bfdb8a6aac4e6654c Judy::SL First, Next, Last, Pref don't clobber SvPV now
+
 0.12 - Sun Jan  4 02:06:00 2009
-        croak() instead of exit(1) on error
-        Complete documentation overhaul
-        More careful integer truncation detection
+
+50d6c6ac4862d77e53d4791ada9a3fba1ca76bb4 Updating documentation
+bb13e254151eccd773168771b310463ce50060be Use perl's croak() on error instead of Judy's fprintf(stderr,..);exit(1).
+2d77ac9de985ab64b210b4fa9b06602b255671c5 More careful checking for data truncation
 
 0.11 - Sat Jan  3 19:22:00 2009
-        Allow utf8 perl strings
-        Typemap handles SET magic for Word_t, Word_t*, Pvoid_t types
-        Introduce typedef Str for uniform SV*->((char*),STRLEN) capture
-        Silence warning, casting from (char*) to (uint8_t*) and (const uint8_t*)'
-        Ptr2String2 now triggers set magic
-        Now ignoring _Inline
-        Dropping const-{c,xs}.inc - it was throwing annoying warnings
-        Adding inc/My/Paths.pm to put -I, -l, -L cc handling in a single place
-        Currently using Inline::C for some magic tests. Plan is to remove Inline.
+
+5d26deb1395bea994f7a8157634e5b6ed53328e7 Adding several files
+0bede2d8ad33c03e5e29a3496b45c95f48978819 Ignore _Inline
+2272efcf967c5eba430a31f381280b296fb0b834 Remove const-c.inc, const-xs.inc harder
+ff9139907fc84a76844210930bbc37d9f502c9bc Allow Str.length=0 for easy use of null terminated strings
+241532e026a6496dc209fb256c2b7fa2c4e1d4b0 Removing const-{c,xs}.inc
+8b4ed49a13382c553d7d6cae3bbc091dc1ecd293 Adding Inline::C
+01a5464fd759fe4aae61413ced8d3da5de619fde Introduce typedef Str for uniform SV*->((char*),STRLEN) capture Silence warning, casting from (char*) to (uint8_t*) and
+ae3d809744caf37986d2ef164834c25a388350a3 Use PUSHp to get SV-set magic
+a28db4ae8179dc3ecfd540ad997b8dec2227e8ec Silence warning, casting from (char*) to (uint8_t*) and (const uint8_t*)
+07caf7318a41389fff5c7096865ed4b5125e1650 Starter test
+7497b8d674b4004a11c21b058f10fa86ee2aeeb0 Dox
+f08a2639b73f37d4c2c6814485267d370abf6135 Rename t/40l.t to t/40trunc.t
+93e82fc25e593e705abec167b685fae273b36500 syntax
+31f1eaba97aef0ec4efecae1a1c186113dda6168 Don' invoke set magic twice
+87f96b8fd57bd690bf732de925d73d48afad3477 Allow utf8 perl strings Refactored a smidge of XS so string handling is now strictly in the typemap Typemap handles SET
 
 0.10 - Sat Dec 26 15:06:00 2008
-        Require Alien::Judy 0.06+
+
+0061f4e2792a48f3bb1ea83e98ca54beafcf2e2b Require Alien::Judy 0.06
 
 0.09 - Sat Dec 26 12:59:00 2008
         API changes:
