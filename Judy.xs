@@ -727,7 +727,6 @@ ljsl_Last( PJSLArray, Key )
             PUSHs(sv_2mortal(newSVuv(*PValue)));
             PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
-        Safefree(Index);
 
 void
 ljsl_Prev( PJSLArray, Key )
