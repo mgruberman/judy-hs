@@ -45,6 +45,11 @@
 #	define DEADBEEF 0xDEADBEEFDEADBEEF
 #endif
 
+
+
+
+
+
 MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
 PROTOTYPES: ENABLE
@@ -69,6 +74,11 @@ lj_JLAP_INVALID()
         RETVAL = JLAP_INVALID;
     OUTPUT:
         RETVAL
+
+
+
+
+
 
 MODULE = Judy PACKAGE = Judy::Mem PREFIX = ljme_
 
@@ -127,6 +137,11 @@ Poke(ptr,v)
         Word_t v
     CODE:
         *ptr = v;
+
+
+
+
+
 
 MODULE = Judy PACKAGE = Judy::1 PREFIX = lj1_
 
@@ -352,6 +367,11 @@ lj1_PrevEmpty( PJ1Array, Key )
             XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
+
+
+
+
+
 MODULE = Judy PACKAGE = Judy::L PREFIX = ljl_
 
 Word_t*
@@ -572,6 +592,11 @@ ljl_PrevEmpty( PJLArray, Key )
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
         }
+
+
+
+
+
 
 MODULE = Judy PACKAGE = Judy::SL PREFIX = ljsl_
 
@@ -799,6 +824,11 @@ ljhs_Free( PJHSArray )
     OUTPUT:
         PJHSArray
         RETVAL
+
+
+
+
+
 
 MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
