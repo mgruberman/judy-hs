@@ -115,7 +115,7 @@ ljme_Free(ptr)
 
 IV
 Peek(ptr)
-        Word_t *ptr
+        PWord_t ptr
     CODE:
         RETVAL = (Word_t)*ptr;
     OUTPUT:
@@ -581,7 +581,7 @@ ljsl_Set( PJSLArray, Key, Value )
         Str Key
         Word_t Value
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     CODE:
         if ( Key.length > MAXLINELEN ) {
            croak("Sorry, can't store keys longer than MAXLINELEN for now. This is a bug.");
@@ -614,7 +614,7 @@ ljsl_Get( PJSLArray, Key )
         Pvoid_t PJSLArray
         Str Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
         JSLG(PValue,PJSLArray,(const uint8_t*)Key.ptr);
@@ -642,7 +642,7 @@ ljsl_First( PJSLArray, Key )
         Pvoid_t PJSLArray
         Str Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue  = PDEADBEEF;
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
@@ -664,7 +664,7 @@ ljsl_Next( PJSLArray, Key )
         Pvoid_t PJSLArray
         Str Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
         JSLN(PValue,PJSLArray,(uint8_t*)Key.ptr);

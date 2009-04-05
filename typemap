@@ -1,5 +1,6 @@
 TYPEMAP
 Pvoid_t T_PVOID
+PWord_t T_WORD_PTR
 Word_t* T_WORD_PTR
 Word_t T_WORD
 Str T_STR
