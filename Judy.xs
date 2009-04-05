@@ -690,15 +690,20 @@ ljsl_Next( PJSLArray, Key )
         Str Key
     INIT:
         PWord_t PValue = PDEADBEEF;
+        uint8_t Index[MAXLINELEN];
     PPCODE:
+        /* Copy Index because it is both input and output. */
+        Copy(Key.ptr,Index,Key.length,uint8_t);
+        Index[Key.length] = 0;
+
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
-        JSLN(PValue,PJSLArray,(uint8_t*)Key.ptr);
+        JSLN(PValue,PJSLArray,Index);
 
         if ( PValue ) {
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-	    PUSHs(sv_2mortal(newSVpv(Key.ptr,0)));
+            PUSHs(sv_2mortal(newSVpv(Index,0)));
         }
 
 void
