@@ -613,7 +613,10 @@ ljsl_Set( PJSLArray, Key, Value )
         }
 
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        JSLI(PValue,PJSLArray,(const uint8_t*)Key.ptr);
+        PerlIO_printf(PerlIO_stdout(),"JSLI(%d,%d,%s)\n",(int)PValue,(int)PJSLArray,(char*)Key.ptr);
+        PerlIO_printf(PerlIO_stdout(),"Key.ptr=%s Key.length=%d\n",Key.ptr,Key.length);
+        JSLI(PValue,PJSLArray,(char*)Key.ptr);
+        PerlIO_printf(PerlIO_stdout(),"PValue=%d\n",(int)PValue);
         *PValue = Value;
         RETVAL = PValue;
     OUTPUT:
