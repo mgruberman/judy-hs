@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use vars '@MAGIC';
-use Test::More 'no_plan';
+use Test::More tests => 23;;
 use Judy::Mem qw( String2Ptr Ptr2String Ptr2String2 Free );
 
 tie my($magic), 'MAGIC';
