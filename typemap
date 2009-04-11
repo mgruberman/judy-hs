@@ -44,7 +44,12 @@ T_WORD
 
 OUTPUT
 T_STR
-    sv_setpvn($arg, $var.ptr, $var.length ? $var.length : strlen( $var.ptr ));
+    if ( SvOK($arg) ) {
+        sv_setpvn($arg, $var.ptr, $var.length ? $var.length : strlen( $var.ptr ));
+    }
+    else {
+        sv_setsv($arg,newSVpv($var.ptr, $var.length ? $var.length : strlen( $var.ptr )));
+    }
 
 T_PVOID
     if ( SvOK($arg) ) {
@@ -56,7 +61,18 @@ T_PVOID
     }
 
 T_WORD
-    sv_setiv($arg, $var);
+    if ( SvOK($arg) ) {
+        sv_setiv($arg, $var);
+    }
+    else {
+        sv_setsv($arg,newSViv($var));
+    }
+    
 
 T_WORD_PTR
-    sv_setiv($arg, PTR2IV($var));
+    if ( SvOK($arg) ) {
+        sv_setiv($arg, PTR2IV($var));
+    }
+    else {
+        sv_setsv($arg,newSViv(PTR2IV($var)));
+    }
