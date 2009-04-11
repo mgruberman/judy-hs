@@ -600,7 +600,7 @@ ljl_PrevEmpty( PJLArray, Key )
 
 MODULE = Judy PACKAGE = Judy::SL PREFIX = ljsl_
 
-Word_t*
+PWord_t
 ljsl_Set( PJSLArray, Key, Value )
         Pvoid_t PJSLArray
         Str Key
@@ -773,7 +773,7 @@ ljhs_Duplicates( PJHSArray, Key )
 
 
 
-Word_t*
+PWord_t
 ljhs_Set( PJHSArray, Key, Value )
         Pvoid_t PJHSArray
         Str Key
