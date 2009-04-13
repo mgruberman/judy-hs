@@ -29,23 +29,32 @@
    and post the patch. */
 #include "Judy.h"
 
+
 /* pjudy.h includes whatever I need to share between Judy.xs and the
    test suite. */
 #include "pjudy.h"
 
 #if PTRSIZE == 4
-#	define PDEADBEEF (void*)0xDEADBEEF
+#	define PDEADBEEF (void*)0xdeadbeef
 #else
-#	define PDEADBEEF (void*)0xDEADBEEFDEADBEEF
+#	define PDEADBEEF (void*)0xdeadbeefdeadbeef
 #endif
 
 #if LONGSIZE == 4
-#	define DEADBEEF 0xDEADBEEF
+#	define DEADBEEF 0xdeadbeef
 #else
-#	define DEADBEEF 0xDEADBEEFDEADBEEF
+#	define DEADBEEF 0xdeadbeefdeadbeef
 #endif
 
 
+int trace = 0;
+#define OOGA(...)\
+  do {\
+    if ( trace ) {\
+      PerlIO_printf(PerlIO_stdout(),__VA_ARGS__);\
+      PerlIO_flush(PerlIO_stdout());\
+    }\
+  } while (0);
 
 
 
@@ -58,6 +67,12 @@ PROTOTYPES: ENABLE
 getting called anyway.
 
 =cut
+
+void
+trace( x )
+        int x
+    CODE:
+        trace = x;
 
 Pvoid_t
 lj_PJERR()
@@ -127,6 +142,8 @@ IV
 Peek(ptr)
         PWord_t ptr
     CODE:
+        OOGA("%s:%d Peek(0x%x)\n",__FILE__,__LINE__,ptr);
+        OOGA("%s:%d Peek(0x%x)=0x%x\n",__FILE__,__LINE__,ptr,*ptr);
         RETVAL = (Word_t)*ptr;
     OUTPUT:
         RETVAL
@@ -136,6 +153,7 @@ Poke(ptr,v)
         Word_t *ptr
         Word_t v
     CODE:
+        OOGA("%s:%d Poke(0x%x,0x%x)\n",__FILE__,__LINE__,ptr,v);
         *ptr = v;
 
 
@@ -152,7 +170,9 @@ lj1_Set( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
+        OOGA("%s:%d J1S(0x%x,0x%x,%d\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
         J1S(Rc_int,PJ1Array,Key);
+        OOGA("%s:%d Rc_int=%d PJ1Array=0x%x\n",__FILE__,__LINE__,Rc_int,PJ1Array);
 
         /* OUTPUT */
         RETVAL = Rc_int;
@@ -167,7 +187,9 @@ lj1_Unset( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
+        OOGA("%s:%d J1U(0x%x,0x%x,%d\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
         J1U(Rc_int,PJ1Array,Key);
+        OOGA("%s:%d Rc_int=%d PJ1Array=0x%x\n",__FILE__,__LINE__,Rc_int,PJ1Array);
 
         /* OUTPUT */
         RETVAL = Rc_int;
@@ -182,7 +204,9 @@ lj1_Test( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
+        OOGA("%s:%d J1T(0x%x,0x%x,%d\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
         J1T(Rc_int,PJ1Array,Key);
+        OOGA("%s:%d Rc_int=%d\n",__FILE__,__LINE__,Rc_int);
         RETVAL = Rc_int;
     OUTPUT:
         PJ1Array
@@ -265,7 +289,9 @@ lj1_First( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
+        OOGA("%s:%d J1F(0x%x,0x%x,%d\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
         J1F(Rc_int,PJ1Array,Key);
+        OOGA("%s:%d Rc_int=%x Key=0x%x\n",__FILE__,__LINE__,Rc_int,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -279,7 +305,9 @@ lj1_Next( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
+        OOGA("%s:%d J1N(0x%x,0x%x,%d\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
         J1N(Rc_int,PJ1Array,Key);
+        OOGA("%s:%d Rc_int=%x Key=0x%x\n",__FILE__,__LINE__,Rc_int,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -607,16 +635,20 @@ ljsl_Set( PJSLArray, Key, Value )
         Word_t Value
     INIT:
         PWord_t PValue = PDEADBEEF;
+        uint8_t Index[MAXLINELEN];
     CODE:
         if ( Key.length > MAXLINELEN ) {
            croak("Sorry, can't store keys longer than MAXLINELEN for now. This is a bug.");
         }
+        Copy((const char* const)Key.ptr,Index,(const int)Key.length,char);
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        PerlIO_printf(PerlIO_stdout(),"JSLI(%d,%d,%s)\n",(int)PValue,(int)PJSLArray,(char*)Key.ptr);
-        PerlIO_printf(PerlIO_stdout(),"Key.ptr=%s Key.length=%d\n",Key.ptr,Key.length);
-        JSLI(PValue,PJSLArray,(char*)Key.ptr);
-        PerlIO_printf(PerlIO_stdout(),"PValue=%d\n",(int)PValue);
+        OOGA("%s:%d JSLI(0x%x,0x%x,Index=\"%s\"@0x%x)\n",__FILE__,__LINE__,(int)PValue,(int)PJSLArray,Index,(int)&Index);
+        JSLI(PValue,PJSLArray,(const uint8_t* const)Index);
+        OOGA("%s:%d PJSLArray=0x%x\n",__FILE__,__LINE__,PJSLArray);
+        OOGA("%s:%d PValue=0x%x\n",__FILE__,__LINE__,(int)PValue);
+        OOGA("%s:%d Index=\"%s\"\n",__FILE__,__LINE__,Index);
         *PValue = Value;
         RETVAL = PValue;
     OUTPUT:
@@ -631,7 +663,11 @@ ljsl_Delete( PJSLArray, Key )
         int Rc_int = DEADBEEF;
     CODE:
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
+        OOGA("%s:%d JSLD(0x%x,0x%x,\"%s\"@0x%x\n",__FILE__,__LINE__,Rc_int,PJSLArray,Key.ptr,Key.ptr);
         JSLD(Rc_int,PJSLArray,(const uint8_t*)Key.ptr);
+        OOGA("%s:%d Rc_int=%d\n",__FILE__,__LINE__,Rc_int);
+        OOGA("%s:%d PJSLArray=0x%x\n",__FILE__,__LINE__,PJSLArray);
+        OOGA("%s:%d Key=\"%s\"@0x%x\n",__FILE__,__LINE__,Key.ptr,Key.ptr);
         RETVAL = Rc_int;
     OUTPUT:
         PJSLArray
@@ -643,9 +679,22 @@ ljsl_Get( PJSLArray, Key )
         Str Key
     INIT:
         PWord_t PValue = PDEADBEEF;
+        uint8_t Index[MAXLINELEN];
     PPCODE:
+        OOGA("%s:%d Copy(\"%s\",0x%x,%d,uint8_t)\n",__FILE__,__LINE__,Key.ptr,Index,Key.length);
+        Copy(Key.ptr,Index,Key.length,uint8_t);
+        Index[Key.length] = '\0';
+
+        OOGA("%s:%d PSLG(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Key.ptr,Key.length);
+
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        JSLG(PValue,PJSLArray,(const uint8_t*)Key.ptr);
+        JSLG(PValue,PJSLArray,Index);
+        OOGA("%s:%d PValue=0x%x\n",__FILE__,__LINE__,(int)PValue);
+        if ( PValue ) {
+            OOGA("%s:%d Value=0x%x\n",__FILE__,__LINE__,(int)*PValue);
+        }
+        else {
+        }
 
         if ( PValue ) {
             EXTEND(SP,2);
@@ -659,6 +708,7 @@ ljsl_Free( PJSLArray )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
+        OOGA("%s:%d JSLFA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,(int)PJSLArray);
         JSLFA(Rc_word,PJSLArray);
         RETVAL = Rc_word;
     OUTPUT:
@@ -674,11 +724,18 @@ ljsl_First( PJSLArray, Key )
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
+        OOGA("%s:%d Copy(\"%s\"@0x0%x,0x%x,%d,uint8_t)\n",__FILE__,__LINE__,Key.ptr,Key.ptr,Index,Key.length);
         Copy(Key.ptr,Index,Key.length,uint8_t);
-        Index[Key.length] = 0;
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */ 
+        OOGA("%s:%d JSLF(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
         JSLF(PValue,PJSLArray,Index);
+        OOGA("%s:%d PValue=0x%x\n",__FILE__,__LINE__,(int)PValue);
+        if ( PValue ) {
+            OOGA("%s:%d Value=0x%x\n",__FILE__,__LINE__,(int)*PValue);
+            OOGA("%s:%d Key=\"%s\"@0x%x\n",__FILE__,__LINE__,Index,Index);
+        }
 
         if ( PValue ) {
             EXTEND(SP,3);
@@ -696,11 +753,18 @@ ljsl_Next( PJSLArray, Key )
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
-        Copy(Key.ptr,Index,Key.length,uint8_t);
+        OOGA("%s:%d Copy(\"%s\"@0x0%x,0x%x,%d,uint8_t)\n",__FILE__,__LINE__,Key.ptr,Key.ptr,Index,Key.length);
+        Copy(Key.ptr,Index,Key.length,char);
         Index[Key.length] = 0;
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
+        OOGA("%s:%d JSLN(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
         JSLN(PValue,PJSLArray,Index);
+        OOGA("%s:%d PValue=0x%x\n",__FILE__,__LINE__,(int)PValue);
+        if ( PValue ) {
+            OOGA("%s:%d Value=0x%x\n",__FILE__,__LINE__,(int)*PValue);
+            OOGA("%s:%d Key=\"%s\"@0x%x\n",__FILE__,__LINE__,Index,Index);
+        }
 
         if ( PValue ) {
             EXTEND(SP,3);
