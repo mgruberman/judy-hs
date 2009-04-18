@@ -10,8 +10,8 @@ sub TIEHASH {
     
     # I wish I had := binding here.
     for ( $_[1] ) {
-        for ( $_->{ptrptr} ) {
-            $self[_ptrptr] = $_ if $_;
+        for ( $_->{ptrpath} ) {
+            $self[_ptrpath] = $_ if $_;
         }
         for ( $_->{ptr} ) {
             $self[_ptr]    = $_ if $_;
@@ -70,14 +70,12 @@ sub CLEAR {
 
 sub FIRSTKEY {
     my $ptr = $_[0]->ptr;
-    my ( undef, undef, $key ) = First( $ptr, '' );
-    return $key;
+    return First( $ptr, 0 );
 }
 
 sub NEXTKEY {
     my $ptr = $_[0]->ptr;
-    my ( undef, undef, $key ) = Next( $ptr, $_[1] );
-    return $key;
+    return Next( $ptr, $_[1] );
 }
 
 # Not implemented.

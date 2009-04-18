@@ -10,8 +10,8 @@ sub TIEHASH {
     
     # I wish I had := binding here.
     for ( $_[1] ) {
-        for ( $_->{ptrptr} ) {
-            $self[_ptrptr] = $_ if $_;
+        for ( $_->{ptrpath} ) {
+            $self[_ptrpath] = $_ if $_;
         }
         for ( $_->{ptr} ) {
             $self[_ptr]    = $_ if $_;
@@ -52,7 +52,7 @@ sub DELETE {
         return if ! defined $val;
     }
     
-    Delete( $optr, $_[1] );
+    Delete( $ptr, $_[1] );
     if ( $optr != $ptr ) {
         $_[0]->setptr( $ptr );
     }
@@ -81,7 +81,17 @@ sub NEXTKEY {
 }
 
 # Not implemented.
-sub SCALAR;
+sub SCALAR {
+    my $count = 0;
+    my $ptr = $_[0]->ptr;
+    my ( undef, undef, $key ) = First( $ptr, '' );
+    while ( defined $key ) {
+        ++ $count;
+        ( undef, undef, $key ) = Next( $ptr, $key );
+    }
+
+    return $count;
+}
 
 sub UNTIE {}
 

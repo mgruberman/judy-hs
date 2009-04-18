@@ -27,7 +27,7 @@ WriteMakefile(
         'Alien::Judy' => '0.06',
     },
     OPTIMIZE => '-g',
-    LIBS => [join ' ', @{ My::Paths::CCLIB() }, '-lJudy', '-lduma'],
+    LIBS => [join ' ', @{ My::Paths::CCLIB() }, '-lJudy'],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Judy-*' },
 );

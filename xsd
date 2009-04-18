@@ -1,0 +1,23 @@
+use strict;
+use warnings;
+use 5.010_000;
+use feature ':5.10';
+undef $/;
+$_ = <>;
+s{(?xm)
+  (?<chunk>
+    (?<indent>^\s+) OOGA\("%s:%d\ (?<fun>\w+) .+\n
+    \k{indent}      \k{fun}                   .+\n
+    \k{indent}      OOGA\("%s:%d\ \k{fun}     .+\n
+  )
+}{
+    my $fun_rx = qr/(?=$+{fun})/;
+
+    my @lines = $+{chunk} =~ /(.*\n)/g;
+    $lines[0] =~ s/$fun_rx/ /;
+    $lines[2] =~ s/$fun_rx/./;
+
+    join '', @lines;
+}ge;
+
+print;

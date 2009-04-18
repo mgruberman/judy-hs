@@ -23,7 +23,7 @@ sub set {
 
 sub delete {
     my $optr = my $ptr = $_[0]->ptr;
-    my $oldval = Judy::L::Unset( $ptr, $_[1] );
+    my $oldval = Judy::L::Delete( $ptr, $_[1] );
     if ( $optr != $ptr ) {
         $_[0]->setptr( $ptr );
     }
