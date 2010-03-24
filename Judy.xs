@@ -688,7 +688,7 @@ ljsl_First( PJSLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-            PUSHs(sv_2mortal(newSVpv(Index,0)));
+            PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
 void
@@ -710,7 +710,7 @@ ljsl_Next( PJSLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-            PUSHs(sv_2mortal(newSVpv(Index,0)));
+            PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
 void
@@ -732,7 +732,7 @@ ljsl_Last( PJSLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-            PUSHs(sv_2mortal(newSVpv(Index,0)));
+            PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
 void
@@ -754,7 +754,7 @@ ljsl_Prev( PJSLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-            PUSHs(sv_2mortal(newSVpv(Index,0)));
+            PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
 
