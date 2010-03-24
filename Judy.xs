@@ -643,9 +643,13 @@ ljsl_Get( PJSLArray, Key )
         Str Key
     INIT:
         PWord_t PValue = PDEADBEEF;
+        uint8_t Index[MAXLINELEN];
     PPCODE:
+        Copy(Key.ptr,Index,Key.length,uint8_t);
+        Index[Key.length] = '\0';
+
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        JSLG(PValue,PJSLArray,(const uint8_t*)Key.ptr);
+        JSLG(PValue,PJSLArray,Index);
 
         if ( PValue ) {
             EXTEND(SP,2);
