@@ -240,7 +240,7 @@ lj1_Free( PJ1Array )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
-        JLFA(Rc_word,PJ1Array);
+        J1FA(Rc_word,PJ1Array);
         RETVAL = Rc_word;
     OUTPUT:
         PJ1Array
@@ -335,7 +335,7 @@ lj1_NextEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        JLNE(Rc_int,PJ1Array,Key);
+        J1NE(Rc_int,PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -348,7 +348,7 @@ lj1_LastEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        JLLE(Rc_int,PJ1Array,Key);
+        J1LE(Rc_int,PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -361,7 +361,7 @@ lj1_PrevEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        JLPE(Rc_int,PJ1Array,Key);
+        J1PE(Rc_int,PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
