@@ -34,15 +34,15 @@
 #include "pjudy.h"
 
 #if PTRSIZE == 4
-#	define PDEADBEEF (void*)0xDEADBEEF
+#	define PDEADBEEF (void*)0xdeadbeef
 #else
-#	define PDEADBEEF (void*)0xDEADBEEFDEADBEEF
+#	define PDEADBEEF (void*)0xdeadbeefdeadbeef
 #endif
 
 #if LONGSIZE == 4
-#	define DEADBEEF 0xDEADBEEF
+#	define DEADBEEF 0xdeadbeef
 #else
-#	define DEADBEEF 0xDEADBEEFDEADBEEF
+#	define DEADBEEF 0xdeadbeefdeadbeef
 #endif
 
 
