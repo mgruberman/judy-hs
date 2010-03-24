@@ -607,13 +607,16 @@ ljsl_Set( PJSLArray, Key, Value )
         Word_t Value
     INIT:
         PWord_t PValue = PDEADBEEF;
+        uint8_t Index[MAXLINELEN];
     CODE:
         if ( Key.length > MAXLINELEN ) {
            croak("Sorry, can't store keys longer than MAXLINELEN for now. This is a bug.");
         }
+        Copy((const char* const)Key.ptr,Index,(const int)Key.length,char);
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        JSLI(PValue,PJSLArray,(const uint8_t*)Key.ptr);
+        JSLI(PValue,PJSLArray,(const uint8_t* const)Index);
         *PValue = Value;
         RETVAL = PValue;
     OUTPUT:
