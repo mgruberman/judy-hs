@@ -34,4 +34,13 @@ require Judy::L;
 require Judy::SL;
 require Judy::HS;
 
+# Load the OO interfaces.
+#
+require Judy::_obj;
+
+# Load the tie interface.
+# 
+require Judy::_tie;
+Judy::_tie->import;
+
 1;

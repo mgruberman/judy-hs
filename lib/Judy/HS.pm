@@ -9,5 +9,8 @@ use Sub::Exporter -setup => {
 
 require Judy; # Beware, Judy.pm also loads Judy::HS.
 
+require Judy::HS::_tie;
+require Judy::HS::_obj;
+
 no warnings;
 'Warning! The consumption of alcohol may cause you to think you have mystical kung-fu powers.'
