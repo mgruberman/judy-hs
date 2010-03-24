@@ -34,15 +34,15 @@
 #include "pjudy.h"
 
 #if PTRSIZE == 4
-#	define PDEADBEEF (void*)0xdeadbeef
+#        define PDEADBEEF (void*)0xdeadbeef
 #else
-#	define PDEADBEEF (void*)0xdeadbeefdeadbeef
+#        define PDEADBEEF (void*)0xdeadbeefdeadbeef
 #endif
 
 #if LONGSIZE == 4
-#	define DEADBEEF 0xdeadbeef
+#        define DEADBEEF 0xdeadbeef
 #else
-#	define DEADBEEF 0xdeadbeefdeadbeef
+#        define DEADBEEF 0xdeadbeefdeadbeef
 #endif
 
 
@@ -229,10 +229,10 @@ lj1_Count( PJ1Array, Key1, Key2 )
         }
         else {
             if ( JU_ERRNO(&JError) == JU_ERRNO_NONE ) {
-	    	RETVAL = 0;
+                RETVAL = 0;
             }
             else if ( JU_ERRNO(&JError) == JU_ERRNO_FULL ) {
-	        /* On a 32-bit machine, this value is
+                /* On a 32-bit machine, this value is
                    indistinguishable from the count of 2^32. On a
                    64-bit machine, this value cannot be triggered. */
                 RETVAL = ULONG_MAX;
@@ -556,7 +556,7 @@ ljl_First( PJLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-	    PUSHs(sv_2mortal(newSVuv(Key)));
+            PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -577,7 +577,7 @@ ljl_Next( PJLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-	    PUSHs(sv_2mortal(newSVuv(Key)));
+            PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -599,7 +599,7 @@ ljl_Last( PJLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-	    PUSHs(sv_2mortal(newSVuv(Key)));
+            PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -620,7 +620,7 @@ ljl_Prev( PJLArray, Key )
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
-	    PUSHs(sv_2mortal(newSVuv(Key)));
+            PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 void
@@ -821,7 +821,7 @@ ljsl_Next( PJSLArray, Key )
 
         if ( PValue ) {
             OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-	    OOGA("%x)\n",*PValue);
+            OOGA("%x)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
