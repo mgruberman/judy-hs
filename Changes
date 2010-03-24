@@ -1,5 +1,23 @@
 Revision history for Judy
 
+0.14 - Wed Mar 23 16:25:00 2010
+
+33a86ab42895c22b42f0e04b9b97c0b2f9e04258 Adding tied and object interfaces
+8a99855d8da7a2e53fac283caa51f93231205984 Expand tabs
+8aca5f37ae1e09b753db35d3d0ff0c345e815789 Add comments
+c743f6269187baf969841dbb6d0d68e7099efac1 Add debugging interface
+e17d8ff7e849c04b36fa53d4bd2a274246671471 Everyone wants debugging symbols
+34f79959ba649f879c818f479666947d2043d827 Be clearer about writing a null char to strings requiring null termination
+54f31540268b8eb7966da7a8034a113ca13c0019 Cast Index to char* Judy::SL::(First,Next,Last,Prev)
+728fae7e2e3094b00342564196dd6257099d7000 Judy::SL::Get was setting the key's C value by accident
+9df3be3646b7bb261011d7d8a1b9723095fb1048 Judy::SL::Set was setting the key's C value by accident
+ae661a371f86457ae62b9cffe720a654b7be8947 Judy::1:: Free, NextEmpty, LastEmpty, PrevEmpty used completely wrong APIs
+f8263552fbb84dd5372f6be1c1145e4fc6654403 Lowercase deadbeef
+51b10fac28e49e82d93c894e73b143d01841044c Mortalize the output when creating a judy pointer
+4e0245d2a81a1e695ed370c750a7c9c1a259b318 Word_t* -> PWord_t for conciseness
+8a92184856b014cd043653c34960d40f554368b9 t/41typemap.t has 23 tests
+0f5f24c85568fa781ad05145caff12f2454d6609 Instantiate target SVs before calling sv_set{iv,pvn}
+
 0.13 - Sun Apr  5 14:28:00 2009
 
 897dc7a7b3f7b0c83bc8d56461e8ced83b0f0b13 Removed (char*) typecast from Index - wasn't needed
