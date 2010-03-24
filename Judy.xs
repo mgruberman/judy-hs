@@ -679,7 +679,7 @@ ljsl_First( PJSLArray, Key )
     PPCODE:
         /* Copy Index because it is both input and output. */
         Copy(Key.ptr,Index,Key.length,uint8_t);
-        Index[Key.length] = 0;
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */ 
         JSLF(PValue,PJSLArray,Index);
@@ -701,7 +701,7 @@ ljsl_Next( PJSLArray, Key )
     PPCODE:
         /* Copy Index because it is both input and output. */
         Copy(Key.ptr,Index,Key.length,uint8_t);
-        Index[Key.length] = 0;
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
         JSLN(PValue,PJSLArray,Index);
@@ -723,7 +723,7 @@ ljsl_Last( PJSLArray, Key )
     PPCODE:
         /* Copy Index because it is both input and output. */
         Copy(Key.ptr,Index,Key.length,uint8_t);
-        Index[Key.length] = 0;
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
         JSLL(PValue,PJSLArray,Index);
@@ -745,7 +745,7 @@ ljsl_Prev( PJSLArray, Key )
     PPCODE:
         /* Copy Index because it is both input and output. */
         Copy(Key.ptr,Index,Key.length,uint8_t);
-        Index[Key.length] = 0;
+        Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
         JSLP(PValue,PJSLArray,Index);
