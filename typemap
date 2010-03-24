@@ -57,7 +57,7 @@ T_PVOID
     }
     else {
             /* Handles the case when we're passed an undef */
-            sv_setsv($arg,newSViv(PTR2IV($var)));
+            sv_setsv($arg,sv_2mortal(newSViv(PTR2IV($var))));
     }
 
 T_WORD
