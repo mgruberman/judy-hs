@@ -143,7 +143,7 @@ sub STORE   { push @::MAGIC, [STORE=>${$_[0]},$_[1]]; ${$_[0]} = $_[1] }
 sub UNTIE {}
 sub DESTROY {}
 
-use Inline C => <<'.', INC => join( ' ', @{My::Paths::CCINC()} ), LIBS => join( ' ', @{My::Paths::CCLIB()}, '-lJudy' ), NAME => 'MAGIC', XSMODE => 1, CLEAN_BUILD_AREA => 0, CLEAN_AFTER_BUILD => 0, TYPEMAPS => ['typemap'];
+use Inline C => <<'.', INC => join( ' ', @{My::Paths::CCINC()} ), LIBS => join( ' ', @{My::Paths::CCLIB()}, '-lJudy' ), NAME => 'MAGIC', XSMODE => 1, CLEAN_BUILD_AREA => 0, CLEAN_AFTER_BUILD => 0, TYPEMAPS => 'typemap';
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
