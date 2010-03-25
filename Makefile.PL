@@ -21,6 +21,7 @@ WriteMakefile(
     INC => join( ' ', @{ My::Paths::CCINC() } ),
     PREREQ_PM => {
         'Test::More' => 0,
+        'Test::Deep' => 0,
 	'Sub::Exporter' => 0,
 	'ExtUtils::CBuilder' => 0,
         'Inline::C' => 0, # for testing

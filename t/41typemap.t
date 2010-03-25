@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use vars '@MAGIC';
 use Test::More tests => 23;;
+use Test::Deep;
 use Judy::Mem qw( String2Ptr Ptr2String Ptr2String2 Free );
 
 tie my($magic), 'MAGIC';
@@ -40,7 +41,11 @@ RunTest {
 ${ tied $magic } = 5;
 RunTest {
     MAGIC::get_Word_t( $magic );
-    is_deeply( \@MAGIC, [['FETCH',5]], 'Fetch Word_t' );
+    cmp_deeply(
+        \@MAGIC,
+        array_each(all(['FETCH',5])),
+        'Fetch Word_t'
+    );
     is( ${tied $magic}, 5, 'Fetch Word_t' );
 };
 
