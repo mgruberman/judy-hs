@@ -102,7 +102,6 @@ void*
 ljme_String2Ptr(in)
         Str in
     INIT:
-        size_t length = DEADBEEF;
         void *out = PDEADBEEF;
     CODE:
         Newx(out,in.length,char);
