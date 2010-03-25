@@ -51,14 +51,19 @@ RunTest {
 
 RunTest {
     $magic = MAGIC::set_Word_t1();
+    @MAGIC =
+        grep { $_->[0] ne 'FETCH' }
+        @MAGIC;
     is_deeply( \@MAGIC,[['STORE',5,6]], 'Set Word_t via RETVAL' )
 	or diag( Dumper( \ @MAGIC ) );
     is( ${tied $magic}, 6, 'Set Word_t via RETVAL' );
 };
 RunTest {
     MAGIC::set_Word_t2( $magic );
-    is_deeply( \@MAGIC,[['FETCH',6],
-    			['STORE',6,7]], 'Set Word_t via OUTPUT:' );
+    @MAGIC =
+        grep { $_->[0] ne 'FETCH' }
+        @MAGIC;
+    is_deeply( \@MAGIC,[['STORE',6,7]], 'Set Word_t via OUTPUT:' );
     is( ${tied $magic}, 7, 'Set Word_t via OUTPUT:' );
 };
 
