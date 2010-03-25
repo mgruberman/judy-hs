@@ -1,5 +1,9 @@
 Revision history for Judy
 
+0.17 - Wed Mar 23 23:28:00 2010
+
+1e07c856ab39017fedb133590c664eaf0b5490bf Adjust tests to accomodate extra FETCH requests on behalf of perl-5.8.7
+
 0.16 - Wed Mar 23 23:10:00 2010
 
 f1a58a728fde2fe568f0d63411fe28af42a8aef7 Use Test::Deep to work-around perl-5.8.7 which would FETCH *many* times against a tied value and would break t/41typemap.t for no good reason
