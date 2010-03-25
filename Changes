@@ -1,5 +1,9 @@
 Revision history for Judy
 
+0.15 - Wed Mar 23 21:55:00 2010
+
+322dbba36177b6892511bacf2a93f8c48ab7b773 Inline::C accepts a *string* in TYPEMAP, not array
+
 0.14 - Wed Mar 23 16:25:00 2010
 
 33a86ab42895c22b42f0e04b9b97c0b2f9e04258 Adding tied and object interfaces
