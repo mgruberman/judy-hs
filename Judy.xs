@@ -104,8 +104,9 @@ ljme_String2Ptr(in)
     INIT:
         void *out = PDEADBEEF;
     CODE:
-        Newx(out,in.length,char);
+        Newx(out,in.length + 1,char);
         Copy(in.ptr,out,in.length,char);
+        *((char*)(out + in.length)) = '\0';
         RETVAL = out;
     OUTPUT:
         RETVAL
