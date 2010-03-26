@@ -141,9 +141,9 @@ IV
 Peek(ptr)
         PWord_t ptr
     CODE:
-        OOGA("%s:%d Peek(0x%x)\n",__FILE__,__LINE__,ptr);
-        OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,ptr);
-        OOGA("%x\n",*ptr);
+        OOGA("%s:%d Peek(%#lx)\n",__FILE__,__LINE__,(long)ptr);
+        OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)ptr);
+        OOGA("%#lx\n",*ptr);
         RETVAL = (Word_t)*ptr;
     OUTPUT:
         RETVAL
@@ -153,7 +153,7 @@ Poke(ptr,v)
         PWord_t ptr
         Word_t v
     CODE:
-        OOGA("%s:%d Poke(0x%x,0x%x)\n",__FILE__,__LINE__,ptr,v);
+        OOGA("%s:%d Poke(%#lx,%#lx)\n",__FILE__,__LINE__,(long)ptr,v);
         *ptr = v;
 
 
@@ -170,9 +170,9 @@ lj1_Set( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
-        OOGA("%s:%d  J1S(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1S(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1S(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1S(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1S(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         RETVAL = Rc_int;
     OUTPUT:
@@ -186,9 +186,9 @@ lj1_Unset( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
-        OOGA("%s:%d  J1U(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1U(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1U(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1U(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1U(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         RETVAL = Rc_int;
     OUTPUT:
@@ -202,9 +202,9 @@ lj1_Test( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
-        OOGA("%s:%d  J1T(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1T(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1T(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1T(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1T(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         RETVAL = Rc_int;
     OUTPUT:
         PJ1Array
@@ -219,9 +219,9 @@ lj1_Count( PJ1Array, Key1, Key2 )
         Word_t Rc_word = DEADBEEF;
         JError_t JError;
     CODE:
-        OOGA("%s:%d Judy1Count(0x%x,0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PJ1Array,Key1,Key2,&JError);
+        OOGA("%s:%d Judy1Count(%#lx,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PJ1Array,Key1,Key2,(long)&JError);
         Rc_word = Judy1Count(PJ1Array,Key1,Key2,&JError);
-        OOGA("%s:%d Judy1Count(0x%x,0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PJ1Array,Key1,Key2,&JError);
+        OOGA("%s:%d Judy1Count(%#lx,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PJ1Array,Key1,Key2,(long)&JError);
         if ( Rc_word ) {
             RETVAL = Rc_word;
         }
@@ -254,9 +254,9 @@ lj1_Nth( PJ1Array, Nth )
         Word_t Index = DEADBEEF;
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1BC(0x%x,0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Nth,Index);
+        OOGA("%s:%d  J1BC(%#x,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Nth,Index);
         J1BC(Rc_int,PJ1Array,Nth,Index);
-        OOGA("%s:%d .J1BC(0x%x,0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Nth,Index);
+        OOGA("%s:%d .J1BC(%#x,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Nth,Index);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSViv(Index)));
@@ -268,9 +268,9 @@ lj1_Free( PJ1Array )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
-        OOGA("%s:%d  J1FA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJ1Array);
+        OOGA("%s:%d  J1FA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJ1Array);
         J1FA(Rc_word,PJ1Array);
-        OOGA("%s:%d .J1FA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJ1Array);
+        OOGA("%s:%d .J1FA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJ1Array);
         RETVAL = Rc_word;
     OUTPUT:
         PJ1Array
@@ -282,7 +282,9 @@ lj1_MemUsed( PJ1Array )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
+        OOGA("%s:%d  M1MU(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJ1Array);
         J1MU(Rc_word,PJ1Array);
+        OOGA("%s:%d  M1MU(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJ1Array);
         RETVAL = Rc_word;
     OUTPUT:
         PJ1Array
@@ -295,9 +297,9 @@ lj1_First( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1F(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1F(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1F(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1F(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1F(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -311,9 +313,9 @@ lj1_Next( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1N(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1N(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1N(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1N(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1N(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -328,9 +330,9 @@ lj1_Last( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1L(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1L(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1L(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1L(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1L(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -344,9 +346,9 @@ lj1_Prev( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1P(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1P(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1P(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1P(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1P(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -359,9 +361,9 @@ lj1_FirstEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1FE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1FE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1FE(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1FE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1FE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -375,9 +377,9 @@ lj1_NextEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1NE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1NE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1NE(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1NE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1NE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -390,9 +392,9 @@ lj1_LastEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1LE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1LE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1LE(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1LE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1LE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -405,9 +407,9 @@ lj1_PrevEmpty( PJ1Array, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  J1PE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d  J1PE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
         J1PE(Rc_int,PJ1Array,Key);
-        OOGA("%s:%d .J1PE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
+        OOGA("%s:%d .J1PE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -426,11 +428,11 @@ ljl_Set( PJLArray, Key, Value )
         Word_t Key
         Word_t Value
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     CODE:
-        OOGA("%s:%d  JLI(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d  JLI(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         JLI(PValue,PJLArray,Key);
-        OOGA("%s:%d .JLI(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d .JLI(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         *PValue = Value;
         RETVAL = PValue;
     OUTPUT:
@@ -445,9 +447,9 @@ ljl_Delete( PJLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
-        OOGA("%s:%d  JLD(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d  JLD(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
         JLD(Rc_int,PJLArray,Key);
-        OOGA("%s:%d .JLD(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d .JLD(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
         RETVAL = Rc_int;
     OUTPUT:
         PJLArray
@@ -460,13 +462,13 @@ ljl_Get( PJLArray, Key )
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLG(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d  JLG(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         JLG(PValue,PJLArray,Key);
-        OOGA("%s:%d .JLG(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d .JLG(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x,0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx,",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,2);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -480,9 +482,9 @@ ljl_Count( PJLArray, Key1, Key2 )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
-        OOGA("%s:%d  JLC(0x%x,0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray,Key1,Key2);
+        OOGA("%s:%d  JLC(%#lx,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray,Key1,Key2);
         JLC(Rc_word,PJLArray,Key1,Key2);
-        OOGA("%s:%d .JLC(0x%x,0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray,Key1,Key2);
+        OOGA("%s:%d .JLC(%#lx,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray,Key1,Key2);
 
         RETVAL = Rc_word;
     OUTPUT:
@@ -497,13 +499,13 @@ ljl_Nth( PJLArray, Nth )
         Word_t Index = DEADBEEF;
         PWord_t PValue = PDEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLBC(0x%x,0x%x,%d,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray,Nth,Index);
+        OOGA("%s:%d  JLBC(%#lx,%#lx,%ld,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray,Nth,Index);
         JLBC(PValue,PJLArray,Nth,Index);
-        OOGA("%s:%d .JLBC(0x%x,0x%x,%d,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray,Nth,Index);
+        OOGA("%s:%d .JLBC(%#lx,%#lx,%ld,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray,Nth,Index);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -516,9 +518,9 @@ ljl_Free( PJLArray )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
-        OOGA("%s:%d  JLFA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray);
+        OOGA("%s:%d  JLFA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray);
         JLFA(Rc_word,PJLArray);
-        OOGA("%s:%d .JLFA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray);
+        OOGA("%s:%d .JLFA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray);
 
         RETVAL = Rc_word;
     OUTPUT:
@@ -531,9 +533,9 @@ ljl_MemUsed( PJLArray )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
-        OOGA("%s:%d  JLMU(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray);
+        OOGA("%s:%d  JLMU(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray);
         JLMU(Rc_word,PJLArray);
-        OOGA("%s:%d .JLMU(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray);
+        OOGA("%s:%d .JLMU(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray);
 
         RETVAL = Rc_word;
     OUTPUT:
@@ -546,13 +548,13 @@ ljl_First( PJLArray, Key )
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLF(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d  JLF(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         JLF(PValue,PJLArray,Key);
-        OOGA("%s:%d .JLF(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d .JLF(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -565,15 +567,15 @@ ljl_Next( PJLArray, Key )
         Pvoid_t PJLArray
         Word_t Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLN(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d  JLN(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         JLN(PValue,PJLArray,Key);
-        OOGA("%s:%d .JLN(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d .JLN(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -587,15 +589,15 @@ ljl_Last( PJLArray, Key )
         Pvoid_t PJLArray
         Word_t Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLL(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d  JLL(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         JLL(PValue,PJLArray,Key);
-        OOGA("%s:%d .JLL(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d .JLL(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -608,15 +610,15 @@ ljl_Prev( PJLArray, Key )
         Pvoid_t PJLArray
         Word_t Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLP(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d  JLP(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
         JLP(PValue,PJLArray,Key);
-        OOGA("%s:%d .JLP(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
+        OOGA("%s:%d .JLP(%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJLArray,Key);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -630,9 +632,9 @@ ljl_FirstEmpty( PJLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLFE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d  JLFE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
         JLFE(Rc_int,PJLArray,Key);
-        OOGA("%s:%d .JLFE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d .JLFE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -646,9 +648,9 @@ ljl_NextEmpty( PJLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLNE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d  JLNE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
         JLNE(Rc_int,PJLArray,Key);
-        OOGA("%s:%d .JLNE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d .JLNE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -661,9 +663,9 @@ ljl_LastEmpty( PJLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLLE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d  JLLE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
         JLLE(Rc_int,PJLArray,Key);
-        OOGA("%s:%d .JLLE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d .JLLE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -676,9 +678,9 @@ ljl_PrevEmpty( PJLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
-        OOGA("%s:%d  JLPE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d  JLPE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
         JLPE(Rc_int,PJLArray,Key);
-        OOGA("%s:%d .JLPE(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJLArray,Key);
+        OOGA("%s:%d .JLPE(0x%x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJLArray,Key);
 
         if ( Rc_int ) {
             XPUSHs(sv_2mortal(newSVuv(Key)));
@@ -707,13 +709,13 @@ ljsl_Set( PJSLArray, Key, Value )
         Index[Key.length] = '\0';
 
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        OOGA("%s:%d  JSLI(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,(int)PValue,(int)PJSLArray,Index,(int)&Index);
+        OOGA("%s:%d  JSLI(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)&Index);
         JSLI(PValue,PJSLArray,(const uint8_t* const)Index);
-        OOGA("%s:%d .JSLI(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,(int)PValue,(int)PJSLArray,Index,(int)&Index);
+        OOGA("%s:%d .JSLI(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)&Index);
 
-        OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
+        OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
         *PValue = Value;
-        OOGA("%x)\n",*PValue);
+        OOGA("%#lx)\n",*PValue);
 
         RETVAL = PValue;
     OUTPUT:
@@ -728,10 +730,9 @@ ljsl_Delete( PJSLArray, Key )
         int Rc_int = DEADBEEF;
     CODE:
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        OOGA("%s:%d  JSLD(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,Rc_int,PJSLArray,Key.ptr,Key.ptr);
+        OOGA("%s:%d  JSLD(0x%x,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJSLArray,Key.ptr,(long)Key.ptr);
         JSLD(Rc_int,PJSLArray,(const uint8_t*)Key.ptr);
-        OOGA("%s:%d .JSLD(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,Rc_int,PJSLArray,Key.ptr,Key.ptr);
-
+        OOGA("%s:%d .JSLD(0x%x,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJSLArray,Key.ptr,(long)Key.ptr);
         RETVAL = Rc_int;
     OUTPUT:
         PJSLArray
@@ -749,13 +750,13 @@ ljsl_Get( PJSLArray, Key )
         Index[Key.length] = '\0';
 
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
-        OOGA("%s:%d PSLG(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Key.ptr,Key.length);
+        OOGA("%s:%d PSLG(%#lx,%#lx,\"%s\"@%d)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Key.ptr,Key.length);
         JSLG(PValue,PJSLArray,Index);
-        OOGA("%s:%d PSLG(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Key.ptr,Key.length);
+        OOGA("%s:%d PSLG(%#lx,%#lx,\"%s\"@%d)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Key.ptr,Key.length);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,2);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -767,9 +768,9 @@ ljsl_Free( PJSLArray )
     INIT:
         Word_t Rc_word = DEADBEEF;
     CODE:
-        OOGA("%s:%d  JSLFA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,(int)PJSLArray);
+        OOGA("%s:%d  JSLFA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJSLArray);
         JSLFA(Rc_word,PJSLArray);
-        OOGA("%s:%d .JSLFA(0x%x,0x%x)\n",__FILE__,__LINE__,Rc_word,(int)PJSLArray);
+        OOGA("%s:%d .JSLFA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJSLArray);
 
         RETVAL = Rc_word;
     OUTPUT:
@@ -789,13 +790,13 @@ ljsl_First( PJSLArray, Key )
         Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */ 
-        OOGA("%s:%d  JSLF(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d  JSLF(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
         JSLF(PValue,PJSLArray,Index);
-        OOGA("%s:%d .JSLF(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d .JSLF(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -815,13 +816,13 @@ ljsl_Next( PJSLArray, Key )
         Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
-        OOGA("%s:%d  JSLN(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d  JSLN(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
         JSLN(PValue,PJSLArray,Index);
-        OOGA("%s:%d .JSLN(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d .JSLN(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -841,13 +842,13 @@ ljsl_Last( PJSLArray, Key )
         Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
-        OOGA("%s:%d  JSLL(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d  JSLL(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
         JSLL(PValue,PJSLArray,Index);
-        OOGA("%s:%d .JSLL(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d .JSLL(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
@@ -867,13 +868,13 @@ ljsl_Prev( PJSLArray, Key )
         Index[Key.length] = '\0';
 
         /* Cast from (char*) to (uint8_t*) to silence a warning. */
-        OOGA("%s:%d  JSLP(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d  JSLP(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
         JSLP(PValue,PJSLArray,Index);
-        OOGA("%s:%d .JSLP(0x%x,0x%x,\"%s\"@0x%x)\n",__FILE__,__LINE__,PValue,(int)PJSLArray,Index,Index);
+        OOGA("%s:%d .JSLP(%#lx,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,(long)PValue,(long)PJSLArray,Index,(long)Index);
 
         if ( PValue ) {
-            OOGA("%s:%d *0x%x=0x",__FILE__,__LINE__,PValue);
-            OOGA("%x)\n",*PValue);
+            OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)PValue);
+            OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
             PUSHs(sv_2mortal(newSVuv(*PValue)));
