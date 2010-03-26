@@ -1,6 +1,10 @@
 Revision history for Judy
 
-0.19 - Fri Mar 26 7:52:00 2010
+0.20 - Fri Mar 26 11:24:00 2010
+
+Releasing a new version purely to deal with some PAUSE.cpan.org issue
+
+0.19 - Fri Mar 26  7:52:00 2010
 
 18f75f7cfdc0e866061a054687910e68d7b2141a Clean up types for debugger statements
 39c24a4296829573374395621ef07dd1712e5191 Minor reformatting
