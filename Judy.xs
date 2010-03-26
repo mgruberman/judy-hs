@@ -231,13 +231,15 @@ lj1_Count( PJ1Array, Key1, Key2 )
             }
             else if ( JU_ERRNO(&JError) == JU_ERRNO_FULL ) {
                 /* On a 32-bit machine, this value is
-                   indistinguishable from the count of 2^32. On a
-                   64-bit machine, this value cannot be triggered. */
+                 * indistinguishable from the count of 2^32. On a
+                 * 64-bit machine, this value cannot be triggered.
+                 */
                 RETVAL = ULONG_MAX;
             }
             else if ( JU_ERRNO(&JError) > JU_ERRNO_NFMAX ) {
                 /* Defer to back to the default implementation for
-                   error handling in the J1C macro. */
+                 * error handling in the J1C macro.
+                 */
                 J_E("Judy1Count",&JError);
             }
         }
