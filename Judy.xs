@@ -150,7 +150,7 @@ Peek(ptr)
 
 void
 Poke(ptr,v)
-        Word_t *ptr
+        PWord_t ptr
         Word_t v
     CODE:
         OOGA("%s:%d Poke(0x%x,0x%x)\n",__FILE__,__LINE__,ptr,v);
@@ -458,7 +458,7 @@ ljl_Get( PJLArray, Key )
         Pvoid_t PJLArray
         Word_t Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
         OOGA("%s:%d  JLG(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
         JLG(PValue,PJLArray,Key);
@@ -495,7 +495,7 @@ ljl_Nth( PJLArray, Nth )
     INIT:
         Word_t Rc_word = DEADBEEF;
         Word_t Index = DEADBEEF;
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
         OOGA("%s:%d  JLBC(0x%x,0x%x,%d,0x%x)\n",__FILE__,__LINE__,Rc_word,PJLArray,Nth,Index);
         JLBC(PValue,PJLArray,Nth,Index);
@@ -544,7 +544,7 @@ ljl_First( PJLArray, Key )
         Pvoid_t PJLArray
         Word_t Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
         OOGA("%s:%d  JLF(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,PValue,PJLArray,Key);
         JLF(PValue,PJLArray,Key);
@@ -833,7 +833,7 @@ ljsl_Last( PJSLArray, Key )
         Pvoid_t PJSLArray
         Str Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
@@ -892,7 +892,7 @@ ljhs_Duplicates( PJHSArray, Key )
         Pvoid_t PJHSArray
         Str Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     CODE:
         JHSI(PValue,PJHSArray,Key.ptr,Key.length);
         RETVAL = *PValue;
@@ -936,7 +936,7 @@ ljhs_Get( PJHSArray, Key )
         Pvoid_t PJHSArray
         Str Key
     INIT:
-        Word_t *PValue = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
     PPCODE:
         JHSG(PValue,PJHSArray,Key.ptr,Key.length);
 
