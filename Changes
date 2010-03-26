@@ -1,6 +1,25 @@
 Revision history for Judy
 
+0.19 - Fri Mar 26 7:52:00 2010
+
+18f75f7cfdc0e866061a054687910e68d7b2141a Clean up types for debugger statements
+39c24a4296829573374395621ef07dd1712e5191 Minor reformatting
+bbd73c6272c897a78092d0cbb304f770c157138a Remove some less useful comments
+1f7b4e6fa2d37e20e2c9ca65cc1b95dd6f7fed64 Use PWord_t_, not Word_t*
+
 0.18 - Thu Mar 25 13:42:00 2010
+
+Bug fixes:
+
+    * The char* allocated by String2Ptr now have a trailing null. I
+      noticed that a common strcpy() of my allocated strings pulled in
+      random garbage because apparently all my initial work had just
+      accidentally worked right.
+
+      Without this bug fix, this can be worked around by appending
+      your own null:
+
+          my $ptr = Judy::Mem::String2Ptr( "hello world\0" )
 
 0bc65322391f5a402c7fe523badd9582e51c3405 Add a terminating null to String2Ptr allocated strings
 07d1f01575e7e1273c7aca53b618f59d5a35dec9 Remove unused variable from String2Ptr
@@ -18,6 +37,39 @@ f1a58a728fde2fe568f0d63411fe28af42a8aef7 Use Test::Deep to work-around perl-5.8.
 322dbba36177b6892511bacf2a93f8c48ab7b773 Inline::C accepts a *string* in TYPEMAP, not array
 
 0.14 - Wed Mar 24 16:25:00 2010
+
+Bug fixes:
+
+* The functions Judy::SL::Get and ::Set were clobbering the
+  contents of the index keys. These variables weren't supposed to
+  be writable.
+
+  These functions should not be used prior to this release.
+
+* The functions Judy::1::Free, ::NextEmpty, ::LastEmpty, ::PrevEmpty
+  all accidentally used the wrong functions for JudyL arrays instead
+  of Judy1 arrays. It seems like a copy/paste error.
+
+  These functions should not be used prior to this release.
+
+* My Judy API normally writes the object's pointer to a in/out
+  variable. There was a potential memory leak if your original object
+  pointer was undef instead of 0. The newly allocated value is now
+  mortalized.
+
+  This can be worked around by initializing the Judy object. Do:
+
+      my $judy = 0;
+      Set( $judy, ... )
+
+   Instead of:
+
+      my $judy;
+      Set( $judy, ... )
+
+* The commit 0f5f24c appears to fix something about lifting undef
+  values to real values. I don't recall the substance of what happened
+  incorrectly without this.
 
 33a86ab42895c22b42f0e04b9b97c0b2f9e04258 Adding tied and object interfaces
 8a99855d8da7a2e53fac283caa51f93231205984 Expand tabs
@@ -37,6 +89,14 @@ f8263552fbb84dd5372f6be1c1145e4fc6654403 Lowercase deadbeef
 
 0.13 - Sun Apr  5 14:28:00 2009
 
+Bug fixes:
+
+* The functions Judy::SL::First, ::Next, ::Last, ::Prev were
+  clobbering the contents of the index keys. These variables weren't
+  supposed to be writable.
+
+  These functions should not be used prior to this release.
+
 897dc7a7b3f7b0c83bc8d56461e8ced83b0f0b13 Removed (char*) typecast from Index - wasn't needed
 96e01701727ffcc93525525e5f8146a66992ae68 Removed accidental Safefree from Judy::SL::Last
 bfd975011f2b2b444369edb3783deff75a516ec3 Judy::SL::Next copies Index like I thought I committed previously
@@ -51,6 +111,11 @@ bb13e254151eccd773168771b310463ce50060be Use perl's croak() on error instead of 
 2d77ac9de985ab64b210b4fa9b06602b255671c5 More careful checking for data truncation
 
 0.11 - Sat Jan  3 19:22:00 2009
+
+Bug fixes:
+
+* Handles "set" magic. Previously, if something being written to were
+  tied, the right thing wouldn't happen.
 
 5d26deb1395bea994f7a8157634e5b6ed53328e7 Adding several files
 0bede2d8ad33c03e5e29a3496b45c95f48978819 Ignore _Inline
