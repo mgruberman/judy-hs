@@ -174,7 +174,6 @@ lj1_Set( PJ1Array, Key )
         J1S(Rc_int,PJ1Array,Key);
         OOGA("%s:%d .J1S(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
 
-        /* OUTPUT */
         RETVAL = Rc_int;
     OUTPUT:
         PJ1Array
@@ -191,7 +190,6 @@ lj1_Unset( PJ1Array, Key )
         J1U(Rc_int,PJ1Array,Key);
         OOGA("%s:%d .J1U(0x%x,0x%x,0x%x)\n",__FILE__,__LINE__,Rc_int,PJ1Array,Key);
 
-        /* OUTPUT */
         RETVAL = Rc_int;
     OUTPUT:
         PJ1Array
