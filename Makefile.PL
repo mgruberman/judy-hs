@@ -25,7 +25,7 @@ WriteMakefile(
 	'Sub::Exporter' => 0,
 	'ExtUtils::CBuilder' => 0,
         'Inline::C' => 0, # for testing
-        'Alien::Judy' => '0.06',
+        'Alien::Judy' => '0.09',
     },
     OPTIMIZE => '-g',
     LIBS => [join ' ', @{ My::Paths::CCLIB() }, '-lJudy'],
