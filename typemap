@@ -34,7 +34,7 @@ T_WORD
            upgrading the CPU. */
 
         if ( SvUV($arg) != (UV)(Word_t)SvUV($arg) ) {
-            warn(\"(UV)%lld truncated to (Word_t)%ld\", SvUV($arg), (Word_t)SvUV($arg));
+            warn(\"(UV)%\"UVuf\" truncated to (Word_t)%lu\", SvUV($arg), (Word_t)SvUV($arg));
         }
         $var = (Word_t)SvUV($arg);
     #else
