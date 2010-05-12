@@ -30,8 +30,7 @@ T_WORD
         /* Perl compiled with -Duse64bitints on a 32-bit machine has
            IV and UV defined as long long except this doesn't fit
            within a word. This potentially makes it easy to try to
-           store values in Judy that can't be represented without
-           upgrading the CPU. */
+           store values in Judy that can't be represented. */
 
         if ( SvUV($arg) != (UV)(Word_t)SvUV($arg) ) {
             warn(\"(UV)%\"UVuf\" truncated to (Word_t)%lu\", SvUV($arg), (Word_t)SvUV($arg));
