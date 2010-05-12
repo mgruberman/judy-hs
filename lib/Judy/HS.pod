@@ -58,14 +58,14 @@ Nothing special is required to allocate a Judy::HS array. Just start using it.
         ...
     }
 
-As with an ordinary array, there are no duplicate keys in a Judy::SL
+As with an ordinary array, there are no duplicate keys in a Judy::HS
 array.
 
 
 
 =head1 DATA TYPES
 
-=head2 $Judy - Judy::SL array
+=head2 $Judy - Judy::HS array
 
 =head2 $Key - a string with no null characters
 
@@ -97,7 +97,7 @@ be re-acquired (using Get()).
 
 =head2 bool = Delete( $Judy, $Key )
 
-Delete the specified C<$Key>/C<$Value> pair from Judy::SL. Returns
+Delete the specified C<$Key>/C<$Value> pair from Judy::HS. Returns
 true if the element was removed, false otherwise.
 
 =head2 ( $PValue, $Value ) = Get( $Judy, $Key )
