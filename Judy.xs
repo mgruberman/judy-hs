@@ -143,7 +143,7 @@ Peek(ptr)
     CODE:
         OOGA("%s:%d Peek(%#lx)\n",__FILE__,__LINE__,(long)ptr);
         OOGA("%s:%d *%#lx=",__FILE__,__LINE__,(long)ptr);
-        OOGA("%#lx\n",*ptr);
+        OOGA("%"IVdf"\n",(IV)*ptr);
         RETVAL = (Word_t)*ptr;
     OUTPUT:
         RETVAL
@@ -153,8 +153,8 @@ Poke(ptr,sv)
         PWord_t ptr
         SV *sv
     CODE:
-        OOGA("%s:%d Poke(%#lx,%#lx)\n",__FILE__,__LINE__,(long)ptr,SvIV(v));
-        *ptr = SvIV(v);
+        OOGA("%s:%d Poke(%#lx,%"IVdf")\n",__FILE__,__LINE__,(long)ptr,SvIV(sv));
+        *ptr = SvIV(sv);
 
 
 
