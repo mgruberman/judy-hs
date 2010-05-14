@@ -457,7 +457,7 @@ lj1_PrevEmpty( PJ1Array, Key )
 
 MODULE = Judy PACKAGE = Judy::L PREFIX = ljl_
 
-Word_t*
+PWord_t
 ljl_Set( PJLArray, Key, Value )
         Pvoid_t PJLArray
         Word_t Key
