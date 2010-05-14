@@ -149,12 +149,12 @@ Peek(ptr)
         RETVAL
 
 void
-Poke(ptr,v)
+Poke(ptr,sv)
         PWord_t ptr
-        Word_t v
+        SV *sv
     CODE:
-        OOGA("%s:%d Poke(%#lx,%#lx)\n",__FILE__,__LINE__,(long)ptr,v);
-        *ptr = v;
+        OOGA("%s:%d Poke(%#lx,%#lx)\n",__FILE__,__LINE__,(long)ptr,SvIV(v));
+        *ptr = SvIV(v);
 
 
 
