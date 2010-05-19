@@ -1100,6 +1100,6 @@ MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
 =pod
 
-Switch back to the Judy
+Switch back to the base Judy namespace. xsubpp requires this.
 
 =cut
