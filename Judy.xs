@@ -56,6 +56,11 @@ int trace = 0;
     }\
   } while (0);
 
+/* Pre-declare function signatures */
+Word_t
+pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength );
+
+/* TODO: document this */
 Word_t
 pvtJudyHSMemUsedV( Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
 {
@@ -94,6 +99,7 @@ pvtJudyHSMemUsedV( Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
   }
 }
 
+/* TODO: document this */
 Word_t
 pvtJudyHSMemUsed( Pvoid_t PJHSArray )
 {
