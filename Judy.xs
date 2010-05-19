@@ -765,6 +765,10 @@ ljsl_Delete( PJSLArray, Key )
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
+        if ( Key.length > MAXLINELEN ) {
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
+        }
+
         /* Cast from (char*) to (const uint8_t*) to silence a warning. */
         OOGA("%s:%d  JSLD(0x%x,%#lx,\"%s\"@%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJSLArray,Key.ptr,(long)Key.ptr);
         JSLD(Rc_int,PJSLArray,(const uint8_t*)Key.ptr);
@@ -782,6 +786,9 @@ ljsl_Get( PJSLArray, Key )
         PWord_t PValue = PDEADBEEF;
         uint8_t Index[MAXLINELEN];
     PPCODE:
+        if ( Key.length > MAXLINELEN ) {
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
+        }
         Copy(Key.ptr,Index,Key.length,uint8_t);
         Index[Key.length] = '\0';
 
@@ -822,6 +829,9 @@ ljsl_First( PJSLArray, Key )
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
+        if ( Key.length > MAXLINELEN ) {
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
+        }
         Copy(Key.ptr,Index,Key.length,uint8_t);
         Index[Key.length] = '\0';
 
@@ -848,6 +858,9 @@ ljsl_Next( PJSLArray, Key )
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
+        if ( Key.length > MAXLINELEN ) {
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
+        }
         Copy(Key.ptr,Index,Key.length,uint8_t);
         Index[Key.length] = '\0';
 
@@ -874,6 +887,9 @@ ljsl_Last( PJSLArray, Key )
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
+        if ( Key.length > MAXLINELEN ) {
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
+        }
         Copy(Key.ptr,Index,Key.length,uint8_t);
         Index[Key.length] = '\0';
 
@@ -900,6 +916,9 @@ ljsl_Prev( PJSLArray, Key )
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
+        if ( Key.length > MAXLINELEN ) {
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
+        }
         Copy(Key.ptr,Index,Key.length,uint8_t);
         Index[Key.length] = '\0';
 
