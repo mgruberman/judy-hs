@@ -122,6 +122,10 @@ L<http://perlmonks.org/?node_id=733140>.
 
 Frees an entire Judy::HS array. C<$Judy> is set to 0.
 
+=head2 bytes = MemUsed( $Judy )
+
+Returns the size of a Judy::HS array. This implementation is not
+supplied by libJudy.
 
 
 
