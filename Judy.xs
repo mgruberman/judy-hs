@@ -56,8 +56,70 @@ int trace = 0;
     }\
   } while (0);
 
+Word_t
+pvtJudyHSMemUsedV( Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
+{
+  if ( remainingLength > LONGSIZE ) {
+    if ( JLAP_INVALID & (int)PJLArray ) {
+      OOGA("keyLength=%lu sizeof(Word_t)=%u\n",keyLength,sizeof(Word_t));
+      return keyLength + sizeof( Word_t );
+    }
+    else if ( PJLArray ) {
+      Word_t sum      = 0;
+      Word_t Index    = 0;
+      Pvoid_t *innerL = NULL;
 
+      /* Iterate over semi-colliding keys */
+      JLF( innerL, PJLArray, Index );
+      OOGA("innerL=%lx\n",(Word_t)innerL);
 
+      while ( innerL ) {
+	OOGA("*innerL=%lx\n",(Word_t)*innerL);
+	if ( *innerL ) {
+	  OOGA("JudyLMemUsed=%lu\n",JudyLMemUsed(*innerL));
+	  sum += JudyLMemUsed( *innerL );
+  
+	  OOGA("pvtMemUsedJudyHSTree(%lx,%lu)\n",(Word_t)*innerL,keyLength);
+	  sum += pvtJudyHSMemUsedV( *innerL, keyLength - LONGSIZE, keyLength );
+	}
+
+	JLN( innerL, PJLArray, Index );
+	OOGA("innerL=%lx\n",innerL);
+      }
+    }
+  }
+  else {
+    OOGA("keyLength=%lu sizeof(Word_t)=%u\n",keyLength,sizeof(Word_t));
+    return keyLength + sizeof( Word_t );
+  }
+}
+
+Word_t
+pvtJudyHSMemUsed( Pvoid_t PJHSArray )
+{
+  Word_t sum = 0;
+  Word_t keyLength = 0;
+  Pvoid_t *hashL;
+
+  /* Count the size of the base JudyL array that maps from key length
+   * to hashes containing values with keys only that length.
+   */
+  sum += JudyLMemUsed( PJHSArray );
+
+  /* Iterate over all key lengths and the hashes */
+  JLF( hashL, PJHSArray, keyLength );
+  while ( hashL ) {
+    /* Count the size of this hash */
+    sum += JudyLMemUsed( *hashL );
+
+    /* Count the space consumed by all values in this hash */
+    sum += pvtJudyHSMemUsedV( *hashL, keyLength, keyLength );
+
+    JLN( hashL, PJHSArray, keyLength );
+  }
+
+  return sum;
+}
 
 MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
@@ -942,6 +1004,14 @@ ljsl_Prev( PJSLArray, Key )
 
 
 MODULE = Judy PACKAGE = Judy::HS PREFIX = ljhs_
+
+UV
+ljhs_MemUsed( PJHSArray )
+        Pvoid_t PJHSArray
+    CODE:
+        RETVAL = pvtJudyHSMemUsed( PJHSArray );
+    OUTPUT:
+        RETVAL
 
 Word_t
 ljhs_Duplicates( PJHSArray, Key )
