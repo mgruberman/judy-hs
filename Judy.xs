@@ -4,7 +4,8 @@
 
 /* FIXME: omg, this is a buffer overflow. Store nothing in Judy::SL
    that is larger than this. */
-#define MAXLINELEN 1000000
+#define MAXLINELEN    1000000
+#define MAXLINELEN_S "1000000"
 
 /* --- hint for SvPVbyte ---
    Does not work in perl-5.6.1, ppport.h implements a version
@@ -738,7 +739,7 @@ ljsl_Set( PJSLArray, Key, Value )
         uint8_t Index[MAXLINELEN];
     CODE:
         if ( Key.length > MAXLINELEN ) {
-           croak("Sorry, can't store keys longer than MAXLINELEN for now. This is a bug.");
+           croak("Sorry, can't use keys longer than "MAXLINELEN_S" for now. This is a bug.");
         }
         Copy((const char* const)Key.ptr,Index,(const int)Key.length,char);
         Index[Key.length] = '\0';
