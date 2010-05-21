@@ -838,7 +838,7 @@ ljsl_Get( PJSLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,2);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
         }
 
 UWord_t
@@ -881,7 +881,7 @@ ljsl_First( PJSLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
@@ -910,7 +910,7 @@ ljsl_Next( PJSLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
@@ -939,7 +939,7 @@ ljsl_Last( PJSLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
@@ -968,7 +968,7 @@ ljsl_Prev( PJSLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVpv((char*)Index,0)));
         }
 
