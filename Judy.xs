@@ -103,14 +103,14 @@ pvtJudyHSMemUsedV(Pvoid_t PJLArray, UWord_t remainingLength, UWord_t keyLength )
 UWord_t
 pvtJudyHSMemUsed( Pvoid_t PJHSArray )
 {
-  UWord_t sum = 0;
+  UWord_t sum;
   UWord_t keyLength = 0;
   Pvoid_t *hashL;
 
   /* Count the size of the base JudyL array that maps from key length
    * to hashes containing values with keys only that length.
    */
-  sum += JudyLMemUsed( PJHSArray );
+  sum = JudyLMemUsed( PJHSArray );
 
   /* Iterate over all key lengths and the hashes */
   JLF( hashL, PJHSArray, keyLength );
