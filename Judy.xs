@@ -543,7 +543,7 @@ ljl_Get( PJLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,2);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
         }
 
 UWord_t
@@ -580,7 +580,7 @@ ljl_Nth( PJLArray, Nth )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVuv(Index)));
         }
 
@@ -629,7 +629,7 @@ ljl_First( PJLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
@@ -650,7 +650,7 @@ ljl_Next( PJLArray, Key )
             OOGA("%#lx\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
@@ -672,7 +672,7 @@ ljl_Last( PJLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
@@ -693,7 +693,7 @@ ljl_Prev( PJLArray, Key )
             OOGA("%#lx)\n",*PValue);
             EXTEND(SP,3);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
             PUSHs(sv_2mortal(newSVuv(Key)));
         }
 
