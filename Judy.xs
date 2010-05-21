@@ -62,7 +62,7 @@ pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength );
 
 /* TODO: document this */
 Word_t
-pvtJudyHSMemUsedV( Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
+pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
 {
   if ( remainingLength > LONGSIZE ) {
     if ( JLAP_INVALID & (int)PJLArray ) {
@@ -893,7 +893,7 @@ ljsl_First( PJSLArray, Key )
         Pvoid_t PJSLArray
         Str Key
     INIT:
-        PWord_t PValue  = PDEADBEEF;
+        PWord_t PValue = PDEADBEEF;
         uint8_t Index[MAXLINELEN];
     PPCODE:
         /* Copy Index because it is both input and output. */
