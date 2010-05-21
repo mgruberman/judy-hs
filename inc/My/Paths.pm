@@ -3,7 +3,12 @@ package My::Paths;
 use strict;
 use warnings;
 
-use Alien::Judy ();
+BEGIN {
+    eval { require Alien::Judy }
+    or do {
+        require inc::Alien::Judy;
+    };
+}
 
 use constant CCINC => [
     map { "-I$_" }
