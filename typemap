@@ -101,43 +101,41 @@ T_UWORD
 
 OUTPUT
 T_STR
-    if ( SvOK($arg) ) {
-        sv_setpvn($arg, $var.ptr, $var.length ? $var.length : strlen( $var.ptr ));
-    }
-    else {
-        sv_setsv($arg,sv_2mortal(newSVpv($var.ptr, $var.length ? $var.length : strlen( $var.ptr ))));
-    }
+    SvUPGRADE($arg,SVt_PV);
+    sv_setpvn(
+        $arg,
+        $var.ptr,
+        $var.length ? $var.length : strlen( $var.ptr )
+    );
 
 T_PVOID
-    if ( SvOK($arg) ) {
-            sv_setiv($arg,PTR2IV($var));
+    SvUPGRADE($arg,SVt_IV);
+    if ( (unsigned long int)$var > LONG_MAX ) {
+        sv_setuv($arg,PTR2UV($var));
     }
     else {
-            /* Handles the case when we're passed an undef */
-            sv_setsv($arg,sv_2mortal(newSViv(PTR2IV($var))));
+        sv_setiv($arg,PTR2IV($var));
     }
 
 T_IWORD
-    if ( SvOK($arg) ) {
-        sv_setiv($arg, $var);
-    }
-    else {
-        sv_setsv($arg,sv_2mortal(newSViv($var)));
-    }
+    SvUPGRADE($arg,SVt_IV);
+    sv_setiv($arg,PTR2IV($var));
 
 T_UWORD
-    if ( SvOK($arg) ) {
-        sv_setuv($arg, $var);
+    SvUPGRADE($arg,SVt_IV);
+    if ( $var > LONG_MAX ) {
+        sv_setuv($arg,PTR2UV($var));
     }
     else {
-        sv_setsv($arg,sv_2mortal(newSVuv($var)));
+        sv_setiv($arg,PTR2IV($var));
     }
     
 
 T_WORD_PTR
-    if ( SvOK($arg) ) {
-        sv_setiv($arg, PTR2IV($var));
+    SvUPGRADE($arg,SVt_IV);
+    if ( (unsigned long int)$var > LONG_MAX ) {
+        sv_setuv($arg,PTR2UV($var));
     }
     else {
-        sv_setsv($arg,sv_2mortal(newSViv(PTR2IV($var))));
+        sv_setiv($arg,PTR2IV($var));
     }
