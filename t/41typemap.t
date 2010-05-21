@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use vars '@MAGIC';
-use Test::More tests => 23;;
+use Test::More tests => 29;
 use Test::Deep;
 use Judy::Mem qw( String2Ptr Ptr2String Ptr2String2 Free );
 
@@ -37,10 +37,10 @@ RunTest {
     is( ${tied $magic}, 4, 'Set Pvoid_t via OUTPUT:' );
 };
 
-# Word_t #####################################################################
+# IWord_t #####################################################################
 ${ tied $magic } = 5;
 RunTest {
-    MAGIC::get_Word_t( $magic );
+    MAGIC::get_IWord_t( $magic );
     cmp_deeply(
         \@MAGIC,
         array_each(all(['FETCH',5])),
@@ -50,7 +50,7 @@ RunTest {
 };
 
 RunTest {
-    $magic = MAGIC::set_Word_t1();
+    $magic = MAGIC::set_IWord_t1();
     @MAGIC =
         grep { $_->[0] ne 'FETCH' }
         @MAGIC;
@@ -59,7 +59,37 @@ RunTest {
     is( ${tied $magic}, 6, 'Set Word_t via RETVAL' );
 };
 RunTest {
-    MAGIC::set_Word_t2( $magic );
+    MAGIC::set_IWord_t2( $magic );
+    @MAGIC =
+        grep { $_->[0] ne 'FETCH' }
+        @MAGIC;
+    is_deeply( \@MAGIC,[['STORE',6,7]], 'Set Word_t via OUTPUT:' );
+    is( ${tied $magic}, 7, 'Set Word_t via OUTPUT:' );
+};
+
+# UWord_t #####################################################################
+${ tied $magic } = 5;
+RunTest {
+    MAGIC::get_UWord_t( $magic );
+    cmp_deeply(
+        \@MAGIC,
+        array_each(all(['FETCH',5])),
+        'Fetch Word_t'
+    );
+    is( ${tied $magic}, 5, 'Fetch Word_t' );
+};
+
+RunTest {
+    $magic = MAGIC::set_UWord_t1();
+    @MAGIC =
+        grep { $_->[0] ne 'FETCH' }
+        @MAGIC;
+    is_deeply( \@MAGIC,[['STORE',5,6]], 'Set Word_t via RETVAL' )
+	or diag( Dumper( \ @MAGIC ) );
+    is( ${tied $magic}, 6, 'Set Word_t via RETVAL' );
+};
+RunTest {
+    MAGIC::set_UWord_t2( $magic );
     @MAGIC =
         grep { $_->[0] ne 'FETCH' }
         @MAGIC;
@@ -185,20 +215,40 @@ magic_set_Pvoid_t2( x )
         x
 
 void
-magic_get_Word_t( x )
-        Word_t x
+magic_get_IWord_t( x )
+        IWord_t x
     CODE:
 
-Word_t
-magic_set_Word_t1()
+IWord_t
+magic_set_IWord_t1()
     CODE:
         RETVAL = 6;
      OUTPUT:
         RETVAL
 
 void
-magic_set_Word_t2( x )
-        Word_t x
+magic_set_IWord_t2( x )
+        IWord_t x
+    CODE:
+        x = 7;
+    OUTPUT:
+        x
+
+void
+magic_get_UWord_t( x )
+        UWord_t x
+    CODE:
+
+UWord_t
+magic_set_UWord_t1()
+    CODE:
+        RETVAL = 6;
+     OUTPUT:
+        RETVAL
+
+void
+magic_set_UWord_t2( x )
+        UWord_t x
     CODE:
         x = 7;
     OUTPUT:
