@@ -206,10 +206,10 @@ magic_set_Word_t2( x )
 
 void
 magic_get_PWord_t( x )
-        Word_t* x
+        PWord_t x
     CODE:
 
-Word_t*
+PWord_t
 magic_set_PWord_t1()
     CODE:
         RETVAL = 9;
@@ -218,7 +218,7 @@ magic_set_PWord_t1()
 
 void
 magic_set_PWord_t2( x )
-        Word_t* x
+        PWord_t x
     CODE:
         x = 10;
     OUTPUT:
