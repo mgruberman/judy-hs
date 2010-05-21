@@ -20,7 +20,7 @@ my $judy;
 my $warned = '';
 $SIG{__WARN__} = sub { $warned = shift @_ };
 Set($judy,0, 4294967360 );
-like( $warned, qr/Truncating 4294967360 to 2147483647/ );
+like( $warned, qr/Truncating 4294967360 to 2147483647/, 'Truncating 4294967360 to 2147483647' );
 
 Set($ judy, 0, -1 );
 like( $warned, qr/Coercing -1 to 0/, 'Coercing -1 to 0' );
