@@ -987,7 +987,7 @@ ljhs_MemUsed( PJHSArray )
     OUTPUT:
         RETVAL
 
-IWord_t
+UWord_t
 ljhs_Duplicates( PJHSArray, Key )
         Pvoid_t PJHSArray
         Str Key
