@@ -1,8 +1,8 @@
 TYPEMAP
 Pvoid_t T_PVOID
 PWord_t T_WORD_PTR
-Word_t T_UWORD
 UWord_t T_UWORD
+IWord_t T_IWORD
 Str T_STR
 
 INPUT
@@ -23,6 +23,51 @@ T_WORD_PTR
        that's at the native size instead of perl's long long. */
 
     $var = INT2PTR($type,SvUV($arg));
+
+T_IWORD
+    /* Accept:
+       - IV that fits in (long int).
+       - IV that requires more bits that fit in (long int). Truncate
+         it to LONG_MAX. Throw a warning.
+       - UV that fits in (long int) without using the sign bit.
+       - UV that fits in (long int) using the sign bit. Truncate it to
+         LONG_MAX and throw a warning.
+       - UV that doesn't fit in (long int). Truncate it to LONG_MAX
+         and throw a warning.
+       - Cast everything else to IV or NV and apply the above rules.
+     */
+
+    if ( SvUOK($arg) && ! SvIOK($arg) ) {
+        if ( SvUV($arg) > LONG_MAX ) {
+            $var = LONG_MAX;
+            warn(\"Truncating %\"UVuf\" to %ld\",
+                 SvUV($arg), LONG_MAX);
+        }
+        else {
+            $var = (long int)SvUV($arg);
+        }
+    }
+    else {
+    #if LONGSIZE == IVSIZE
+        assert( LONG_MIN <= SvIV($arg) && SvIV($arg) <= LONG_MAX );
+        $var = SvIV($arg);
+    #else
+        if ( SvIV($arg) > LONG_MAX ) {
+            $var = LONG_MAX;
+            warn(\"Truncating %\"IVdf\" to %ld\",
+                 SvIV($arg), LONG_MAX);
+        }
+        else if ( SvIV($arg) < LONG_MIN ) {
+            $var = LONG_MIN;
+            warn(\"Truncating %\"IVdf\" to %ld\",
+                 SvIV($arg), LONG_MIN);
+        }
+        else {
+            $var = SvIV($arg);
+        }
+    #endif
+    }
+
 
 T_UWORD
     /* Accept:
@@ -70,6 +115,14 @@ T_PVOID
     else {
             /* Handles the case when we're passed an undef */
             sv_setsv($arg,sv_2mortal(newSViv(PTR2IV($var))));
+    }
+
+T_IWORD
+    if ( SvOK($arg) ) {
+        sv_setiv($arg, $var);
+    }
+    else {
+        sv_setsv($arg,sv_2mortal(newSViv($var)));
     }
 
 T_UWORD

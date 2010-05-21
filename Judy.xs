@@ -530,7 +530,7 @@ PWord_t
 ljl_Set( PJLArray, Key, Value )
         Pvoid_t PJLArray
         UWord_t Key
-        Word_t Value
+        IWord_t Value
     INIT:
         PWord_t PValue = PDEADBEEF;
     CODE:
@@ -801,7 +801,7 @@ PWord_t
 ljsl_Set( PJSLArray, Key, Value )
         Pvoid_t PJSLArray
         Str Key
-        Word_t Value
+        IWord_t Value
     INIT:
         PWord_t PValue = PDEADBEEF;
         uint8_t Index[MAXLINELEN];
@@ -1011,7 +1011,7 @@ ljsl_Prev( PJSLArray, Key )
 
 MODULE = Judy PACKAGE = Judy::HS PREFIX = ljhs_
 
-UV
+UWord_t
 ljhs_MemUsed( PJHSArray )
         Pvoid_t PJHSArray
     CODE:
@@ -1019,7 +1019,7 @@ ljhs_MemUsed( PJHSArray )
     OUTPUT:
         RETVAL
 
-Word_t
+IWord_t
 ljhs_Duplicates( PJHSArray, Key )
         Pvoid_t PJHSArray
         Str Key
@@ -1039,9 +1039,9 @@ PWord_t
 ljhs_Set( PJHSArray, Key, Value )
         Pvoid_t PJHSArray
         Str Key
-        Word_t Value
+        IWord_t Value
     INIT:
-        Word_t  *PValue = PDEADBEEF;
+        IWord_t  *PValue = PDEADBEEF;
     CODE:
         JHSI(PValue,PJHSArray,Key.ptr,Key.length);
         *PValue = Value;
