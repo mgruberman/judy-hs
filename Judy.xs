@@ -279,7 +279,7 @@ lj1_Test( PJ1Array, Key )
         PJ1Array
         RETVAL
 
-IV
+UV
 lj1_Count( PJ1Array, Key1, Key2 )
         Pvoid_t PJ1Array
         UWord_t Key1
@@ -331,10 +331,10 @@ lj1_Nth( PJ1Array, Nth )
         OOGA("%s:%d .J1BC(%#x,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Nth,Index);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(newSViv(Index)));
+            XPUSHs(sv_2mortal(newSVuv(Index)));
         }
 
-IV
+UV
 lj1_Free( PJ1Array )
         Pvoid_t PJ1Array
     INIT:
@@ -348,7 +348,7 @@ lj1_Free( PJ1Array )
         PJ1Array
         RETVAL
 
-IV
+UV
 lj1_MemUsed( PJ1Array )
         Pvoid_t PJ1Array
     INIT:
@@ -374,11 +374,7 @@ lj1_First( PJ1Array, Key )
         OOGA("%s:%d .J1F(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -394,11 +390,7 @@ lj1_Next( PJ1Array, Key )
         OOGA("%s:%d .J1N(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -415,11 +407,7 @@ lj1_Last( PJ1Array, Key )
         OOGA("%s:%d .J1L(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -435,11 +423,7 @@ lj1_Prev( PJ1Array, Key )
         OOGA("%s:%d .J1P(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 void
@@ -454,11 +438,7 @@ lj1_FirstEmpty( PJ1Array, Key )
         OOGA("%s:%d .J1FE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
@@ -474,11 +454,7 @@ lj1_NextEmpty( PJ1Array, Key )
         OOGA("%s:%d .J1NE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 void
@@ -493,11 +469,7 @@ lj1_LastEmpty( PJ1Array, Key )
         OOGA("%s:%d .J1LE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 void
@@ -512,11 +484,7 @@ lj1_PrevEmpty( PJ1Array, Key )
         OOGA("%s:%d .J1PE(%#x,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Key);
 
         if ( Rc_int ) {
-            XPUSHs(sv_2mortal(
-                (IV)Key >= 0
-                ? newSViv(Key)
-                : newSVuv(Key)
-            ));
+            XPUSHs(sv_2mortal(newSVuv(Key)));
         }
 
 
