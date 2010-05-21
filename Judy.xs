@@ -89,7 +89,7 @@ pvtJudyHSMemUsedV(Pvoid_t PJLArray, UWord_t remainingLength, UWord_t keyLength )
 	}
 
 	JLN( innerL, PJLArray, Index );
-	OOGA("innerL=%lx\n",innerL);
+	OOGA("innerL=%lx\n",(UWord_t)innerL);
       }
     }
   }
