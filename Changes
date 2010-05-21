@@ -10,6 +10,7 @@ Bug fixes:
       Perl's -Duse64bitint on a 32-bit machine.
     * Silenced a gcc warning about Judy::HS::MemUsed
 
+8b87e30896942623287a0dbeba12ec51bbcf8ed3 typemap for IWord_t preserves sign bit
 04ee666dbcb6c130e27bf638dff95b514962a12e Judy::HS should be careful to cast return values to retain sign bit
 8bb118004db7ffd55dff7c7e7d9caec120882738 Judy::HS::Duplicates is unsigned
 d5a159d49299ff9afe1ff650765f0d91c666ad9a Judy::SL should be careful to cast return values to retain sign bit
