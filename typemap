@@ -74,10 +74,10 @@ T_PVOID
 
 T_UWORD
     if ( SvOK($arg) ) {
-        sv_setiv($arg, $var);
+        sv_setuv($arg, $var);
     }
     else {
-        sv_setsv($arg,sv_2mortal(newSViv($var)));
+        sv_setsv($arg,sv_2mortal(newSVuv($var)));
     }
     
 
