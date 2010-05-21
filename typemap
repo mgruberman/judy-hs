@@ -2,6 +2,7 @@ TYPEMAP
 Pvoid_t T_PVOID
 PWord_t T_WORD_PTR
 Word_t T_UWORD
+UWord_t T_UWORD
 Str T_STR
 
 INPUT

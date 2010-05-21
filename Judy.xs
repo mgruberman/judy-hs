@@ -57,12 +57,12 @@ int trace = 0;
   } while (0);
 
 /* Pre-declare function signatures */
-Word_t
-pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength );
+UWord_t
+pvtJudyHSMemUsedV(Pvoid_t PJLArray, UWord_t remainingLength, UWord_t keyLength );
 
 /* TODO: document this */
-Word_t
-pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
+UWord_t
+pvtJudyHSMemUsedV(Pvoid_t PJLArray, UWord_t remainingLength, UWord_t keyLength )
 {
   if ( remainingLength > LONGSIZE ) {
     if ( JLAP_INVALID & (int)PJLArray ) {
@@ -70,21 +70,21 @@ pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
       return keyLength + sizeof( Word_t );
     }
     else if ( PJLArray ) {
-      Word_t sum      = 0;
-      Word_t Index    = 0;
+      UWord_t sum      = 0;
+      UWord_t Index    = 0;
       Pvoid_t *innerL = NULL;
 
       /* Iterate over semi-colliding keys */
       JLF( innerL, PJLArray, Index );
-      OOGA("innerL=%lx\n",(Word_t)innerL);
+      OOGA("innerL=%lx\n",(UWord_t)innerL);
 
       while ( innerL ) {
-	OOGA("*innerL=%lx\n",(Word_t)*innerL);
+	OOGA("*innerL=%lx\n",(UWord_t)*innerL);
 	if ( *innerL ) {
 	  OOGA("JudyLMemUsed=%lu\n",JudyLMemUsed(*innerL));
 	  sum += JudyLMemUsed( *innerL );
   
-	  OOGA("pvtMemUsedJudyHSTree(%lx,%lu)\n",(Word_t)*innerL,keyLength);
+	  OOGA("pvtMemUsedJudyHSTree(%lx,%lu)\n",(UWord_t)*innerL,keyLength);
 	  sum += pvtJudyHSMemUsedV( *innerL, keyLength - LONGSIZE, keyLength );
 	}
 
@@ -100,11 +100,11 @@ pvtJudyHSMemUsedV(Pvoid_t PJLArray, Word_t remainingLength, Word_t keyLength )
 }
 
 /* TODO: document this */
-Word_t
+UWord_t
 pvtJudyHSMemUsed( Pvoid_t PJHSArray )
 {
-  Word_t sum = 0;
-  Word_t keyLength = 0;
+  UWord_t sum = 0;
+  UWord_t keyLength = 0;
   Pvoid_t *hashL;
 
   /* Count the size of the base JudyL array that maps from key length
@@ -150,7 +150,7 @@ lj_PJERR()
     OUTPUT:
         RETVAL
 
-Word_t
+UWord_t
 lj_JLAP_INVALID()
     PROTOTYPE:
     CODE:
@@ -235,7 +235,7 @@ MODULE = Judy PACKAGE = Judy::1 PREFIX = lj1_
 IV
 lj1_Set( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
@@ -251,7 +251,7 @@ lj1_Set( PJ1Array, Key )
 IV
 lj1_Unset( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
@@ -267,7 +267,7 @@ lj1_Unset( PJ1Array, Key )
 IV
 lj1_Test( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
@@ -282,10 +282,10 @@ lj1_Test( PJ1Array, Key )
 IV
 lj1_Count( PJ1Array, Key1, Key2 )
         Pvoid_t PJ1Array
-        Word_t Key1
-        Word_t Key2
+        UWord_t Key1
+        UWord_t Key2
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
         JError_t JError;
     CODE:
         /* TODO: Upgrade the returned IV to a UV if the count would be
@@ -321,9 +321,9 @@ lj1_Count( PJ1Array, Key1, Key2 )
 void
 lj1_Nth( PJ1Array, Nth )
         Pvoid_t PJ1Array
-        Word_t Nth
+        UWord_t Nth
     INIT:
-        Word_t Index = DEADBEEF;
+        UWord_t Index = DEADBEEF;
         int Rc_int = DEADBEEF;
     PPCODE:
         OOGA("%s:%d  J1BC(%#x,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_int,(long)PJ1Array,Nth,Index);
@@ -338,7 +338,7 @@ IV
 lj1_Free( PJ1Array )
         Pvoid_t PJ1Array
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         OOGA("%s:%d  J1FA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJ1Array);
         J1FA(Rc_word,PJ1Array);
@@ -352,7 +352,7 @@ IV
 lj1_MemUsed( PJ1Array )
         Pvoid_t PJ1Array
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         OOGA("%s:%d  M1MU(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJ1Array);
         J1MU(Rc_word,PJ1Array);
@@ -365,7 +365,7 @@ lj1_MemUsed( PJ1Array )
 void
 lj1_First( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -385,7 +385,7 @@ lj1_First( PJ1Array, Key )
 void
 lj1_Next( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -406,7 +406,7 @@ lj1_Next( PJ1Array, Key )
 void
 lj1_Last( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -426,7 +426,7 @@ lj1_Last( PJ1Array, Key )
 void
 lj1_Prev( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -445,7 +445,7 @@ lj1_Prev( PJ1Array, Key )
 void
 lj1_FirstEmpty( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -465,7 +465,7 @@ lj1_FirstEmpty( PJ1Array, Key )
 void
 lj1_NextEmpty( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -484,7 +484,7 @@ lj1_NextEmpty( PJ1Array, Key )
 void
 lj1_LastEmpty( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -503,7 +503,7 @@ lj1_LastEmpty( PJ1Array, Key )
 void
 lj1_PrevEmpty( PJ1Array, Key )
         Pvoid_t PJ1Array
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -529,7 +529,7 @@ MODULE = Judy PACKAGE = Judy::L PREFIX = ljl_
 PWord_t
 ljl_Set( PJLArray, Key, Value )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
         Word_t Value
     INIT:
         PWord_t PValue = PDEADBEEF;
@@ -547,7 +547,7 @@ ljl_Set( PJLArray, Key, Value )
 int
 ljl_Delete( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     CODE:
@@ -562,7 +562,7 @@ ljl_Delete( PJLArray, Key )
 void
 ljl_Get( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
@@ -578,13 +578,13 @@ ljl_Get( PJLArray, Key )
             PUSHs(sv_2mortal(newSVuv(*PValue)));
         }
 
-Word_t
+UWord_t
 ljl_Count( PJLArray, Key1, Key2 )
         Pvoid_t PJLArray
-        Word_t Key1
-        Word_t Key2
+        UWord_t Key1
+        UWord_t Key2
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         OOGA("%s:%d  JLC(%#lx,%#lx,%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray,Key1,Key2);
         JLC(Rc_word,PJLArray,Key1,Key2);
@@ -597,10 +597,10 @@ ljl_Count( PJLArray, Key1, Key2 )
 void
 ljl_Nth( PJLArray, Nth )
         Pvoid_t PJLArray
-        Word_t Nth
+        UWord_t Nth
     INIT:
-        Word_t Rc_word = DEADBEEF;
-        Word_t Index = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
+        UWord_t Index = DEADBEEF;
         PWord_t PValue = PDEADBEEF;
     PPCODE:
         OOGA("%s:%d  JLBC(%#lx,%#lx,%ld,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray,Nth,Index);
@@ -616,11 +616,11 @@ ljl_Nth( PJLArray, Nth )
             PUSHs(sv_2mortal(newSVuv(Index)));
         }
 
-Word_t
+UWord_t
 ljl_Free( PJLArray )
         Pvoid_t PJLArray
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         OOGA("%s:%d  JLFA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray);
         JLFA(Rc_word,PJLArray);
@@ -631,11 +631,11 @@ ljl_Free( PJLArray )
         PJLArray
         RETVAL
 
-Word_t
+UWord_t
 ljl_MemUsed( PJLArray )
         Pvoid_t PJLArray
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         OOGA("%s:%d  JLMU(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJLArray);
         JLMU(Rc_word,PJLArray);
@@ -648,7 +648,7 @@ ljl_MemUsed( PJLArray )
 void
 ljl_First( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
@@ -669,7 +669,7 @@ ljl_First( PJLArray, Key )
 void
 ljl_Next( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
@@ -691,7 +691,7 @@ ljl_Next( PJLArray, Key )
 void
 ljl_Last( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
@@ -712,7 +712,7 @@ ljl_Last( PJLArray, Key )
 void
 ljl_Prev( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         PWord_t PValue = PDEADBEEF;
     PPCODE:
@@ -732,7 +732,7 @@ ljl_Prev( PJLArray, Key )
 void
 ljl_FirstEmpty( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -748,7 +748,7 @@ ljl_FirstEmpty( PJLArray, Key )
 void
 ljl_NextEmpty( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -763,7 +763,7 @@ ljl_NextEmpty( PJLArray, Key )
 void
 ljl_LastEmpty( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -778,7 +778,7 @@ ljl_LastEmpty( PJLArray, Key )
 void
 ljl_PrevEmpty( PJLArray, Key )
         Pvoid_t PJLArray
-        Word_t Key
+        UWord_t Key
     INIT:
         int Rc_int = DEADBEEF;
     PPCODE:
@@ -873,11 +873,11 @@ ljsl_Get( PJSLArray, Key )
             PUSHs(sv_2mortal(newSVuv(*PValue)));
         }
 
-Word_t
+UWord_t
 ljsl_Free( PJSLArray )
         Pvoid_t PJSLArray
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         OOGA("%s:%d  JSLFA(%#lx,%#lx)\n",__FILE__,__LINE__,Rc_word,(long)PJSLArray);
         JSLFA(Rc_word,PJSLArray);
@@ -1079,11 +1079,11 @@ ljhs_Get( PJHSArray, Key )
             PUSHs(sv_2mortal(newSVuv(*PValue)));
         }
 
-Word_t
+UWord_t
 ljhs_Free( PJHSArray )
         Pvoid_t PJHSArray
     INIT:
-        Word_t Rc_word = DEADBEEF;
+        UWord_t Rc_word = DEADBEEF;
     CODE:
         JHSFA(Rc_word,PJHSArray);
         RETVAL = Rc_word;
