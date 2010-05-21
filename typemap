@@ -119,7 +119,7 @@ T_PVOID
 
 T_IWORD
     SvUPGRADE($arg,SVt_IV);
-    sv_setiv($arg,PTR2IV($var));
+    sv_setiv($arg, (signed long int)$var);
 
 T_UWORD
     SvUPGRADE($arg,SVt_IV);

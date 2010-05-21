@@ -1,5 +1,23 @@
 Revision history for Judy
 
+0.25 - Fri May 21 14:49:07 2010 -0700
+
+Bug fixes:
+
+    * All value-returning functions should return the value as a
+      signed integer. That is, if you store a -1 into a Judy::HS, you
+      should get back a -1 and regardless of whether you're using
+      Perl's -Duse64bitint on a 32-bit machine.
+    * Silenced a gcc warning about Judy::HS::MemUsed
+
+04ee666dbcb6c130e27bf638dff95b514962a12e Judy::HS should be careful to cast return values to retain sign bit
+8bb118004db7ffd55dff7c7e7d9caec120882738 Judy::HS::Duplicates is unsigned
+d5a159d49299ff9afe1ff650765f0d91c666ad9a Judy::SL should be careful to cast return values to retain sign bit
+f0af5147edbe7c786d3ff17a0a79164aebc5f551 Judy::L should be careful to cast return values to retain sign bit
+01636c899ac712308b4561fc907162d89b6165c0 Judy::1 returns a bunch of unsigned ints
+0127a21239d574e3883d08fd0a08e19628749a40 Simplify Judy::HS::MemUsed
+4141ec47723c717dce3cda19f72c640060fc3a6c Silence type cast warning
+
 0.25 - Fri May 21 13:12:46 2010 -0700
 
 Bug fixes:
