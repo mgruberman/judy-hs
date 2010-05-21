@@ -1044,7 +1044,7 @@ ljhs_Get( PJHSArray, Key )
         if ( PValue ) {
             EXTEND(SP,2);
             PUSHs(sv_2mortal(newSVuv(INT2PTR(UV,PValue))));
-            PUSHs(sv_2mortal(newSViv(*PValue)));
+            PUSHs(sv_2mortal(newSViv((signed long int)*PValue)));
         }
 
 UWord_t
