@@ -1,5 +1,11 @@
 Revision history for Judy
 
+0.25 - Fri May 21 13:12:46 2010 -0700
+
+Bug fixes:
+
+   * Include stub of Alien::Judy in inc/ for Makefile.PL's uses
+
 0.24 - Fri May 21 11:08:11 PDT 2010
 
 Bug fixes:
