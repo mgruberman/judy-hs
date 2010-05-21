@@ -1,5 +1,75 @@
 Revision history for Judy
 
+0.23 -
+
+API changes:
+
+    * Judy::L::Set, Judy::SL::Set, Judy::HS::Duplicates, Judy::HS::Set
+      now consume their value as signed integers.
+
+    * Judy::L::Get, Judy::L::First, Judy::L::Next, Judy::L::Last,
+      Judy::L::Prev, Judy::SL::Get, Judy::SL::First, Judy::SL::Next,
+      Judy::SL::Last, Judy::SL::Prev, Judy::HS::Get all now return
+      their values as signed integers.
+
+    * 32-bit CPU users with -Duse64bitint now may receive truncation
+      warnings if the perl values being used can't be accomodated by
+      Judy.
+
+    * Added Judy::HS::MemUsed using private implementation.
+
+Bug fixes:
+
+    * The previous typemap was likely leaking memory
+    * The Judy::HS manual had some copy-paste errors from Judy::SL.
+
+e2445556d1ba7027fdcb961575941bd7113e5340 Judy::L::{Get,First,Next,Last,Prev}, Judy::SL::{Get,First,Next,Last,Prev}, Judy::HS::Get all now return signed integers instead
+0dbed9cf331a134363eaae473ed4b9d44f9cd5e7 typemap upgrades target and supposedly doesn't allocate another SV
+82348a159189364b6277abad7545b56f7cf77537 Remove default Word_t and store/fetch signed integers to be more perly
+52bb7559343867aa665d3ef02fc5a1b62b14a5a4 Output typemap for UWord_t ought to be using UVs
+499063d1e1048bb163b1fee0008a3f52b54302a0 All usage of unsigned Word_t ought to use UWord_t now instead
+64100e6b40f811264d29dfdfa49757b021d2b58e Add test description
+424e5a04d5fa5c15ebf653291db66186c47791e8 Adding coersion for negative numbers in unsigned type to 0
+4e606588ed7a0345b5b5ec51b06d66d910b8a710 Reimplement Word_t
+ce5b5479a42cfda2df5a5ddb9510ce49461f123d Remove Word_t* in favor of PWord_t
+5e3e1c7bd39a3fd5d7a0f0a630b5e502c0d0771f Whitespace
+0a8c47de880f0d2ffec01a65199339a89b6abad9 Mortalize all returns
+8d505819f8b12ea9be3f459612bf19f8c918d005 Add Pod documentation for Judy::HS::MemUsed
+48c85304592c1c224cb7889d2dd51d40790b6958 Improve comments
+89a24c0580b0774aac98ca9d8abe467ae554ccca Add TODO notes
+104b0300e2d6fd697dd188a4eca13cc8e6e0b096 Add Judy::HS::MemUsed
+d298ecc4628ab63d2cec88775ec58f884606a72e Remove buffer overflows by adding guard statements
+67b1c232fb8302eb47057e7f4154b01f0147d195 Judy::SL exception on a too-long key now reports the actual limitation
+9b784d8e003ad67269fcdcb7a7777ad9facf3582 Unify Word_t* to PWord_t
+f03de2274b464537a07e541010d85e5ec9abd54e Judy::1 prefers to use IV instead of UV
+58653a8790027fe8d243ba356276d1ddf7cdd2f4 Judy::Mem::Poke() now consumes SV* and extracts SvIV
+bd9be61e86cb29539640b051e2e7afd673d33511 Judy::Mem::Poke() now consumes SV* and extracts SvIV
+3c4c11287549ee3503513c21da1b4ed9d3ee95c3 Fix some typos in the Judy::HS manual
+
+
+0.22 - Wed May 12 09:24:39 2010 -0700
+
+Bug fixes:
+
+    * The warning when truncating a (Word_t) to (UV) accidentally
+      itself truncated the value so in my usage, it reported that it
+      was truncating -1 to -1.
+
+36933cb97e83840a931fcd39c00b2198c50efbdf Better comments
+7ea873165a1d628d836e52326010b9ebc1b6684f More accurate truncation warning
+
+0.21 - Wed May 12 09:23:52 2010 -0700
+
+Bug fixes:
+
+    * Use Alien::Judy's path ability to find Judy.h and
+      libJudy.so. Prior versions would often fail to build because
+      libJudy wasn't installed and Alien::Judy's build couldn't be
+      found.
+
+b2acef43ad6a8b9ea7cbc40bfcb00fc2098f1544 Use Alien::Judy's path ability to find Judy.h and libJudy.so
+d24e27a9652bfc1f3ce0cfc6863fd02e91ef9b96 chmod +x Makefile.PL
+
 0.20 - Fri Mar 26 11:24:00 2010
 
 Releasing a new version purely to deal with some PAUSE.cpan.org issue
