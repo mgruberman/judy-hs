@@ -1,6 +1,14 @@
 Revision history for Judy
 
-0.23 -
+0.24 - Fri May 21 11:08:11 PDT 2010
+
+Bug fixes:
+
+   * Updated tests for the new typemap. Judy-0.23 fails.
+
+3808b2eb963dd6fdb343b6d91d5957a2fbe8f13d Oops, fix typemap tests for IWord_t and UWord_t
+
+0.23
 
 API changes:
 
