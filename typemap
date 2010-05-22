@@ -87,10 +87,10 @@ T_UWORD
         $var = SvUV($arg);
     }
     #else
-    else if ( SvUV($arg) > LONG_MAX ) {
+    else if ( SvUV($arg) > ULONG_MAX ) {
         $var = LONG_MAX;
         warn(\"Truncating %\"UVuf\" to %lu\",
-             SvUV($arg), LONG_MAX);
+             SvUV($arg), ULONG_MAX);
     }
     else {
         $var = SvUV($arg);
