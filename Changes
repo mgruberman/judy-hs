@@ -1,5 +1,32 @@
 Revision history for Judy
 
+0.27 - Sat May 22 15:10:36 2010 -0700
+
+Bug fixes:
+
+    * Unsigned fields truncate to ULONG_MAX, not LONG_MAX. It's the
+      difference between whether the most significant bit is used.
+    * Fixed the usage of the API to allow the previously published -1
+      key value to be used as-is.
+
+ce7b9947ed7253e1bc2a265b930280feadeefe64 Allow -1 in unsigned fields because both libJudy and this Judy advertise -1 as a valid key
+c978e4d8da2e3a185ed67bac020ffbe23cdc166b Unsigned things get truncated to ULONG_MAX, not LONG_MAX
+
+0.26 - Fri May 21 15:04:02 2010 -0700
+
+Bug fixes:
+
+    * Fetching negative values are now actually negative
+
+8b87e30896942623287a0dbeba12ec51bbcf8ed3 typemap for IWord_t preserves sign bit
+04ee666dbcb6c130e27bf638dff95b514962a12e Judy::HS should be careful to cast return values to retain sign bit
+8bb118004db7ffd55dff7c7e7d9caec120882738 Judy::HS::Duplicates is unsigned
+d5a159d49299ff9afe1ff650765f0d91c666ad9a Judy::SL should be careful to cast return values to retain sign bit
+f0af5147edbe7c786d3ff17a0a79164aebc5f551 Judy::L should be careful to cast return values to retain sign bit
+01636c899ac712308b4561fc907162d89b6165c0 Judy::1 returns a bunch of unsigned ints
+0127a21239d574e3883d08fd0a08e19628749a40 Simplify Judy::HS::MemUsed
+4141ec47723c717dce3cda19f72c640060fc3a6c Silence type cast warning
+
 0.25 - Fri May 21 14:49:07 2010 -0700
 
 Bug fixes:
