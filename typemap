@@ -71,16 +71,22 @@ T_IWORD
 
 T_UWORD
     /* Accept:
-       - IV that's negative, coerce to 0 and th
+       - IV that's -1.
+       - IV that's negative, coerce to 0 and warn.
        - IV/UV that fits in (unsigned long int)
        - IV/UV that requires more bits than fit in (unsigned long
          int). Truncate it and throw a warning.
        - Cast everything else to UV and apply the above rules
      */
     if ( SvIOK($arg) && SvIV($arg) < 0 ) {
-        warn(\"Coercing %\"IVdf\" to 0\",
-             SvIV($arg));
-        $var = 0;
+        if ( SvIV($arg) == -1 ) {
+            $var = -1;
+        }
+        else {
+            $var = 0;
+            warn(\"Coercing %\"IVdf\" to 0\",
+                 SvIV($arg));
+        }
     }
     #if (LONGSIZE == UVSIZE)
     else {
