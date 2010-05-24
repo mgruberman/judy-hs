@@ -47,7 +47,7 @@ T_IWORD
     if ( SvUOK($arg) && ! SvIOK($arg) ) {
         if ( SvUV($arg) > LONG_MAX ) {
             $var = LONG_MAX;
-            warn(\"Truncating %\"UVuf\" to %ld\",
+            warn(\"Truncating %\"UVuf\" to %ld because your number is larger than fits in a signed integer\",
                  SvUV($arg), LONG_MAX);
         }
         else {
@@ -61,12 +61,12 @@ T_IWORD
     #else
         if ( SvIV($arg) > LONG_MAX ) {
             $var = LONG_MAX;
-            warn(\"Truncating %\"IVdf\" to %ld\",
+            warn(\"Truncating %\"IVdf\" to %ld because your number is larger than fits in a signed integer\",
                  SvIV($arg), LONG_MAX);
         }
         else if ( SvIV($arg) < LONG_MIN ) {
             $var = LONG_MIN;
-            warn(\"Truncating %\"IVdf\" to %ld\",
+            warn(\"Truncating %\"IVdf\" to %ld because your number is smaller than fits in a signed integer\",
                  SvIV($arg), LONG_MIN);
         }
         else {
@@ -91,7 +91,7 @@ T_UWORD
         }
         else {
             $var = 0;
-            warn(\"Coercing %\"IVdf\" to 0\",
+            warn(\"Coercing %\"IVdf\" to 0. Can't use negative values as keys.\",
                  SvIV($arg));
         }
     }
@@ -102,7 +102,7 @@ T_UWORD
     #else
     else if ( SvUV($arg) > ULONG_MAX ) {
         $var = LONG_MAX;
-        warn(\"Truncating %\"UVuf\" to %lu\",
+        warn(\"Truncating %\"UVuf\" to %lu because your number is larger than fits in an unsigned integer\",
              SvUV($arg), ULONG_MAX);
     }
     else {
