@@ -7,7 +7,14 @@ Str T_STR
 
 INPUT
 T_STR
-    ($var.ptr) = SvPV($arg,($var.length))
+    ($var.ptr) = SvPV($arg,($var.length));
+    if ( SvUTF8($arg) ) {
+        /* TODO: handle warning properly if there's an embedded null
+           in the input string. Right now, ordinary %s interpolation
+           will halt. */
+        warn(\"Dropping UTF8 flag for '%\s'\",
+             $var.ptr);
+    }
 
 T_PVOID
 
