@@ -40,7 +40,7 @@ size of 4 billion).
 
 =over
 
-=item L<Judy::1> functions:
+=item L<Judy::1>:
 
 This can be thought of as a bit vector. For a comparison between
 L<Judy::1> and L<perlfunc/vec>, take a look at
@@ -55,7 +55,7 @@ L<http://perlmonks.org/?node_id=732843>.
         42
     );
 
-=item L<Judy::L> functions:
+=item L<Judy::L>
 
 Maps an integer to another integer. This is sort of like a very
 compact perl hash where the only allowed keys and values are
@@ -71,7 +71,7 @@ integers.
         9000
     );
 
-=item L<Judy::SL> functions:
+=item L<Judy::SL>
 
 Maps null terminated strings to integers.
 
@@ -85,7 +85,7 @@ Maps null terminated strings to integers.
         9000
     );
 
-=item L<Judy::HS> functions:
+=item L<Judy::HS>
 
 Maps perl strings to integers.
 
