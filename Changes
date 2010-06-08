@@ -1,5 +1,38 @@
 Revision history for Judy
 
+0.30 -
+
+Bug fixes:
+
+    * Updating Alien::Judy
+
+b4fc6caf67e2e7b81cf6eb966f130d97a9acdf73 Update Alien::Judy-0.13
+
+0.29 - Tue Jun 8 10:07:20 2010 -0700
+
+Bug fixes:
+
+    * Updating Alien::Judy
+
+db7b9a8f5a082ae19b2a0d6d1e8bc4d888985313 Import Alien::Judy-0.12 so Judy.h can be found
+
+0.28 - Sat Jun 5 16:44:26 2010 -0700
+
+API Changes:
+
+    * Update truncation/coersion warnings
+    * Warn when dropping UTF8 on strings
+
+Bug fixes:
+
+    * Updating Alien::Judy
+
+7bdbcb71aaa17d0b164659ae85988dbba35e09a3 Update inc_dirs and lib_dirs functions from Alien::Judy
+a81de24c220c877d1cc3680c5d41fee00e8a2ca1 Updating documentation
+1666301f6daf9185552dbd0b5faed0251967b821 Updating documentation
+da1afee359ec5f741c41ccf42d04315597521d17 Update truncation/coersion warnings
+e7353195d744a34ec90ca6130140113605766085 Warn when dropping UTF8 on strings
+
 0.27 - Sat May 22 15:10:36 2010 -0700
 
 Bug fixes:
