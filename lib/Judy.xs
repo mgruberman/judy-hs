@@ -1066,8 +1066,7 @@ ljhs_Free( PJHSArray )
 
 MODULE = Judy PACKAGE = Judy PREFIX = lj_
 
-=pod
-
-Switch back to the base Judy namespace. xsubpp requires this.
-
-=cut
+# Switch back to the base Judy namespace. xsubpp requires this.
+#
+# Also, avoid terminating in =pod because ExtUtils::ParseXS throws
+# warnings. This paragraph used to be in =pod/cut comments.

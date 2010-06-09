@@ -16,7 +16,7 @@ magic_get_Pvoid_t( x )
 Pvoid_t
 magic_set_Pvoid_t1()
     CODE:
-        RETVAL = 3;
+        RETVAL = (Pvoid_t)3;
      OUTPUT:
         RETVAL
 
@@ -24,7 +24,7 @@ void
 magic_set_Pvoid_t2( x )
         Pvoid_t x
     CODE:
-        x = 4;
+        x = (Pvoid_t)4;
     OUTPUT:
         x
 
@@ -76,7 +76,7 @@ magic_get_PWord_t( x )
 PWord_t
 magic_set_PWord_t1()
     CODE:
-        RETVAL = 9;
+        RETVAL = (PWord_t)9;
      OUTPUT:
         RETVAL
 
@@ -84,7 +84,7 @@ void
 magic_set_PWord_t2( x )
         PWord_t x
     CODE:
-        x = 10;
+        x = (PWord_t)10;
     OUTPUT:
         x
 
