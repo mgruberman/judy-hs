@@ -7,7 +7,10 @@ use Alien::Judy;
 # Render README.pod to README for consumption by the world. README.pod
 # is only present in the version available from git.
 if ( -e 'README.pod' ) {
-    system 'perldoc -t README.pod > README';
+    system 'perldoc -t README.pod > README.new';
+    if ( ! $? && -s README.new ) {
+        rename 'README.new', 'README';
+    }
 }
 
 WriteMakefile(
