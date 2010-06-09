@@ -1,6 +1,14 @@
 Revision history for Judy
 
-0.30 -
+0.31 -
+
+Bug fixes:
+
+    * Removing My::Paths and relying solely on Alien::Judy to find Judy.h
+
+f8945f31e905a63695130e65ad67c016e6279cd6 My::Paths was still involved, pre-removing the target directory for Alien::Judy's Judy.h
+
+0.30 - Tue Jun 8 10:08:06 2010 -0700
 
 Bug fixes:
 
