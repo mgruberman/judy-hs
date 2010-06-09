@@ -4,7 +4,6 @@
 Changes
 eg/juniq
 inc/Alien/Judy.pm
-inc/My/Paths.pm
 Judy.xs
 lib/Judy.pm
 lib/Judy.pod
