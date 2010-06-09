@@ -48,6 +48,11 @@ t/30l.t
 t/30o.t
 t/40trunc.t
 t/41typemap.t
+t/MAGIC/Build.PL
+t/MAGIC/lib/MAGIC.pm
+t/MAGIC/lib/MAGIC.xs
+t/MAGIC/MANIFEST
+t/MAGIC/MANIFEST.SKIP
 t/README
 typemap
 xt/99_critic.t
