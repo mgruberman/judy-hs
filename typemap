@@ -44,7 +44,7 @@ T_IWORD
        - Cast everything else to IV or NV and apply the above rules.
      */
 
-    if ( SvUOK($arg) && ! SvIOK($arg) ) {
+    if ( SvUOK($arg) ) {
         if ( SvUV($arg) > LONG_MAX ) {
             $var = LONG_MAX;
             warn(\"Truncating %\"UVuf\" to %ld because your number is larger than fits in a signed integer\",
