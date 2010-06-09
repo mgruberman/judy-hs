@@ -51,7 +51,7 @@ T_IWORD
                  SvUV($arg), LONG_MAX);
         }
         else {
-            $var = (long int)SvUV($arg);
+            $var = (long int)SvIV($arg);
         }
     }
     else {
