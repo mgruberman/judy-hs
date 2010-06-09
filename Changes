@@ -1,6 +1,29 @@
 Revision history for Judy
 
-0.31 -
+0.32
+
+Bug fixes:
+
+    * Force loading of libJudy from $sitearch/Alien/Judy when necessary
+    * ExtUtils::ParseXS no longer warns about uninitialized variables in $lastline
+    * Switched to Module::Build because ExtUtils::MakeMaker was
+      filtering out necessary -L/path/to/libJudy and -lJudy
+      parameters.
+
+b3eee2df43df9c9386ac2a370af4ff410068e03f Re-rendered README
+ac8bf36e698b26f4b35ff384b2a03413877e0681 Cleaning
+883639c9a75316b71fde3e7712538b4576fda145 Drop Inline::C as a dependency
+b3dc328b52c80c48fc68923840aa649e951c06fd Cleaning
+b938bde19fb62ca52fcccc621cbaedad1fe00c86 Cleaning
+134d8ce58e64fc805e01fe40ddf4869a1571e4db Manually pre-load libJudy when it can't be otherwise found
+4fc0633c3c8ff7b70044f41694450420f7acaa74 Use an IV when possible
+d8033eb4c42b9036a265cec1d793eb6281ef7842 Remove mutually exclusive condition
+9c5a1673b3238d65a155399afce9bf7087d407d7 Remove extra \\ in warning
+ff98e851af0c2125691259349eaf7407e5d0346a Switch from ExtUtils::MakeMaker to Module::Build because EU::MM pre-filtered LIBS preventing successful installation
+a047e1770b03ed081a679a59c6e6c1d5e0a61725 My::Paths was still involved, pre-removing the target directory for Alien::Judy's Judy.h
+634c95b15ed529fc456d27047f9d4de1daa461b6 Debian might not have a useable perldoc
+ 
+0.31
 
 Bug fixes:
 
