@@ -12,7 +12,7 @@ T_STR
         /* TODO: handle warning properly if there's an embedded null
            in the input string. Right now, ordinary %s interpolation
            will halt. */
-        warn(\"Dropping UTF8 flag for '%\s'\",
+        warn(\"Dropping UTF8 flag for '%s'\",
              $var.ptr);
     }
 
