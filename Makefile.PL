@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 use lib 'inc';
-use My::Paths;
+use Alien::Judy;
 
 # Render README.pod to README for consumption by the world. README.pod
 # is only present in the version available from git.
@@ -18,7 +18,10 @@ WriteMakefile(
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
-    INC => join( ' ', @{ My::Paths::CCINC() } ),
+    INC => join( ' ',
+        map { "-I$_" }
+        Alien::Judy::inc_dirs()
+    ),
     PREREQ_PM => {
         'Test::More' => 0,
         'Test::Deep' => 0,
@@ -28,7 +31,15 @@ WriteMakefile(
         'Alien::Judy' => '0.09',
     },
     OPTIMIZE => '-g',
-    LIBS => [join ' ', @{ My::Paths::CCLIB() }, '-lJudy'],
+    LIBS => [
+        join( ' ',
+            (
+                map { "-L$_" }
+                Alien::Judy::lib_dirs(),
+            ),
+            '-lJudy'
+        )
+    ],
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Judy-*' },
 );
