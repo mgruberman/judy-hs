@@ -1,6 +1,9 @@
-unshift @INC, 'inc';
-require Module::Build;
-require Alien::Judy;
+#!perl
+use Module::Build;
+BEGIN {
+    unshift @INC, 'inc';
+}
+use Alien::Judy;
 
 my $build = Module::Build->new(
     module_name => 'Judy',
