@@ -1,12 +1,13 @@
 .cvsignore
 .gitignore
 .releaserc
+Build.PL
 Changes
 eg/juniq
 inc/Alien/Judy.pm
-Judy.xs
 lib/Judy.pm
 lib/Judy.pod
+lib/Judy.xs
 lib/Judy/1.pm
 lib/Judy/1.pod
 lib/Judy/1/_obj.pm
@@ -28,7 +29,6 @@ lib/Judy/SL.pod
 lib/Judy/SL/_dump.pm
 lib/Judy/SL/_obj.pm
 lib/Judy/SL/_tie.pm
-Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml

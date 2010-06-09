@@ -12,6 +12,10 @@ Judy-HS-*
 *.o
 _Inline
 
+# Module::Build
+Build
+_build
+
 # EU::MM
 blib
 pm_to_blib
@@ -26,7 +30,7 @@ Makefile.old
 # Distribution artifacts
 MANIFEST.bak
 META.yml
-
+MYMETA.yml
 
 # bin/release
 Changes.bak
