@@ -6,8 +6,23 @@ use warnings;
 BEGIN {
     our $VERSION = '0.31';
 
-    require XSLoader;
-    XSLoader::load( __PACKAGE__, $VERSION );
+    require Alien::Judy;
+    require DynaLoader;
+
+    # Ensure that libJudy is loadable
+    if ( ! DynaLoader::dl_findfile('-lJudy') ) {
+
+        # Alien::Judy will have installed it to
+        # $Config{sitearch}/Alien/Judy
+        local @DynaLoader::dl_library_path = Alien::Judy::lib_dirs();
+        my $libJudy_file = DynaLoader::dl_findfile('-lJudy');
+        DynaLoader::dl_load_file( $libJudy_file, 0x01 );
+    }
+
+    # Now load the Perl wrapper over libJudy
+    our @ISA;
+    local @ISA = 'DynaLoader';
+    Judy->bootstrap;
 }
 
 use Sub::Exporter -setup => {
