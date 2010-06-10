@@ -34,7 +34,7 @@ my $build = Module::Build->new(
         'Config'     => 0,
 
 	'Sub::Exporter' => 0,
-        'Alien::Judy'   => '0.13',
+        'Alien::Judy'   => '0.15',
     },
 
     create_readme => 1,
