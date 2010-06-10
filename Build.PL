@@ -39,11 +39,23 @@ my $build = Module::Build->new(
 
     create_readme => 1,
     dynamic_config => 1,
-    include_dirs => [ Alien::Judy::inc_dirs() ],
+    include_dirs => [
+        Alien::Judy::inc_dirs(),
+        (
+            map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
+            grep { m{blib/arch} }
+            @INC
+        ),
+    ],
     extra_linker_flags => join( ' ',
         (
             map { "-L$_" }
             Alien::Judy::lib_dirs(),
+            (
+                map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
+                grep { m{blib/arch} }
+                @INC
+            ),
         ),
         '-lJudy'
     ),
