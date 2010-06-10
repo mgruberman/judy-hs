@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 BEGIN {
-    our $VERSION = '0.32';
+    our $VERSION = '0.33';
 
     require Alien::Judy;
     require DynaLoader;

@@ -1,6 +1,15 @@
 Revision history for Judy
 
-<<<<<<< HEAD
+0.33 
+
+Bug fixes:
+
+    * Look in Alien-Judy's blib/arch/Alien/Judy for -I and -L
+
+570b45344c95969b1edc41627819a137ae0a04c8 Look in Alien-Judy's blib/arch/Alien/Judy for -I and -L
+19549418fe4e41bba46ba2e293e445739a5becfd Require Alien::Judy 0.15
+bdc754e221ad69adfa9499b895d8792c0ae6c711 Merge remote branch 'github/master'
+
 0.32
 
 Bug fixes:
