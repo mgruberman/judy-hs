@@ -29,19 +29,13 @@ sub inc_dirs {
             Cwd::getcwd(),
             map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
             grep { defined() && length() }
-            @Config::Config{qw(sitearchexp sitearch)}
+            @Config::Config{qw(sitearchexp sitearch)},
+            @INC
         );
 }
 
-sub lib_dirs {
-    return
-        unique(
-            map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
-            grep { defined() && length() }
-            @Config::Config{qw(sitearchexp sitearch)}
-        );
-}
+*lib_dirs = \&inc_dirs;
 
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 1;
