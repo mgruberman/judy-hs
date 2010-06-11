@@ -13,8 +13,12 @@ BEGIN {
     if ( ! DynaLoader::dl_findfile('-lJudy') ) {
 
         # Alien::Judy will have installed it to
-        # $Config{sitearch}/Alien/Judy
-        local @DynaLoader::dl_library_path = Alien::Judy::lib_dirs();
+        # $Config{sitearch}/Alien/Judy however during CPAN testing it
+        # may be in any(@INC)/blib/arch/Alien/Judy.
+        local @DynaLoader::dl_library_path = (
+            @DynaLoader::dl_library_path,
+            Alien::Judy::lib_dirs(),
+        );
         my $libJudy_file = DynaLoader::dl_findfile('-lJudy');
         DynaLoader::dl_load_file( $libJudy_file, 0x01 );
     }
