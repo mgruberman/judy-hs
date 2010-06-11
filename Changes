@@ -1,5 +1,15 @@
 Revision history for Judy
 
+0.34
+
+Bug fixes:
+
+    * Look in any(@INC)/Alien/Judy for -I and -L
+
+dcea55fedbab56001ad3c69983cbca55cfdc1b64 Retain prior value for @DynaLoader::dl_library_path
+02a7198316299c13fd33a3f27d525bc2eae21f32 Alien-Judy-0.16
+43fd1ebdf0262829e9e15aba64ec84db9c54426e Update Alien::Judy 0.15
+
 0.33 
 
 Bug fixes:
