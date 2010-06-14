@@ -10,6 +10,7 @@ my $build = Module::Build->new(
     license => 'perl',
     configure_requires => {
         'Module::Build' => 0,
+        'Alien::Judy'   => '0.15',
     },
     build_requires => {
         'strict'         => 0,
@@ -24,6 +25,8 @@ my $build = Module::Build->new(
         'Test::More'         => 0,
         'Test::Deep'         => 0,
 	'ExtUtils::CBuilder' => 0,
+
+        'Alien::Judy'   => '0.15',
     },
     requires => {
         'perl'       => '5.6.0',
