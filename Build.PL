@@ -24,7 +24,7 @@ my $build = Module::Build->new(
 
         'Test::More'         => 0,
         'Test::Deep'         => 0,
-	'ExtUtils::CBuilder' => 0,
+        'ExtUtils::CBuilder' => 0,
 
         'Alien::Judy'   => '0.15',
     },
@@ -36,7 +36,7 @@ my $build = Module::Build->new(
         'constant'   => 0,
         'Config'     => 0,
 
-	'Sub::Exporter' => 0,
+        'Sub::Exporter' => 0,
         'Alien::Judy'   => '0.15',
     },
 
