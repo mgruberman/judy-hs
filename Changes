@@ -4,6 +4,20 @@ Revision history for Judy
 
 Bug fixes:
 
+   * Re-write -I and -L at build-time because Build.PL-time often
+     doesn't have the right paths yet
+
+6d0bc8394ad8b9cd808c24d9fa79b297cf0a099f Re-do finding of Judy.h
+35772d2c643092b92480d18a296f771faf2a2c48 Oops, removed t/00-load.t
+02b07c1223ea6854ebb0d03d86dc1a7528afe0b3 Untabify
+0a7c72ee9d641ef98b68fa178343e0167271dccd Uniquify INC and LIB dirs
+aab84ac62a8f2f4a70436092f9c2df0ef68acc3f Add Alien::Judy to configure_requires and build_requires
+92ab57310f5bcb35207a1c2b9a4483386412dde2 Remove useless test
+
+0.34
+
+Bug fixes:
+
     * Look in any(@INC)/Alien/Judy for -I and -L
 
 dcea55fedbab56001ad3c69983cbca55cfdc1b64 Retain prior value for @DynaLoader::dl_library_path
