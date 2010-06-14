@@ -43,15 +43,17 @@ my $build = Module::Build->new(
     create_readme => 1,
     dynamic_config => 1,
     include_dirs => [
-        Alien::Judy::inc_dirs(),
-        (
-            map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
-            grep { m{blib/arch} }
-            @INC
+        unique(
+            Alien::Judy::inc_dirs(),
+            (
+                map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
+                grep { m{blib/arch} }
+                @INC
+            ),
         ),
     ],
     extra_linker_flags => join( ' ',
-        (
+        unique(
             map { "-L$_" }
             Alien::Judy::lib_dirs(),
             (
@@ -64,3 +66,10 @@ my $build = Module::Build->new(
     ),
 );
 $build->create_build_script();
+
+sub unique {
+    my %seen;
+    return
+        grep { ! $seen{$_}++ }
+        @_
+}
