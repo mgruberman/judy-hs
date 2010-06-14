@@ -35,7 +35,6 @@ META.yml
 pjudy.h
 ppport.h
 README
-t/00-load.t
 t/10hs.t
 t/10l.t
 t/10o.t
