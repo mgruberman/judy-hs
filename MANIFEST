@@ -4,7 +4,7 @@
 Build.PL
 Changes
 eg/juniq
-inc/Alien/Judy.pm
+inc/My/Builder.pm
 lib/Judy.pm
 lib/Judy.pod
 lib/Judy.xs

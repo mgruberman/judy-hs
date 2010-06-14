@@ -1,16 +1,21 @@
 #!perl
-use Module::Build;
 BEGIN {
     unshift @INC, 'inc';
 }
-use Alien::Judy;
+use My::Builder;
+use Config;
+use File::Spec;
 
-my $build = Module::Build->new(
+
+my $build = My::Builder->new(
     module_name => 'Judy',
     license => 'perl',
     configure_requires => {
+        'strict'        => 0,
+        'warnings'      => 0,
+        'vars'          => 0,
         'Module::Build' => 0,
-        'Alien::Judy'   => '0.15',
+        'File::Spec'    => 0,
     },
     build_requires => {
         'strict'         => 0,
@@ -25,8 +30,6 @@ my $build = Module::Build->new(
         'Test::More'         => 0,
         'Test::Deep'         => 0,
         'ExtUtils::CBuilder' => 0,
-
-        'Alien::Judy'   => '0.15',
     },
     requires => {
         'perl'       => '5.6.0',
@@ -42,34 +45,13 @@ my $build = Module::Build->new(
 
     create_readme => 1,
     dynamic_config => 1,
-    include_dirs => [
-        unique(
-            Alien::Judy::inc_dirs(),
-            (
-                map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
-                grep { m{blib/arch} }
-                @INC
-            ),
-        ),
-    ],
-    extra_linker_flags => join( ' ',
-        unique(
-            map { "-L$_" }
-            Alien::Judy::lib_dirs(),
-            (
-                map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
-                grep { m{blib/arch} }
-                @INC
-            ),
-        ),
-        '-lJudy'
-    ),
+
+    # Both of these values will be overwritten by My::Builder during
+    # ACTION_build so the PERL5LIB of the moment can affect the usage
+    # of -I and -L flags to find Judy.h and libJudy.so
+    #
+    include_dirs => [],
+    extra_linker_flags => '',
 );
 $build->create_build_script();
 
-sub unique {
-    my %seen;
-    return
-        grep { ! $seen{$_}++ }
-        @_
-}
