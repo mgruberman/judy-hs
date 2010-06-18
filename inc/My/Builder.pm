@@ -2,14 +2,12 @@ package My::Builder;
 
 use strict;
 use warnings;
-use vars qw( @ISA $LIB_EXT );
+use vars qw( @ISA );
 use Config ();
 use File::Spec;
 
 use Module::Build;
 @ISA = 'Module::Build';
-
-$LIB_EXT = $Config::Config{lib_ext};
 
 my @actions =
     grep { /^ACTION_\w+\z/ && $_ ne 'ACTION_config_data' }
@@ -81,7 +79,6 @@ sub update_inc_lib_dirs {
     my @new_extra_linker_flags = unique(
         (
             map { "-L$_" }
-            grep { -e File::Spec->catfile( $_, "libJudy$LIB_EXT" ) }
             @all_dirs
         ),
         '-lJudy',
@@ -99,7 +96,7 @@ sub update_inc_lib_dirs {
             '-lJudy'
         );
         local $" = q{', '};
-        print "$action: I couldn't find libJudy$LIB_EXT in any of the below listed places.\n";
+        print "$action: I couldn't resolve -lJudy in any of the below listed places.\n";
         print "$action: extra_linker_flags='@{new_extra_linker_flags}'\n";
     }
     $self->{properties}{extra_linker_flags} = \ @new_extra_linker_flags;
