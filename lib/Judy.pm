@@ -39,6 +39,7 @@ Sub::Exporter->import(
 # Load the functional interfaces. The XS package already loaded all
 # the real implementation anyway.
 #
+local $Judy::LOADING = 1;
 require Judy::1;
 require Judy::L;
 require Judy::SL;
