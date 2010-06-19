@@ -1,5 +1,13 @@
 Revision history for Judy
 
+0.37
+
+Bug fixes:
+
+    * Inform build meta data that Judy requires Alien::Judy-0.18+
+
+fcae9139a7fd29a3feb712b9a9bbeaa2648c5c8b Require Alien::Judy in distro meta-data as well as functionally at runtime
+
 0.36
 
 Bug fixes:
