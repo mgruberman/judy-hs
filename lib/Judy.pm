@@ -2,8 +2,9 @@ package Judy;
 
 use strict;
 use warnings;
+use vars qw( $VERSION @ISA );
 
-our $VERSION = '0.35';
+$VERSION = '0.35';
 
 require Alien::Judy;
 require DynaLoader;
@@ -23,7 +24,6 @@ if ( ! DynaLoader::dl_findfile('-lJudy') ) {
 }
 
 # Now load the Perl wrapper over libJudy
-our @ISA;
 local @ISA = 'DynaLoader';
 Judy->bootstrap;
 
