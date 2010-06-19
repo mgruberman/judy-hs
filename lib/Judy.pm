@@ -40,10 +40,6 @@ Sub::Exporter->import(
 # the real implementation anyway.
 #
 local $Judy::LOADING = 1;
-require Judy::1;
-require Judy::L;
-require Judy::SL;
-require Judy::HS;
 
 # Load the OO interfaces.
 #
@@ -53,5 +49,12 @@ require Judy::_obj;
 # 
 require Judy::_tie;
 Judy::_tie->import;
+
+require Judy::1;
+require Judy::L;
+require Judy::SL;
+require Judy::HS;
+
+
 
 1;
