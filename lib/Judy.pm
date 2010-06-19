@@ -3,31 +3,29 @@ package Judy;
 use strict;
 use warnings;
 
-BEGIN {
-    our $VERSION = '0.35';
+our $VERSION = '0.35';
 
-    require Alien::Judy;
-    require DynaLoader;
+require Alien::Judy;
+require DynaLoader;
 
-    # Ensure that libJudy is loadable
-    if ( ! DynaLoader::dl_findfile('-lJudy') ) {
+# Ensure that libJudy is loadable
+if ( ! DynaLoader::dl_findfile('-lJudy') ) {
 
-        # Alien::Judy will have installed it to
-        # $Config{sitearch}/Alien/Judy however during CPAN testing it
-        # may be in any(@INC)/blib/arch/Alien/Judy.
-        local @DynaLoader::dl_library_path = (
-            @DynaLoader::dl_library_path,
-            Alien::Judy::lib_dirs(),
+    # Alien::Judy will have installed it to
+    # $Config{sitearch}/Alien/Judy however during CPAN testing it
+    # may be in any(@INC)/blib/arch/Alien/Judy.
+    local @DynaLoader::dl_library_path = (
+        @DynaLoader::dl_library_path,
+        Alien::Judy::lib_dirs(),
         );
-        my $libJudy_file = DynaLoader::dl_findfile('-lJudy');
-        DynaLoader::dl_load_file( $libJudy_file, 0x01 );
-    }
-
-    # Now load the Perl wrapper over libJudy
-    our @ISA;
-    local @ISA = 'DynaLoader';
-    Judy->bootstrap;
+    my $libJudy_file = DynaLoader::dl_findfile('-lJudy');
+    DynaLoader::dl_load_file( $libJudy_file, 0x01 );
 }
+
+# Now load the Perl wrapper over libJudy
+our @ISA;
+local @ISA = 'DynaLoader';
+Judy->bootstrap;
 
 use Sub::Exporter -setup => {
     exports => [qw[ PJERR JLAP_INVALID ]]
