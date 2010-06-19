@@ -7,21 +7,11 @@ use vars qw( $VERSION @ISA );
 $VERSION = '0.35';
 
 require Alien::Judy;
-require DynaLoader;
-
-# Ensure that libJudy is loadable
-if ( ! DynaLoader::dl_findfile('-lJudy') ) {
-
-    # Alien::Judy will have installed it to
-    # $Config{sitearch}/Alien/Judy however during CPAN testing it
-    # may be in any(@INC)/blib/arch/Alien/Judy.
-    local @DynaLoader::dl_library_path = (
-        @DynaLoader::dl_library_path,
-        Alien::Judy::lib_dirs(),
-        );
-    my $libJudy_file = DynaLoader::dl_findfile('-lJudy');
-    DynaLoader::dl_load_file( $libJudy_file, 0x01 );
+my $av_version = Alien::Judy->VERSION;
+if ( $av_version < 0.18 ) {
+    die "Alien::Judy version 0.18 required--this is only version $av_version";
 }
+Alien::Judy::dl_load_libjudy();
 
 # Now load the Perl wrapper over libJudy
 local @ISA = 'DynaLoader';
