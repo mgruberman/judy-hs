@@ -1,5 +1,26 @@
 Revision history for Judy
 
+0.36
+
+Bug fixes:
+
+    * Let Alien::Judy-0.18 load libJudy and remove Judy's attempt to load libJudy
+    * Update -I and -L during build for all Module::Build actions
+
+90dc5ed3954df3c89404fbf518eac9637d4df082 Finish loading all mixin behaviors into Judy before loading Judy::1, Judy::L, Judy::SL, or Judy::HS
+ae0f4cb0d02ce1b8508d875a49f57d92a17a71d1 Set $Judy::LOADING while compiling Judy.pm
+e1096320a51057737a77345a45297366913d4813 Load Sub::Exporter at runtime for code that reads linearly
+9ee85b39a8a0ee3a4b599dbb798c714c3ddca393 Defer loading libJudy to Alien::Judy
+dd1bbd744762ea3f8c25b17e06db2c74c7cb41f4 Remove our() in favor of vars.pm for 5.005 friendliness
+7b3249f8906a4f305e53e23737b29b1650b113d8 Remove a BEGIN so I can focus on straightforward execution
+a870d637374bb8144411993be8b1e8f09514f018 Remove -e checks for libJudy.so until I fully consume all the many possible libJudy names by reading DynaLoader more carefully
+f2ede9b5907d3f15f8dd4c80316e5b2cea404a98 Builder updates -I and -L paths for all Module::Build actions
+
+
+0.35
+
+Same as 0.34. Looks like a commit screw-up
+
 0.34
 
 Bug fixes:
