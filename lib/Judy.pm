@@ -15,11 +15,14 @@ Alien::Judy::dl_load_libjudy();
 
 # Now load the Perl wrapper over libJudy
 local @ISA = 'DynaLoader';
-Judy->bootstrap;
+__PACKAGE__->bootstrap;
 
-use Sub::Exporter -setup => {
-    exports => [qw[ PJERR JLAP_INVALID ]]
-};
+require Sub::Exporter;
+Sub::Exporter->import(
+    -setup => {
+        exports => [qw[ PJERR JLAP_INVALID ]]
+    }
+);
 
 # Beware, each implementation also uses Judy.pm. Both Judy.pm and 1.pm
 # (for example) require() each other. In execution order:
