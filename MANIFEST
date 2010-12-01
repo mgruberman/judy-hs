@@ -25,6 +25,7 @@ lib/Judy/L.pod
 lib/Judy/L/_impl.pm
 lib/Judy/L/_obj.pm
 lib/Judy/L/_tie.pm
+lib/Judy/Mem/_impl.pm
 lib/Judy/Mem.pm
 lib/Judy/Mem.pod
 lib/Judy/SL.pm

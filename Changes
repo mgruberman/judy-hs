@@ -1,10 +1,21 @@
 Revision history for Judy
 
+0.39
+
+Bug fixes:
+
+    * Normalize loading path to remove cycles
+      - Judy::Mem (forgot this one in 0.38)
+
 0.38
 
 Bug fixes:
 
     * Normalize loading path to remove cycles
+      - Judy::1
+      - Judy::L
+      - Judy::SL
+      - Judy::HS
 
 0.37
 

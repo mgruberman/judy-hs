@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use vars qw( $VERSION @ISA );
 
-$VERSION = '0.38';
+$VERSION = '0.39';
 
 require Alien::Judy;
 my $av_version = Alien::Judy->VERSION;
@@ -24,18 +24,6 @@ Sub::Exporter->import(
     }
 );
 
-# Beware, each implementation also uses Judy.pm. Both Judy.pm and 1.pm
-# (for example) require() each other. In execution order:
-#
-# Compile Judy.pm
-# iz $INC{'Judy.pm'} true naow?
-# Execute Judy.pm
-# $INC{'Judy.pm'} iz true naow.
-# require 1.pm
-# Compile 1.pm
-# Execute 1.pm
-# require Judy.pm # but $INC{'Judy.pm'} is already true
-
 # Load the OO interfaces.
 #
 require Judy::_obj;
@@ -46,6 +34,7 @@ require Judy::_tie;
 Judy::_tie->import;
 
 # Load the functional interfaces.
+require Judy::Mem::_impl;
 require Judy::1::_impl;
 require Judy::L::_impl;
 require Judy::SL::_impl;
