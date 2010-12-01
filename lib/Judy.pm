@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use vars qw( $VERSION @ISA );
 
-$VERSION = '0.37';
+$VERSION = '0.38';
 
 require Alien::Judy;
 my $av_version = Alien::Judy->VERSION;
@@ -36,11 +36,6 @@ Sub::Exporter->import(
 # Execute 1.pm
 # require Judy.pm # but $INC{'Judy.pm'} is already true
 
-# Load the functional interfaces. The XS package already loaded all
-# the real implementation anyway.
-#
-local $Judy::LOADING = 1;
-
 # Load the OO interfaces.
 #
 require Judy::_obj;
@@ -50,11 +45,10 @@ require Judy::_obj;
 require Judy::_tie;
 Judy::_tie->import;
 
-require Judy::1;
-require Judy::L;
-require Judy::SL;
-require Judy::HS;
-
-
+# Load the functional interfaces.
+require Judy::1::_impl;
+require Judy::L::_impl;
+require Judy::SL::_impl;
+require Judy::HS::_impl;
 
 1;

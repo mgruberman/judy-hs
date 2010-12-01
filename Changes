@@ -1,5 +1,11 @@
 Revision history for Judy
 
+0.38
+
+Bug fixes:
+
+    * Normalize loading path to remove cycles
+
 0.37
 
 Bug fixes:

@@ -10,16 +10,19 @@ lib/Judy.pod
 lib/Judy.xs
 lib/Judy/1.pm
 lib/Judy/1.pod
+lib/Judy/1/_impl.pm
 lib/Judy/1/_obj.pm
 lib/Judy/1/_tie.pm
 lib/Judy/_obj.pm
 lib/Judy/_tie.pm
 lib/Judy/HS.pm
 lib/Judy/HS.pod
+lib/Judy/HS/_impl.pm
 lib/Judy/HS/_obj.pm
 lib/Judy/HS/_tie.pm
 lib/Judy/L.pm
 lib/Judy/L.pod
+lib/Judy/L/_impl.pm
 lib/Judy/L/_obj.pm
 lib/Judy/L/_tie.pm
 lib/Judy/Mem.pm
@@ -27,6 +30,7 @@ lib/Judy/Mem.pod
 lib/Judy/SL.pm
 lib/Judy/SL.pod
 lib/Judy/SL/_dump.pm
+lib/Judy/SL/_impl.pm
 lib/Judy/SL/_obj.pm
 lib/Judy/SL/_tie.pm
 MANIFEST			This list of files
