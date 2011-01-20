@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use vars qw( $VERSION @ISA );
 
-$VERSION = '0.39';
+$VERSION = '0.40';
 
 require Alien::Judy;
 my $av_version = Alien::Judy->VERSION;
