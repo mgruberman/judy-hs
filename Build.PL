@@ -40,7 +40,7 @@ my $build = My::Builder->new(
         'Config'     => 0,
 
         'Sub::Exporter' => 0,
-        'Alien::Judy'   => '0.18',
+        'Alien::Judy'   => '0.26',
     },
 
     create_readme => 1,
