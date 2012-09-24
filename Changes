@@ -1,5 +1,13 @@
 Revision history for Judy
 
+0.41
+
+Bug fixes:
+
+    * ExtUtils::ParseXS circa 3.16 no longer handles CPP directives in typemap
+      files. The typemap file now uses plain C instead of any CPP directives
+      for conditional compilation.
+
 0.40
 
 Bug fixes:

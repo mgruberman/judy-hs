@@ -55,10 +55,10 @@ T_IWORD
         }
     }
     else {
-    #if LONGSIZE == IVSIZE
+    if (LONGSIZE == IVSIZE) {
         assert( LONG_MIN <= SvIV($arg) && SvIV($arg) <= LONG_MAX );
         $var = SvIV($arg);
-    #else
+    } else {
         if ( SvIV($arg) > LONG_MAX ) {
             $var = LONG_MAX;
             warn(\"Truncating %\"IVdf\" to %ld because your number is larger than fits in a signed integer\",
@@ -72,7 +72,7 @@ T_IWORD
         else {
             $var = SvIV($arg);
         }
-    #endif
+    }
     }
 
 
@@ -95,22 +95,21 @@ T_UWORD
                  SvIV($arg));
         }
     }
-    #if (LONGSIZE == UVSIZE)
     else {
-        $var = SvUV($arg);
+        if (LONGSIZE == UVSIZE) {
+            $var = SvUV($arg);
+        }
+        else {
+            if (SvUV($arg) > ULONG_MAX) {
+                $var = LONG_MAX;
+                warn(\"Truncating %\"UVuf\" to %lu because your number is larger than fits in an unsigned integer\",
+                SvUV($arg), ULONG_MAX);
+            }
+            else {
+                $var = SvUV($arg);
+            }
+        }
     }
-    #else
-    else if ( SvUV($arg) > ULONG_MAX ) {
-        $var = LONG_MAX;
-        warn(\"Truncating %\"UVuf\" to %lu because your number is larger than fits in an unsigned integer\",
-             SvUV($arg), ULONG_MAX);
-    }
-    else {
-        $var = SvUV($arg);
-    }
-    #endif
-    /* This line added to get the immediately preceding #endif to work
-       properly in generated C source. */
 
 OUTPUT
 T_STR
