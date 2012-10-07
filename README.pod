@@ -49,7 +49,7 @@ A 3 hour technical description, slightly out of date, and very corny>
 
 The Perl CPAN module wraps the C library available at
 L<http://judy.sourceforge.net/>. Download and install this prior to
-attempting to install Judy::HS. At the time of this writing,
+attempting to install Judy. At the time of this writing,
 Judy-1.0.4 happens to be the latest but I don't have any particular
 reason to prefer one version over another. If you have a newer
 version, give it a try.
@@ -65,9 +65,8 @@ Fetch Judy from L<http://judy.sourceforge.net>
 
 =head2 Judy::* PERL LIBRARY
 
-Fetch Judy::HS from CPAN, L<http://search.cpan.org>.
+Fetch Judy from CPAN, L<http://search.cpan.org>.
 
-  $ tar xzf Judy-HS-...tar.gz
   $ perl Makefile.PL
   $ make test
   $ sudo make install
@@ -78,4 +77,4 @@ Judy was invented by Doug Baskins (dougbaskins .AT, yahoo.com) and
 implemented by Hewlett-Packard. (Note: Judy is named for the
 inventor's sister, after discarding many proposed names.)
 
-Judy::HS, the perl wrapper was written by Joshua ben Jore
+Judy, the perl wrapper was written by Joshua ben Jore

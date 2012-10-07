@@ -286,7 +286,7 @@ extra care and attention.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Joshua ben Jore, all rights reserved.
+Copyright 2012 Josh Jore, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
@@ -305,4 +305,4 @@ Judy was invented by Doug Baskins (dougbaskins .AT, yahoo.com) and
 implemented by Hewlett-Packard. (Note: Judy is named for the
 inventor's sister, after discarding many proposed names.)
 
-The perl wrapper was written by Joshua ben Jore
+The perl wrapper was written by Josh Jore

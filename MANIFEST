@@ -62,3 +62,4 @@ typemap
 xt/99_critic.t
 xt/99_pod.t
 xt/99_pod_coverage.t
+META.json
